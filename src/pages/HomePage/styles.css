@@ -17,6 +17,7 @@
     border-bottom: 1px solid grey;
 }
 
+<<<<<<< HEAD
 .carousel {
     margin-top: 2rem;
 }
@@ -26,4 +27,9 @@
     margin-top: 2rem;
     height: 50px;
     width: 100px;
+=======
+.profile {
+    height: 30px;
+    width: auto;
+>>>>>>> 98ac4c9cb529c8b03802fc75f0899823e9d0efce
 }
