@@ -6,8 +6,8 @@ function Navbar() {
         <nav>
             <ul className="nav-bar">
                 <li className="nav-bar-name">TicketWarrior</li>
-                <li><a href="">Login</a></li>
-                <li><a href="">Register</a></li>
+                <li><a href="#">Login</a></li>
+                <li><a href="#">Register</a></li>
             </ul>
             <div className="nav-bar-line"></div>
         </nav>

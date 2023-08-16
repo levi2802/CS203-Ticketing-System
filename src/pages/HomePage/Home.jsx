@@ -5,8 +5,9 @@ import MyCarousel from "./Carousel";
 function Home() {
     return (
         <>
-            <Navbar/> 
-            <MyCarousel/>
+            <Navbar />
+            <MyCarousel />
+            <button className="buy-btn">Buy Ticket</button>
         </>
     )
 }

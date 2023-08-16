@@ -9,10 +9,21 @@
     margin-right: auto;
 }
 
-.nav-bar > li {
+.nav-bar>li {
     margin-left: 25px;
 }
 
 .nav-bar-line {
     border-bottom: 1px solid grey;
+}
+
+.carousel {
+    margin-top: 2rem;
+}
+
+.buy-btn {
+    margin-left: 45rem;
+    margin-top: 2rem;
+    height: 50px;
+    width: 100px;
 }
