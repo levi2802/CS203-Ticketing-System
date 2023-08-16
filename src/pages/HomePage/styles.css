@@ -16,3 +16,8 @@
 .nav-bar-line {
     border-bottom: 1px solid grey;
 }
+
+.profile {
+    height: 30px;
+    width: auto;
+}
