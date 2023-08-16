@@ -1,0 +1,18 @@
+.nav-bar {
+    display: flex;
+    list-style-type: none;
+    font-size: 20px;
+    padding: 20px;
+}
+
+.nav-bar-name {
+    margin-right: auto;
+}
+
+.nav-bar > li {
+    margin-left: 25px;
+}
+
+.nav-bar-line {
+    border-bottom: 1px solid grey;
+}
