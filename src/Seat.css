@@ -1,0 +1,31 @@
+.Available {
+	width: 20px;
+	height: 20px;
+	background: green;
+	border-radius: 25%;
+}
+
+.Available:hover{
+	background: lightgreen;
+	cursor: pointer;
+    transform: translateY(-2px);
+}
+
+#selected {
+	background: lightgreen;
+}
+
+
+.Unavailable {
+	width: 20px;
+	height: 20px;
+	background: grey;
+	border-radius: 25%;
+}
+
+.Row1, .Row2, .Row3, Row4 {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	margin: 3px;
+}

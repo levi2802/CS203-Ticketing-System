@@ -1,0 +1,51 @@
+
+#stage-container {
+  position: relative;
+  height: 240px;
+  width: 540px;
+  margin: 0 auto;
+}
+
+svg {
+	margin: 20px;
+  fill:#222;
+}
+
+#stage {
+  position: absolute;
+  text-transform: uppercase;
+  color: white;
+  z-index: 10;
+  top: 30%;
+  right: 40%;
+}
+
+div.center {
+  border: 2px solid black;
+  width: auto;
+  border-radius: 5px;
+  background: lightblue;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  margin-top: 5%;
+  margin-left: 30%;
+  margin-right: 30%;
+}
+
+div.left {
+  border: 2px solid black;
+  width: auto;
+  border-radius: 5px;
+  background: lightyellow;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  margin-top: -14%;
+  margin-left: 3%;
+  margin-right: 75%;
+  rotate: 40deg;
+}
+
+
+
