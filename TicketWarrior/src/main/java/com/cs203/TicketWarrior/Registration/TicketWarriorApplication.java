@@ -1,4 +1,4 @@
-package com.cs203.TicketWarrior;
+package com.cs203.TicketWarrior.Registration;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

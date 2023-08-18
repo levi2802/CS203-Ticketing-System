@@ -1,16 +1,17 @@
-package com.cs203.TicketWarrior;
+package com.cs203.TicketWarrior.Registration.payload;
+
+import java.util.Set;
 
 import jakarta.validation.constraints.NotBlank;
 
-
-// This is the User Data Transfer Object. It is used to send all of the registration information to our Spring Backend.
-public class UserDTO {
-    
+public class RegisterRequest {
     @NotBlank
     private String username;
 
     @NotBlank
     private String password;
+
+    private Set<String> roles;
 
     public String getUsername() {
         return username;
@@ -26,5 +27,13 @@ public class UserDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Set<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<String> roles) {
+        this.roles = roles;
     }
 }
