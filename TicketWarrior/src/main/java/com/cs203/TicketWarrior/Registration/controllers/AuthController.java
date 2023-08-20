@@ -37,6 +37,7 @@ public class AuthController {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Username already taken!"));
         }
 
+        
         // Create user
         
     }
