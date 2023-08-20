@@ -1,8 +1,8 @@
 import React, { Component, useState } from 'react';
-import './App.css';
+import './SeatApp.css';
 import Seat from './Seat.js';
 
-class App extends Component {
+class SeatApp extends Component {
   constructor(props){
     super(props);
     this.state = {seats: []};
@@ -103,4 +103,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default SeatApp;
