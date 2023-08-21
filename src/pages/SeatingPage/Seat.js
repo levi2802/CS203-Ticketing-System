@@ -2,30 +2,44 @@ import React, { Component } from 'react';
 import './Seat.css';
 
 class Seat extends Component {
-	constructor(props){
-		super(props)
-		this.state = {selected: false}
-		this.selectSeat = this.selectSeat.bind(this);
-	}
+  constructor(props) {
+    super(props);
+    this.state = {
+      selected: false,
+    };
+  }
 
-	selectSeat(){
-		console.log(`seat: {row: ${this.props.row}, num: ${this.props.num}}`)
-		this.setState({selected: this.state.selected? false: true });
-	}
+  handleSeatClick = () => {
+    if (this.props.avail && !this.props.reserved) {
+      this.setState(prevState => ({
+        selected: !prevState.selected,
+      }));
+      this.props.onSeatSelect(this.props.row, this.props.num);
+    }
+  }
 
-	render() {
-		let seat = <div className="Unavailable" title="Seat Unavailable"></div>
+  render() {
+    const { avail, reserved } = this.props;
+    const { selected } = this.state;
 
-		if (this.props.avail) {
-			seat = <div className="Available" title={this.state.selected? "Seat Selected" : "Seat Available \n$50\n" + ( 1 + this.props.num)} id={this.state.selected? "selected" : ""} onClick={this.selectSeat.bind(this)}></div>
-		} 
+    let seatClassName = "Unavailable";
 
-		return(
-			<div>
-				{seat}
-			</div>
-		)
-	}
+    if (reserved) {
+      seatClassName = "Unavailable";
+    } else if (avail) {
+      seatClassName = selected ? "selected" : "Available";
+    }
+
+    return (
+      <div
+        className={seatClassName}
+        title={selected ? "Seat Selected" : (avail ? "Seat Available" : "Seat Unavailable")}
+        onClick={this.handleSeatClick}
+      >
+        <center>{this.props.num + 1}</center>
+      </div>
+    );
+  }
 }
 
 export default Seat;
