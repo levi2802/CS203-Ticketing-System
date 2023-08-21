@@ -1,8 +1,9 @@
 .Available {
-	width: 20px;
-	height: 20px;
+	width: 25px;
+	height: 25px;
 	background: green;
 	border-radius: 25%;
+	clip-path: polygon(0 0, 100% 0, 100% 70%, 80% 80%, 80% 100%, 20% 100%, 20% 80%, 0 70%);
 }
 
 .Available:hover{
@@ -11,16 +12,21 @@
     transform: translateY(-2px);
 }
 
-#selected {
+.selected {
+	width: 25px;
+	height: 25px;
 	background: lightgreen;
+	border-radius: 25%;
+	clip-path: polygon(0 0, 100% 0, 100% 70%, 80% 80%, 80% 100%, 20% 100%, 20% 80%, 0 70%);
 }
 
 
 .Unavailable {
-	width: 20px;
-	height: 20px;
+	width: 25px;
+	height: 25px;
 	background: grey;
 	border-radius: 25%;
+	clip-path: polygon(0 0, 100% 0, 100% 70%, 80% 80%, 80% 100%, 20% 100%, 20% 80%, 0 70%);
 }
 
 .Row1, .Row2, .Row3, Row4 {
