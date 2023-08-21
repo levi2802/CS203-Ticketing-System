@@ -9,7 +9,7 @@ class SeatApp extends Component {
   }
 
   componentDidMount(){
-    this.setState({seats: [
+    let seats = [
       {row: 0, num: 0, avail: true},{row: 0, num: 1, avail: true},{row: 0, num: 2, avail: true},
       {row: 0, num: 3, avail: true},{row: 0, num: 4, avail: true},{row: 0, num: 5, avail: true},
       {row: 0, num: 6, avail: true},{row: 0, num: 7, avail: true},{row: 0, num: 8, avail: true},
@@ -29,75 +29,118 @@ class SeatApp extends Component {
       {row: 3, num: 3, avail: true},{row: 3, num: 4, avail: true},{row: 3, num: 5, avail: true},
       {row: 3, num: 6, avail: true},{row: 3, num: 7, avail: true},{row: 3, num: 8, avail: true},
       {row: 3, num: 9, avail: true}
-    ]}, () => console.log(this.state.seats));
-  }
+    ];
+
+    const seatsToMakeUnavailable = [
+      [1, 0],
+      [1, 1],
+      [0, 0]
+      // Add more [row, col] pairs as needed
+    ];
+
+   for(let i = 0; i < seats.length;i++){
+      for(let x = 0; x < seatsToMakeUnavailable.length;x++){
+        let r = seatsToMakeUnavailable[x][0];
+        let c = seatsToMakeUnavailable[x][1]
+        if(seats[i].row == r && seats[i].num == c ){
+          seats[i].avail = false;
+        }
+      }
+   }
+
+    this.setState({seats}, () => console.log(this.state.seats));
+
+
+    }
+
+    handleSeatSelect = (row, num) => {
+      const { seats } = this.state;
+      const updatedSeats = seats.map(seat => {
+        if (seat.row === row && seat.num === num) {
+          return { ...seat, selected: !seat.selected };
+        }
+        return seat;
+      });
+
+      this.setState({
+        seats: updatedSeats,
+      });
+      
+      if (updatedSeats.find(seat => seat.row === row && seat.num === num).selected) {
+        console.log(`Selected seat: {row: ${row}, column: ${num}}`);
+      } else {
+        console.log(`Unselected seat: {row: ${row}, column: ${num}}`);
+      }
+      
+    }
   
   render() {
-    let seats = new Array(4);
-    for(let i = 0; i < seats.length; i++ ){
-      seats[i] = new Array(10);
-    }
+    const { seats } = this.state;
+    const seatsGrid = new Array(4).fill(0).map(() => new Array(10).fill(null));
 
-    if (this.state.seats) {
-      this.state.seats.forEach(seat => {
-        seats[seat.row][seat.num] = <Seat row = {seat.row} num = {seat.num}
-        avail = {seat.avail} key = {seat.row + seat.num} />
-      });
-    } 
+    seats.forEach(seat => {
+      seatsGrid[seat.row][seat.num] = (
+        <Seat
+          row={seat.row}
+          num={seat.num}
+          avail={seat.avail}
+          selected={seat.selected}
+          onSeatSelect={this.handleSeatSelect}
+          key={seat.row + seat.num}
+        />
+      );
+    });
 
-    //Collate those that are selected and make it false
-    //needs to be an array of arrays
-    let x = [[0,1],[1,1],[1,2]];
-    //get from backend data on what seats are purchased
-    for(let i = 0; i < x.length; i++){
-      let r = x[i][0];
-      let c = x[i][1];
-      if (this.state.seats) {
-        this.state.seats.forEach(seat => {
-          seats[r][c] = <Seat row = {r} num = {c}
-          avail = {false} key = {r + c} />
-        });
-      } 
-    }
+    const selectedSeatNumbers = seats.filter(seat => seat.selected).map(seat => seat.num + 1);
+    const availableSeatsCount = seats.filter(seat => seat.avail && !seat.selected).length;
     
     
     return (
       <div>
         <div id="stage-container">
-          <svg width="500" height="200">
-            <ellipse cx="250" cy="100" rx="250" ry="100" />
-            <rect x="0" y="0" width="500" height="100" />
+          <svg width="500" height="100" >
           </svg>
           <h1 id="stage">stage</h1>
         </div>
         <div className='center'>
           <div className="Row1">
-            {seats[0].slice(4,10)}
+            {seatsGrid[0].slice(4,10)}
           </div>
           <div className="Row2">
-            {seats[1].slice(4,10)}
+            {seatsGrid[1].slice(4,10)}
           </div>
           <div className="Row3">
-            {seats[2].slice(4,10)}
+            {seatsGrid[2].slice(4,10)}
           </div>
           <div className="Row3">
-            {seats[3].slice(4,10)}
+            {seatsGrid[3].slice(4,10)}
           </div>
         </div>
         <div className='left'>
           <div className="Row1">
-            A{seats[0].slice(0,4)}
+            A{seatsGrid[0].slice(0,4)}
           </div>
           <div className="Row2">
-            B{seats[1].slice(0,4)}
+            B{seatsGrid[1].slice(0,4)}
           </div>
           <div className="Row3">
-            C{seats[2].slice(0,4)}
+            C{seatsGrid[2].slice(0,4)}
           </div>
           <div className="Row3">
-            D{seats[3].slice(0,4)}
+            D{seatsGrid[3].slice(0,4)}
           </div>
         </div>
+        <div className='inputs'>
+          <pre>
+          Seats available: {availableSeatsCount}
+          </pre>
+          <pre>
+          Seats Selected: {selectedSeatNumbers.length}
+          </pre>
+        </div>
+        <button>
+          submit
+        </button>
       </div>
     );
   }
