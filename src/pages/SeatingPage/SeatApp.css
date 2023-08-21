@@ -1,14 +1,23 @@
 
 #stage-container {
   position: relative;
-  height: 240px;
-  width: 540px;
+  height: 30%;
+  width: 50%;
   margin: 0 auto;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  background-color: #555;
+  clip-path: polygon(0 0, 100% 0, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+
 }
 
 svg {
-	margin: 20px;
-  fill:#222;
+	margin: 0px;
+  border-top: 30% solid #555;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 #stage {
@@ -16,36 +25,54 @@ svg {
   text-transform: uppercase;
   color: white;
   z-index: 10;
-  top: 30%;
-  right: 40%;
+  top: 25%;
+  left: 45%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 div.center {
-  border: 2px solid black;
+  border: 5px solid lightblue;
   width: auto;
-  border-radius: 5px;
+  border-radius: 50%/0px 0px 25px 25px;
   background: lightblue;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  margin-top: 5%;
+  box-shadow: 0 0 15px grey;
+  margin-top: 8%;
   margin-left: 30%;
   margin-right: 30%;
+  transform: rotate(0 deg) skewX(0deg) skewY(0deg) perspective(40%);
+
 }
 
 div.left {
-  border: 2px solid black;
+  border: 5px solid lightyellow;
   width: auto;
-  border-radius: 5px;
+  border-radius: 50%/0px 0px 25px 25px;
   background: lightyellow;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   margin-top: -14%;
-  margin-left: 3%;
-  margin-right: 75%;
-  rotate: 40deg;
+  margin-left: 1%;
+  margin-right: 80%;
+  box-shadow: 0 0 15px grey;
+  transform-origin: left bottom;
+  transform: rotate(15deg) skewX(-30deg) skewY(10deg) perspective(40px);
 }
 
-
+div.inputs{
+  border: 2px solid black;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: auto;
+  margin-top: 30%;
+  margin-left: 30%;
+  margin-right: 30%;
+  text-align: center;
+}
 
