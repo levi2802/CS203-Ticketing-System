@@ -1,5 +1,5 @@
 import React from "react";
-import SeatApp from "./SeatApp"
+import SeatApp from "./SeatApp/SeatApp"
 import Navbar from "../HomePage/Navbar";
 
 function SeatPage() {
