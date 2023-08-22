@@ -1,15 +1,12 @@
 
 #stage-container {
   position: relative;
-  height: 30%;
-  width: 50%;
   margin: 0 auto;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  background-color: #555;
-  clip-path: polygon(0 0, 100% 0, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-
+  border-bottom:5px solid #555;
+  border-radius: 0 0 100px 100px;
 }
 
 svg {
@@ -23,45 +20,56 @@ svg {
 #stage {
   position: absolute;
   text-transform: uppercase;
-  color: white;
-  z-index: 10;
+  text-align: center;
+  color: black;
   top: 25%;
-  left: 45%;
+  left: 50%;
+  transform: translateX(-50%);
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
 
+div.layout{
+  margin: 5%;
+  display: flex;
+  justify-content: space-between;
+  overflow-x: hidden; 
+  max-width: 100%; /* Ensure the container doesn't exceed the viewport width */
+  padding: 0 20px; 
+}
+
 div.center {
+  flex: 1;
   border: 5px solid lightblue;
   width: auto;
-  border-radius: 50%/0px 0px 25px 25px;
   background: lightblue;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  box-shadow: 0 0 15px grey;
-  margin-top: 8%;
-  margin-left: 30%;
-  margin-right: 30%;
-  transform: rotate(0 deg) skewX(0deg) skewY(0deg) perspective(40%);
-
+  margin: 0 10px;
 }
 
 div.left {
+  flex: 1;
   border: 5px solid lightyellow;
   width: auto;
-  border-radius: 50%/0px 0px 25px 25px;
   background: lightyellow;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  margin-top: -14%;
-  margin-left: 1%;
-  margin-right: 80%;
-  box-shadow: 0 0 15px grey;
-  transform-origin: left bottom;
-  transform: rotate(15deg) skewX(-30deg) skewY(10deg) perspective(40px);
+  margin: 0 10px;
+}
+
+div.right {
+  flex: 1;
+  border: 5px solid lightyellow;
+  width: auto;
+  background: lightyellow;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0 10px;
 }
 
 div.inputs{
