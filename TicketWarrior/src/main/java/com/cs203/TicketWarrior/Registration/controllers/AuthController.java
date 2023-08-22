@@ -39,6 +39,17 @@ public class AuthController {
 
         
         // Create user
+        UserDTO user = new UserDTO(RegisterRequest.getUsername(), RegisterRequest.getPassword());
+
         
     }
 }
+
+
+
+
+
+// 1. User registers at the front end page
+// 2. Payload request is created and send to the controller
+// 3. Controller uses service/repository to check if username exists
+// 4. If pass, creates a new User model class
