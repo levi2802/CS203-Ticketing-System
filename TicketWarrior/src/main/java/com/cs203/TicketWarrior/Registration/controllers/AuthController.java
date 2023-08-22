@@ -25,8 +25,6 @@ public class AuthController {
     @Autowired
     UserRepository userRepository;
 
-    @Autowired
-    RoleRepository roleRepository;
 
     // @Valid perform validation based on the constraints defined in RegisterRequest.java
     @PostMapping("/register")
@@ -50,6 +48,11 @@ public class AuthController {
 
         return ResponseEntity.ok(new MessageResponse("User registered!"));
         
+    }
+
+    @GetMapping("/test")
+    public String test() {
+        return "Hello world";
     }
 }
 
