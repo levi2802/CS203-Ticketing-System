@@ -39,8 +39,16 @@ public class AuthController {
 
         
         // Create user
-        UserDTO user = new UserDTO(RegisterRequest.getUsername(), RegisterRequest.getPassword());
+        UserDTO user = new UserDTO(registerRequest.getUsername(), registerRequest.getPassword());
 
+        //Roles stuff
+
+        //Generate ID and assign to user
+
+        // Save created user into repository
+        userRepository.save(user);
+
+        return ResponseEntity.ok(new MessageResponse("User registered!"));
         
     }
 }
