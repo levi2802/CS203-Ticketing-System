@@ -19,28 +19,25 @@ class Seat extends Component {
   }
 
   render() {
-    const {avail, reserved} = this.props;
-    const {selected} = this.state;
+  const { avail, reserved, selected } = this.props;
 
-    let seatClassName = "Unavailable";
+  let seatClassName = "Unavailable";
 
-    if (reserved) {
-      seatClassName = "Unavailable";
-    } else if (avail) {
-      seatClassName = selected ? "selected" : "Available";
-    }
+  if (reserved) {
+    seatClassName = "Unavailable";
+  } else if (avail) {
+    seatClassName = selected ? "selected" : "Available";
+  }
 
-    return (
-      <div
-        className={seatClassName}
-        title={selected ? "Seat Selected" : (avail ? "Seat Available" : "Seat Unavailable")}
-        onClick={this.handleSeatClick}
-      >
-        <center>{this.props.num + 1}</center>
-      </div>
-    );
+  return (
+    <div
+      className={seatClassName}
+      title={selected ? "Seat Selected" : (avail ? "Available \n $8" : "Unavailable")}
+      onClick={this.handleSeatClick}
+    >
+      <center>{this.props.num + 1}</center>
+    </div>
+  )
   }
 }
-
 export default Seat;
-

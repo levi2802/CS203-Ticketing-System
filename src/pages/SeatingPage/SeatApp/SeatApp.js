@@ -1,11 +1,13 @@
 import React, { Component, useState } from 'react';
 import './SeatApp.css';
 import Seat from '../Seat/Seat.js';
+import {Link} from 'react-scroll';
+import { useRef } from 'react';
 
 class SeatApp extends Component {
   constructor(props){
     super(props);
-    this.state = {seats: []};
+    this.state = {seats: [], chosenSeats: []};
   }
 
   componentDidMount(){
@@ -18,49 +20,98 @@ class SeatApp extends Component {
       }
     }
 
-    const seatsToMakeUnavailable = [[1, 0],[1, 1],[0, 0]];
+    //example
+    const makeUnavailable = [[1, 0],[1, 1],[0, 0]];
 
-   for(let i = 0; i < seats.length;i++){
-      for(let x = 0; x < seatsToMakeUnavailable.length;x++){
-        let r = seatsToMakeUnavailable[x][0];
-        let c = seatsToMakeUnavailable[x][1]
-        if(seats[i].row == r && seats[i].num == c ){
-          seats[i].avail = false;
+    //code to make seat unavail r = row c = col
+    for(let i = 0; i < seats.length;i++){
+        for(let j = 0; j < makeUnavailable.length; j++){
+          let r = makeUnavailable[j][0];
+          let c = makeUnavailable[j][1]
+          if(seats[i].row == r && seats[i].num == c ){
+            seats[i].avail = false;
+          }
         }
-      }
-   }
+    }
 
+    //Updating
     this.setState({seats}, () => console.log(this.state.seats));
-
-
     }
 
     handleSeatSelect = (row, num) => {
       const {seats} = this.state;
+      //object of the seat that i clicked
+      const selectedSeat = seats.find(seat => seat.row === row && seat.num === num);
+    
+      //A list of selected seat numbers
+      const selectedSeatNumbers = [];
+      seats.forEach(seat => {
+        if (seat.row === row && seat.selected) {
+          selectedSeatNumbers.push(seat.num);
+        }
+      });
+    
       const updatedSeats = seats.map(seat => {
         if (seat.row === row && seat.num === num) {
-          return { ...seat, selected: !seat.selected };
+          //Allow these seats to be selected
+          //Some need to be added for unchecking
+          if (
+            selectedSeatNumbers.length === 0 || // Allow first seat to be selected
+            selectedSeatNumbers.includes(num - 1) ||
+            selectedSeatNumbers.includes(num + 1) ||
+            selectedSeatNumbers.includes(num)
+          ) {
+            seat.selected = !seat.selected;
+          } else {
+            // Show pop-up message
+            alert("Please choose a seat with no space between.");
+          }
         }
         return seat;
       });
 
+      // Update chosenSeats array
+      const updatedChosenSeats = seats
+      .filter((seat) => seat.selected)
+      .map((seat) => seat.num + 1);
+    
       this.setState({
         seats: updatedSeats,
+        chosenSeats: updatedChosenSeats
       });
-      
-      if (updatedSeats.find(seat => seat.row === row && seat.num === num).selected) {
+
+      //log of selected/unselected seat
+      if (selectedSeat.selected) {
         console.log(`Selected seat: {row: ${row}, column: ${num}}`);
       } else {
         console.log(`Unselected seat: {row: ${row}, column: ${num}}`);
       }
-      
     }
+
+    handleCheckout = () => {
+    const {chosenSeats} = this.state;
+    if (chosenSeats.length === 0) {
+      alert("Please select at least one seat before checkout");
+    } else {
+      window.scrollTo({top: 1000, left: 0, behavior: 'smooth'});
+    }
+  };
   
   render() {
     const {seats} = this.state;
-    const seatsGrid = new Array(4).fill(0).map(() => new Array(14).fill(null));
 
-    seats.forEach(seat => {
+    //create array with nulls
+    const seatsGrid = [];
+    for (let i = 0; i < 4; i++) {
+      let row = [];
+      for (let j = 0; j < 14; j++) {
+        row.push(null);
+      }
+      seatsGrid.push(row);
+    }
+
+    for (let i = 0; i < seats.length; i++) {
+      let seat = seats[i];
       seatsGrid[seat.row][seat.num] = (
         <Seat
           row={seat.row}
@@ -71,54 +122,81 @@ class SeatApp extends Component {
           key={seat.row + seat.num}
         />
       );
-    });
+    }
 
-    const selectedSeatNumbers = seats.filter(seat => seat.selected).map(seat => seat.num + 1);
-    const availableSeatsCount = seats.filter(seat => seat.avail && !seat.selected).length;
-    
+    //This code allows for conversion of row from int to char
+    const rowName = [];
+    for(let i = 0; i < seatsGrid.length; i++){
+      let temp = 'A'.charCodeAt(0) + i;
+      rowName.push(String.fromCharCode(temp));
+    }
+
+    const chosenSeats = seats.filter(seat => seat.selected).map(seat => seat.num + 1);
+    const chosenRow = seats.filter(seat => seat.selected).map(seat => seat.row + 1);
+    const availableSeats = seats.filter(seat => seat.avail && !seat.selected).length;
     
     return (
       <div>
-        <div id="stage-container">
-          <svg width="500" height="100" >
-          </svg>
-          <h1 id="stage">Screen</h1>
-        </div>
-        <div className='layout'>
-        <div className='left'>
-          {['A', 'B', 'C', 'D'].map((rowLabel, rowIndex) => (
-            <div className="Row" key={rowIndex}>
-              {rowLabel}
-              {seatsGrid[rowIndex].slice(0, 4)}
+        <div className='lock' style={{ overflow: 'hidden' }}>
+          <div id="stage-container">
+            <svg width="500" height="100" >
+            </svg>
+            <h1 id="stage">Screen</h1>
+          </div>
+
+          <div className='layout'>
+            <div className='left'>
+              {rowName.map((rowLabel, rowIndex) => (
+                <div className="Row" key={rowIndex}>
+                  {rowLabel}
+                  {seatsGrid[rowIndex].slice(0, 4)}
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-          <div className='center'>
+
+            <div className='center'>
+              {[0, 1, 2, 3].map(rowIndex => (
+                <div className="Row" key={rowIndex}>
+                  {seatsGrid[rowIndex].slice(4, 10)}
+                </div>
+              ))}
+            </div>
+
+            <div className='right'>
             {[0, 1, 2, 3].map(rowIndex => (
-              <div className="Row" key={rowIndex}>
-                {seatsGrid[rowIndex].slice(4, 10)}
-              </div>
-            ))}
+                <div className="Row" key={rowIndex}>
+                  {seatsGrid[rowIndex].slice(10, 14)}
+                </div>
+              ))}
+            </div>
           </div>
-          <div className='right'>
-          {[0, 1, 2, 3].map(rowIndex => (
-              <div className="Row" key={rowIndex}>
-                {seatsGrid[rowIndex].slice(10, 14)}
-              </div>
-            ))}
+
+          <div className='inputs'>
+            <pre>
+            Seats available: {availableSeats}/{seatsGrid.length * seatsGrid[0].length}
+            </pre>
+            <pre>
+            Seats Selected: {chosenSeats.length}
+            </pre>
+            <button onClick={this.handleCheckout}>
+            Check Out
+            </button>
           </div>
         </div>
-        <div className='inputs'>
+        <div className='orderSummary'>
           <pre>
-          Seats available: {availableSeatsCount}/{seatsGrid.length * seatsGrid[0].length}
+          Seats: {chosenSeats.map((seatNum, index) => {
+            const rowLabel = rowName[chosenRow[index] - 1];
+            return `${rowLabel}${seatNum}`;
+          }).join(", ")}
           </pre>
           <pre>
-          Seats Selected: {selectedSeatNumbers.length}
+          Total cost: ${chosenSeats.length * 8}
           </pre>
-          <button>
-          submit
-          </button>
+          <button onClick={() => {window.scrollTo({top: 0, left: 0, behavior: 'smooth'});}}>Cancel</button>
+          <button>Confirm</button>
         </div>
+
       </div>
     );
   }
