@@ -1,5 +1,7 @@
-package kh.dev.movies.Movies;
+package com.cs203.TicketWarrior.Registration.services;
 
+import com.cs203.TicketWarrior.Registration.models.Movie;
+import com.cs203.TicketWarrior.Registration.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.*;

@@ -1,5 +1,6 @@
-package kh.dev.movies.Movies;
+package com.cs203.TicketWarrior.Registration.repository;
 
+import com.cs203.TicketWarrior.Registration.models.Movie;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;

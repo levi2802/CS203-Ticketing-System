@@ -1,4 +1,4 @@
-package kh.dev.movies.Movies;
+package com.cs203.TicketWarrior.Registration.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,6 +24,4 @@ public class Movie {
     private String poster;
     private List<String> genres;
     private List<String> backdrops;
-    @DocumentReference // Store the reviewIds but the reviews will be in a separate collection.
-    private List<Review> reviewIds;
 }
