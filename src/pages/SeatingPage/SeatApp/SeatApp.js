@@ -1,7 +1,6 @@
 import React, { Component, useState } from 'react';
 import './SeatApp.css';
 import Seat from '../Seat/Seat.js';
-import {Link} from 'react-scroll';
 import { useRef } from 'react';
 
 class SeatApp extends Component {
@@ -13,7 +12,7 @@ class SeatApp extends Component {
   componentDidMount(){
     let seats = [];
 
-    //How many seats to create r=row i = col
+    //How many seats to create r=row i=col
     for(let r = 0; r < 4; r++){
       for(let i = 0;i < 14;i++){
         seats.push({row: r, num: i,avail:true});
@@ -51,18 +50,35 @@ class SeatApp extends Component {
         }
       });
     
+      //Seat picking algo
       const updatedSeats = seats.map(seat => {
         if (seat.row === row && seat.num === num) {
-          //Allow these seats to be selected
-          //Some need to be added for unchecking
-          if (
-            selectedSeatNumbers.length === 0 || // Allow first seat to be selected
-            selectedSeatNumbers.includes(num - 1) ||
-            selectedSeatNumbers.includes(num + 1) ||
-            selectedSeatNumbers.includes(num)
+          if (selectedSeatNumbers.includes(num)) {
+            // If clicked seat is in selected group
+            if (selectedSeatNumbers.length > 1) {
+              // Check if it's the maximum or minimum seat number in the group
+              let maxSelected = Math.max(...selectedSeatNumbers);
+              let minSelected = Math.min(...selectedSeatNumbers);
+              //Only allow the outsides to be 'de-selected'
+              if (num === maxSelected || num === minSelected) {
+                seat.selected = !seat.selected;
+              } 
+              else {
+                // Show pop-up message
+                alert("Please choose a seat with no space between.");
+              }
+            } 
+            else {
+              seat.selected = !seat.selected;
+            }
+          } 
+          else if (
+            selectedSeatNumbers.length === 0 || selectedSeatNumbers.includes(num - 1) ||
+            selectedSeatNumbers.includes(num + 1) || selectedSeatNumbers.includes(num)
           ) {
             seat.selected = !seat.selected;
-          } else {
+          } 
+          else {
             // Show pop-up message
             alert("Please choose a seat with no space between.");
           }
@@ -71,9 +87,7 @@ class SeatApp extends Component {
       });
 
       // Update chosenSeats array
-      const updatedChosenSeats = seats
-      .filter((seat) => seat.selected)
-      .map((seat) => seat.num + 1);
+      const updatedChosenSeats = seats.filter((seat) => seat.selected).map((seat) => seat.num + 1);
     
       this.setState({
         seats: updatedSeats,
@@ -83,7 +97,8 @@ class SeatApp extends Component {
       //log of selected/unselected seat
       if (selectedSeat.selected) {
         console.log(`Selected seat: {row: ${row}, column: ${num}}`);
-      } else {
+      } 
+      else {
         console.log(`Unselected seat: {row: ${row}, column: ${num}}`);
       }
     }
@@ -92,7 +107,8 @@ class SeatApp extends Component {
     const {chosenSeats} = this.state;
     if (chosenSeats.length === 0) {
       alert("Please select at least one seat before checkout");
-    } else {
+    } 
+    else {
       window.scrollTo({top: 1000, left: 0, behavior: 'smooth'});
     }
   };
