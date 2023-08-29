@@ -2,11 +2,9 @@ package com.cs203.TicketWarrior.Registration.models;
 
 import java.util.HashSet;
 import java.util.Set;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-
 import jakarta.validation.constraints.NotBlank;
 
 
@@ -14,7 +12,7 @@ import jakarta.validation.constraints.NotBlank;
 
 // This is the User Data Transfer Object. It is used to send all of the registration information to our Spring Backend.
 @Document(collection = "users")
-public class UserDTO{
+public class User{
 
     @Id
     private String id;
@@ -28,11 +26,11 @@ public class UserDTO{
     @DBRef
     private Set<Role> roles = new HashSet<>();
 
-    public UserDTO() {
+    public User() {
 
     }
 
-    public UserDTO(String username, String password) {
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
     }

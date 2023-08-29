@@ -1,12 +1,14 @@
 package com.cs203.TicketWarrior.Registration.repository;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
+import com.cs203.TicketWarrior.Registration.models.User;
 
-import com.cs203.TicketWarrior.Registration.models.UserDTO;
+import java.util.Optional;
 
-public interface UserRepository extends MongoRepository<UserDTO, String> {
-    
-    UserDTO findByUsername(String username);
+public interface UserRepository extends MongoRepository<User, String> {
 
-    Boolean usernameExists(String username);
+    Optional<User> findUserByUsername(String username);
 }
+
+
+
