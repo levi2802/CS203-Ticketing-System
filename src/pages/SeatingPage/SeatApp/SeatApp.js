@@ -27,7 +27,7 @@ class SeatApp extends Component {
         for(let j = 0; j < makeUnavailable.length; j++){
           let r = makeUnavailable[j][0];
           let c = makeUnavailable[j][1]
-          if(seats[i].row == r && seats[i].num == c ){
+          if(seats[i].row === r && seats[i].num === c ){
             seats[i].avail = false;
           }
         }
