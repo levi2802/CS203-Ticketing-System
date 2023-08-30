@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from 'react-router-dom'
-import './styles.css'
+import './styles.css';
+import axios from 'axios';
 
 function UsernamePassword() {
 
@@ -21,7 +22,12 @@ function UsernamePassword() {
 
     const handleSubmit = event => {
         event.preventDefault();
-        console.log(formData.username);
+        axios.post('/api/auth/register', formData).then(response => {
+            console.log(response.data);
+        }).catch(error => {
+            console.log('Error: ', error);
+        })
+        
     };
 
     return (
