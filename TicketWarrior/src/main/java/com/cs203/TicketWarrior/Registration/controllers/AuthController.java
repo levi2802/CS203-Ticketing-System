@@ -1,5 +1,6 @@
 package com.cs203.TicketWarrior.Registration.controllers;
 
+import com.cs203.TicketWarrior.Registration.payload.LoginRequest;
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,7 +29,6 @@ public class AuthController {
     @Autowired
     UserService userService;
 
-
     // @Valid perform validation based on the constraints defined in RegisterRequest.java
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
@@ -44,22 +44,12 @@ public class AuthController {
 
         return new ResponseEntity<User>(user, HttpStatus.CREATED);
 
-        
-
-        
-        // // Create user
-        // UserDTO user = new UserDTO(registerRequest.getUsername(), registerRequest.getPassword());
-
-        // //Roles stuff
-
-        // //Generate ID and assign to user
-
-        // // Save created user into repository
-        // userRepository.save(user);
-
-        // return ResponseEntity.ok(new MessageResponse("User registered!"));
-        
     }
+
+//    @PostMapping("/login")
+//    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+//
+//    }
 
     @GetMapping("/test")
     public String test() {

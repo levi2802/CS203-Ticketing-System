@@ -22,7 +22,7 @@ function UsernamePassword() {
 
     const handleSubmit = event => {
         event.preventDefault();
-        axios.post('/api/auth/register', formData).then(response => {
+        axios.post('http://localhost:8080/api/auth/register', formData).then(response => {
             console.log(response.data);
         }).catch(error => {
             console.log('Error: ', error);
