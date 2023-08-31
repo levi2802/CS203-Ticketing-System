@@ -5,13 +5,23 @@ import java.util.Set;
 import jakarta.validation.constraints.NotBlank;
 
 public class RegisterRequest {
+
+
     @NotBlank
     private String username;
 
     @NotBlank
     private String password;
 
-    private Set<String> roles;
+//    private Set<String> roles;
+
+    public RegisterRequest() {
+    }
+
+    public RegisterRequest(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 
     public String getUsername() {
         return username;
@@ -29,11 +39,11 @@ public class RegisterRequest {
         this.password = password;
     }
 
-    public Set<String> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<String> roles) {
-        this.roles = roles;
-    }
+//    public Set<String> getRoles() {
+//        return roles;
+//    }
+//
+//    public void setRoles(Set<String> roles) {
+//        this.roles = roles;
+//    }
 }
