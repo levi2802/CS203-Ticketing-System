@@ -31,7 +31,7 @@ class Seat extends Component {
 
   return (
     <div
-      className={seatClassName}
+      id={seatClassName}
       title={selected ? "Seat Selected" : (avail ? "Available \n $8" : "Unavailable")}
       onClick={this.handleSeatClick}
     >

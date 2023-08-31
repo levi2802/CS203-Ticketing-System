@@ -1,7 +1,3 @@
-div.lock{
-  overflow: hidden;
-}
-
 #stage-container {
   position: relative;
   margin: 0 auto;
@@ -76,15 +72,15 @@ div.right {
 }
 
 div.inputs{
-  border: 2px solid black;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   width: auto;
-  margin: 0 10px;
-  margin-left: 40%;
-  margin-right: 40%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
   text-align: center;
+  padding: 3px;
 }
 
 div.orderSummary{
@@ -93,9 +89,7 @@ div.orderSummary{
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   width: auto;
-  margin: 30%;
-  margin-left: 40%;
-  margin-right: 40%;
+  display: inline-block;
   text-align: center;
 }
 

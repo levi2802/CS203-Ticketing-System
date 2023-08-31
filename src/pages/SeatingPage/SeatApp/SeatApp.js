@@ -6,7 +6,7 @@ import { useRef } from 'react';
 class SeatApp extends Component {
   constructor(props){
     super(props);
-    this.state = {seats: [], chosenSeats: []};
+    this.state = {seats: [], chosenSeats: [], showSummary: false,};
   }
 
   componentDidMount(){
@@ -109,12 +109,19 @@ class SeatApp extends Component {
       alert("Please select at least one seat before checkout");
     } 
     else {
-      window.scrollTo({top: 1000, left: 0, behavior: 'smooth'});
+      this.setState({showSummary: true});
+      }
+    };
+
+    handleCancel = () => {
+      const {chosenSeats} = this.state;
+      this.setState({showSummary: false});
     }
-  };
+
+  
   
   render() {
-    const {seats} = this.state;
+    const {seats, showSummary} = this.state;
 
     //create array with nulls
     const seatsGrid = [];
@@ -153,7 +160,7 @@ class SeatApp extends Component {
     
     return (
       <div>
-        <div className='lock' style={{ overflow: 'hidden' }}>
+        <div className='lock' style={{display: showSummary ? 'none':'block'}}>
           <div id="stage-container">
             <svg width="500" height="100" >
             </svg>
@@ -189,17 +196,23 @@ class SeatApp extends Component {
 
           <div className='inputs'>
             <pre>
-            Seats available: {availableSeats}/{seatsGrid.length * seatsGrid[0].length}
+              <div id = 'Unavailable' style={{ display: 'inline-block'}}></div>Unavailable
+              <div id = 'AvailableLegend' style={{ display: 'inline-block', marginLeft: '10px'}}></div>Available
+              <div id = 'selected' style={{ display: 'inline-block', marginLeft: '10px'}}></div>Selected
             </pre>
             <pre>
-            Seats Selected: {chosenSeats.length}
+              Seats available: {availableSeats}/{seatsGrid.length * seatsGrid[0].length}
+            </pre>
+            <pre>
+              Seats Selected: {chosenSeats.length}
             </pre>
             <button onClick={this.handleCheckout}>
-            Check Out
+              Check Out
             </button>
           </div>
         </div>
-        <div className='orderSummary'>
+
+        <div className='orderSummary' style={{display: showSummary ? 'block':'none'}}>
           <pre>
           Seats: {chosenSeats.map((seatNum, index) => {
             const rowLabel = rowName[chosenRow[index] - 1];
@@ -209,7 +222,7 @@ class SeatApp extends Component {
           <pre>
           Total cost: ${chosenSeats.length * 8}
           </pre>
-          <button onClick={() => {window.scrollTo({top: 0, left: 0, behavior: 'smooth'});}}>Cancel</button>
+          <button onClick={this.handleCancel}>Cancel</button>
           <button>Confirm</button>
         </div>
 
