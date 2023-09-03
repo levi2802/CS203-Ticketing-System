@@ -6,7 +6,7 @@ import { useRef } from 'react';
 class SeatApp extends Component {
   constructor(props){
     super(props);
-    this.state = {seats: [], chosenSeats: [], showSummary: false,};
+    this.state = {seats: [], chosenSeats: [], showSummary: false};
   }
 
   componentDidMount(){
@@ -14,7 +14,7 @@ class SeatApp extends Component {
 
     //How many seats to create r=row i=col
     for(let r = 0; r < 4; r++){
-      for(let i = 0;i < 14;i++){
+      for(let i = 0; i < 14; i++){
         seats.push({row: r, num: i,avail:true});
       }
     }
@@ -116,6 +116,17 @@ class SeatApp extends Component {
     handleCancel = () => {
       const {chosenSeats} = this.state;
       this.setState({showSummary: false});
+    }
+
+    //Handling confirm button to give info to backend
+    handleConfirm = () => {
+      const {seats} = this.state;
+      const selectedSeats = seats.filter(seat => seat.selected)
+      .map(seat => {
+        const {row, num} = seat;
+        return {row, num};
+      })
+      console.log(selectedSeats);
     }
 
   
@@ -223,7 +234,7 @@ class SeatApp extends Component {
           Total cost: ${chosenSeats.length * 8}
           </pre>
           <button onClick={this.handleCancel}>Cancel</button>
-          <button>Confirm</button>
+          <button onClick={this.handleConfirm}>Confirm</button>
         </div>
 
       </div>
