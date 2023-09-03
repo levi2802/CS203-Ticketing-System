@@ -1,12 +1,15 @@
 import React from "react";
 import Navbar from "../HomePage/Navbar";
-import OrderHistoryPageDetails from "./OrderHistoryPageDetails";
+import OrderHistoryPageTable from "./OrderHistoryPageTable";
+import OrderHistoryPageStartText from "./OrderHistoryPageStartText";
+import { Link } from 'react-router-dom'
 
 function OrderHistoryPageFrame() {
     return (
         <>
             <Navbar/>
-            <OrderHistoryPageDetails/>
+            <OrderHistoryPageStartText/>
+            <OrderHistoryPageTable/>
         </>
     )
 }
