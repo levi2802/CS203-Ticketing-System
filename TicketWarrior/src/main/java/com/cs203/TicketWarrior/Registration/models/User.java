@@ -1,69 +1,70 @@
 package com.cs203.TicketWarrior.Registration.models;
 
-import java.util.HashSet;
-import java.util.Set;
-import org.springframework.data.annotation.Id;
+import java.util.Collection;
+import java.util.List;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Id;
+import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import jakarta.validation.constraints.NotBlank;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 
-
-
-// This is the User Data Transfer Object. It is used to send all of the registration information to our Spring Backend.
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
 @Document(collection = "users")
-public class User{
+public class User implements UserDetails {
 
     @Id
     private String id;
 
-    @NotBlank
+    @NonNull
     private String username;
 
-    @NotBlank
+    @NonNull
     private String password;
 
-    @DBRef
-    private Set<Role> roles = new HashSet<>();
-
-    public User() {
-
-    }
+    // Declare as enum, using String to represent instead of integer
+    @Enumerated(EnumType.STRING)
+    private ERole role;
 
     public User(String username, String password) {
         this.username = username;
         this.password = password;
     }
 
-    public String getId() {
-        return id;
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
     }
 
-    public String getUsername() {
-        return username;
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }
 }

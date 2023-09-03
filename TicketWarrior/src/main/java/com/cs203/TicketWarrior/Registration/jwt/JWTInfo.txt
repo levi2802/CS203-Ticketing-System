@@ -1,0 +1,9 @@
+A JWT (JSON Web Token) is a compact, URL-safe means of representing claims to be transferred between two parties.
+It is often used for securely transmitting information between a client and a server in web applications.
+JWTs consist of three parts: a header, a payload, and a signature.
+The payload contains "claims" that contains information about the user
+
+
+1. Using AuthenticationFilter, we can obtain the token from the user html request.
+
+2. The token is then passed to JwtService to check for its validity
