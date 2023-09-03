@@ -1,8 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from 'react-router-dom'
-import './styles.css'
+import './styles.css';
+import axios from 'axios';
 
 function UsernamePassword() {
+
+    const [formData, setData] = useState (
+        {
+            username : '',
+            password : ''
+        }
+    );
+
+    const handleChange = event => {
+        const { name, value } = event.target;
+        setData(prevState => ({
+            ...prevState,
+            [name] : value
+        }));
+    };
+
+    const handleSubmit = event => {
+        event.preventDefault();
+        axios.post('http://localhost:8080/api/auth/register', formData).then(response => {
+            console.log(response.data);
+        }).catch(error => {
+            console.log('Error: ', error);
+        })
+        
+    };
+
     return (
         <>
             <div className="description">
@@ -10,12 +37,12 @@ function UsernamePassword() {
                 <h3>Already have an account? <Link to="/login">Login here!</Link></h3>
             </div>
 
-            <form>
+            <form onSubmit={handleSubmit}>
                 <div className="login-details">
-                    <label for="inputUsername" class="form-label">Username:</label>
-                    <input placeholder="Enter Username" type="text" class="login-input" id="inputUsername" value="" />
-                    <label for="inputPassword" class="form-label">Password:</label> 
-                    <input placeholder="Enter Password" type="text" class="login-input" id="inputPassword" value=""/>
+                    <label htmlFor="inputUsername" className="form-label">Username:</label>
+                    <input placeholder="Enter Username" type="text" className="login-input" name="username" value={formData.username} onChange={handleChange} />
+                    <label htmlFor="inputPassword" className="form-label">Password:</label> 
+                    <input placeholder="Enter Password" type="password" className="login-input" name="password" value={formData.password} onChange={handleChange}/>
 
                     <div className="login-button">
                         <button type="submit">Register</button>
