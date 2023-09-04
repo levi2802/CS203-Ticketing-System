@@ -124,7 +124,7 @@ class SeatApp extends Component {
       const selectedSeats = seats.filter(seat => seat.selected)
       .map(seat => {
         const {row, num} = seat;
-        return {row, num};Y
+        return {row, num};
       })
       console.log(selectedSeats);
     }
@@ -216,6 +216,9 @@ class SeatApp extends Component {
             </pre>
             <pre>
               Seats Selected: {chosenSeats.length}
+            </pre>
+            <pre>
+              Cost: ${chosenSeats.length * 8}
             </pre>
             <button onClick={this.handleCheckout}>
               Check Out
