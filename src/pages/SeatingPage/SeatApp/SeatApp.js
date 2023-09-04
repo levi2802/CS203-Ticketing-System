@@ -124,7 +124,7 @@ class SeatApp extends Component {
       const selectedSeats = seats.filter(seat => seat.selected)
       .map(seat => {
         const {row, num} = seat;
-        return {row, num};Y
+        return {row, num};
       })
       console.log(selectedSeats);
     }
