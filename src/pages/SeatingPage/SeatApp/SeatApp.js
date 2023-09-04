@@ -217,6 +217,9 @@ class SeatApp extends Component {
             <pre>
               Seats Selected: {chosenSeats.length}
             </pre>
+            <pre>
+              Cost: ${chosenSeats.length * 8}
+            </pre>
             <button onClick={this.handleCheckout}>
               Check Out
             </button>
