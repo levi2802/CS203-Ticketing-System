@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './Seat.css';
 
 class Seat extends Component {
+  
+
   constructor(props) {
     super(props);
     this.state = {

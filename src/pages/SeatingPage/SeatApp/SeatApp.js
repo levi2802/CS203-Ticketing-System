@@ -2,14 +2,45 @@ import React, { Component, useState } from 'react';
 import './SeatApp.css';
 import Seat from '../Seat/Seat.js';
 import { useRef } from 'react';
+import axios, { formToJSON } from 'axios';
+import { json } from 'react-router-dom';
+//import { model } from 'mongoose';
+
+//const mongoose = require('mongoose');
+//   let SeatSchema = new mongoose.Schema({
+//     // seatNumber: {
+//     //     type: Number,
+//     //     required: true,
+//     // },
+//     row: {
+//         type: Number,
+//         required: true,
+//     },
+//     column: {
+//         type: Number,
+//         required: true,
+// //     },
+//     type: {
+//         type: String,
+//         required: true,
+//     },
+//     availability: {
+//         type: String,
+//         required: true,
+//     },
+// });
+
+//const seatmodel = mongoose.model("seat", SeatSchema);
 
 class SeatApp extends Component {
+  template = function(row, coloumn, type, availability){}
+  Unavailable = [];
   constructor(props){
     super(props);
     this.state = {seats: [], chosenSeats: [], showSummary: false};
   }
 
-  componentDidMount(){
+  async componentDidMount(){
     let seats = [];
 
     //How many seats to create r=row i=col
@@ -18,15 +49,20 @@ class SeatApp extends Component {
         seats.push({row: r, num: i,avail:true});
       }
     }
-
+    
     //example
-    const makeUnavailable = [[1, 0],[1, 1],[0, 0]];
+    await axios.get("http://localhost:8080/api/v1/seats/OccupiedSeats")
+    .then(json => json.data.forEach(data=> this.Unavailable.push([data.row, data.coloumn])))
+    .catch(console.error);
+    
+    console.log(this.Unavailable);
+
 
     //code to make seat unavail r = row c = col
     for(let i = 0; i < seats.length;i++){
-        for(let j = 0; j < makeUnavailable.length; j++){
-          let r = makeUnavailable[j][0];
-          let c = makeUnavailable[j][1]
+        for(let j = 0; j < this.Unavailable.length; j++){
+          let r = this.Unavailable[j][0];
+          let c = this.Unavailable[j][1];
           if(seats[i].row === r && seats[i].num === c ){
             seats[i].avail = false;
           }
@@ -34,7 +70,7 @@ class SeatApp extends Component {
     }
 
     //Updating
-    this.setState({seats}, () => console.log(this.state.seats));
+    this.setState({seats});
     }
 
     handleSeatSelect = (row, num) => {
@@ -119,16 +155,36 @@ class SeatApp extends Component {
     }
 
     //Handling confirm button to give info to backend
-    handleConfirm = () => {
+    handleConfirm = async () => {
       const {seats} = this.state;
       const selectedSeats = seats.filter(seat => seat.selected)
       .map(seat => {
         const {row, num} = seat;
         return {row, num};
       })
-      console.log(selectedSeats);
+      await selectedSeats.forEach(seat => this.addSeatToDB(seat));
     }
 
+
+    addSeatToDB = (seat) => {
+      try{
+      axios.post("http://localhost:8080/api/v1/seats/PostSeats", {
+        row: seat.row,
+        coloumn: seat.num,
+        type: "standard",
+        availability: false,
+      }, {validateStatus: function (status) {
+        if(status <500) return true;
+        else alert("double input" + status);
+        return true; // Resolve only if the status code is less than 500
+        }}).then(this.Unavailable.push([seat.row, seat.num]));
+      }catch{
+        alert("double input");
+      }
+      
+      
+      console.log(this.Unavailable);
+    }
   
   
   render() {
