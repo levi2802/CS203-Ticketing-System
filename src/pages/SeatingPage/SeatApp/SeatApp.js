@@ -169,9 +169,11 @@ class SeatApp extends Component {
     const chosenRow = seats.filter(seat => seat.selected).map(seat => seat.row + 1);
     const availableSeats = seats.filter(seat => seat.avail && !seat.selected).length;
     
+    
     return (
       <div>
-        <div className='lock' style={{display: showSummary ? 'none':'block'}}>
+        <div className = 'seats' style={{display: showSummary ? 'none':'block'}}>
+          <h2 align = "left">Seats</h2>
           <div id="stage-container">
             <svg width="500" height="100" >
             </svg>
@@ -204,7 +206,7 @@ class SeatApp extends Component {
               ))}
             </div>
           </div>
-
+          <footer class="footer">
           <div className='inputs'>
             <pre>
               <div id = 'Unavailable' style={{ display: 'inline-block'}}></div>Unavailable
@@ -212,10 +214,7 @@ class SeatApp extends Component {
               <div id = 'selected' style={{ display: 'inline-block', marginLeft: '10px'}}></div>Selected
             </pre>
             <pre>
-              Seats available: {availableSeats}/{seatsGrid.length * seatsGrid[0].length}
-            </pre>
-            <pre>
-              Seats Selected: {chosenSeats.length}
+              Quantity: {chosenSeats.length}
             </pre>
             <pre>
               Cost: ${chosenSeats.length * 8}
@@ -224,9 +223,13 @@ class SeatApp extends Component {
               Check Out
             </button>
           </div>
+          </footer>
         </div>
 
         <div className='orderSummary' style={{display: showSummary ? 'block':'none'}}>
+          <pre>
+            Qty: {chosenSeats.length}
+          </pre>
           <pre>
           Seats: {chosenSeats.map((seatNum, index) => {
             const rowLabel = rowName[chosenRow[index] - 1];

@@ -1,3 +1,16 @@
+div.seats{
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: auto;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  text-align: center;
+  padding: 3px;
+  border: 2px solid black;
+}
+
 #stage-container {
   position: relative;
   margin: 0 auto;
@@ -40,9 +53,7 @@ div.layout{
 
 div.center {
   flex: 1;
-  border: 5px solid lightblue;
   width: auto;
-  background: lightblue;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -51,9 +62,7 @@ div.center {
 
 div.left {
   flex: 1;
-  border: 5px solid lightyellow;
   width: auto;
-  background: lightyellow;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -62,9 +71,7 @@ div.left {
 
 div.right {
   flex: 1;
-  border: 5px solid lightyellow;
   width: auto;
-  background: lightyellow;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -93,3 +100,19 @@ div.orderSummary{
   text-align: center;
 }
 
+body {
+  margin: 0;
+  padding: 0;
+  /* Add some padding to create space for the footer */
+  padding-bottom: 100px; /* Adjust as needed */
+}
+
+/* Style for the fixed footer */
+.footer {
+  position: fixed;
+  background: gold;
+  bottom: 0;
+  width: 100%;
+  padding: 1px 0; /* Adjust padding as needed */
+  text-align: center;
+}
