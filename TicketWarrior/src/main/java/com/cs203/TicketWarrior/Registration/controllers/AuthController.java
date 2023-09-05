@@ -5,6 +5,9 @@ import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,12 +25,17 @@ import com.cs203.TicketWarrior.Registration.services.UserService;
 import ch.qos.logback.core.model.Model;
 import jakarta.validation.Valid;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
     
     @Autowired
     UserService userService;
+
+    @Autowired
+    AuthenticationManager authenticationManager;
 
     // @Valid perform validation based on the constraints defined in RegisterRequest.java
     @PostMapping("/register")
@@ -46,10 +54,14 @@ public class AuthController {
 
     }
 
-//    @PostMapping("/login")
-//    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-//
-//    }
+    @PostMapping("/login")
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+        Authentication authentication = authenticationManager.authenticate
+                (new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+
+        Optional<User> user = userService.findUserByUsername(authentication.getName());
+        return new ResponseEntity<User>(user.get(), HttpStatus.ACCEPTED);
+    }
 
     @GetMapping("/test")
     public String test() {
