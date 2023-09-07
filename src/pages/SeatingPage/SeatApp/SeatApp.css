@@ -110,7 +110,7 @@ body {
 /* Style for the fixed footer */
 .footer {
   position: fixed;
-  background: gold;
+  background: gray;
   bottom: 0;
   width: 100%;
   padding: 1px 0; /* Adjust padding as needed */

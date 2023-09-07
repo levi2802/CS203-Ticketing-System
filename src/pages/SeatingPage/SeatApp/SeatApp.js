@@ -3,6 +3,7 @@ import './SeatApp.css';
 import Seat from '../Seat/Seat.js';
 import sample1 from "../../HomePage/images/image1.png";
 import PG from "../../HomePage/images/PG.png"
+import Button from '@mui/material/Button'
 
 class SeatApp extends Component {
   constructor(props){
@@ -106,12 +107,7 @@ class SeatApp extends Component {
 
     handleCheckout = () => {
     const {chosenSeats} = this.state;
-    if (chosenSeats.length === 0) {
-      alert("Please select at least one seat before checkout");
-    } 
-    else {
-      this.setState({showSummary: true});
-      }
+    this.setState({showSummary: true});
     };
 
     handleCancel = () => {
@@ -219,6 +215,7 @@ class SeatApp extends Component {
             </div>
           </div>
           <div>
+            <h3>Legend</h3>
               <pre>
                 <div id = 'Unavailable' style={{ display: 'inline-block'}}></div>Unavailable
                 <div id = 'AvailableLegend' style={{ display: 'inline-block', marginLeft: '10px'}}></div>Available
@@ -233,9 +230,7 @@ class SeatApp extends Component {
               <pre>
                 Cost: ${chosenSeats.length * 8}
               </pre>
-              <button onClick={this.handleCheckout}>
-                Check Out
-              </button>
+              <Button variant="contained" onClick={this.handleCheckout} disabled={chosenSeats.length === 0 ? true:false}>checkout</Button>
             </div>
           </footer>
         </div>
