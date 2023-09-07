@@ -116,3 +116,14 @@ body {
   padding: 1px 0; /* Adjust padding as needed */
   text-align: center;
 }
+
+.movieInfo {
+  background: gray;
+  display: flex; 
+  align-items: center; 
+
+}
+
+.imageContainer {
+  margin-right: 10px;
+}

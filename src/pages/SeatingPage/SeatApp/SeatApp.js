@@ -1,7 +1,8 @@
 import React, { Component, useState } from 'react';
 import './SeatApp.css';
 import Seat from '../Seat/Seat.js';
-import { useRef } from 'react';
+import sample1 from "../../HomePage/images/image1.png";
+import PG from "../../HomePage/images/PG.png"
 
 class SeatApp extends Component {
   constructor(props){
@@ -172,6 +173,17 @@ class SeatApp extends Component {
     
     return (
       <div>
+        <div className='movieInfo'>
+          <div className='imageContainer'>
+            <img src={sample1} alt="" style={{ height: "200px", width: "400px" }} />
+          </div>
+          <div>
+            <h1>Teenage Mutant Ninja Turtles: Mutant Mayhem (忍者龟：变种大乱斗)</h1>
+            <p>Run Time: 1 hr 39 mins</p>
+            <p>Rating: <img src={PG} alt="" style={{ height: "25px", width: "35px" }}/>some violence</p>
+          </div>
+        </div>
+
         <div className = 'seats' style={{display: showSummary ? 'none':'block'}}>
           <h2 align = "left">Seats</h2>
           <div id="stage-container">
@@ -206,23 +218,25 @@ class SeatApp extends Component {
               ))}
             </div>
           </div>
-          <footer class="footer">
-          <div className='inputs'>
-            <pre>
-              <div id = 'Unavailable' style={{ display: 'inline-block'}}></div>Unavailable
-              <div id = 'AvailableLegend' style={{ display: 'inline-block', marginLeft: '10px'}}></div>Available
-              <div id = 'selected' style={{ display: 'inline-block', marginLeft: '10px'}}></div>Selected
-            </pre>
-            <pre>
-              Quantity: {chosenSeats.length}
-            </pre>
-            <pre>
-              Cost: ${chosenSeats.length * 8}
-            </pre>
-            <button onClick={this.handleCheckout}>
-              Check Out
-            </button>
+          <div>
+              <pre>
+                <div id = 'Unavailable' style={{ display: 'inline-block'}}></div>Unavailable
+                <div id = 'AvailableLegend' style={{ display: 'inline-block', marginLeft: '10px'}}></div>Available
+                <div id = 'selected' style={{ display: 'inline-block', marginLeft: '10px'}}></div>Selected
+              </pre>
           </div>
+          <footer class="footer">
+            <div className='inputs'>
+              <pre>
+                Quantity: {chosenSeats.length}
+              </pre>
+              <pre>
+                Cost: ${chosenSeats.length * 8}
+              </pre>
+              <button onClick={this.handleCheckout}>
+                Check Out
+              </button>
+            </div>
           </footer>
         </div>
 
