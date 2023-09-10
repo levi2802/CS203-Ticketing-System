@@ -12,7 +12,8 @@ import java.util.*;
 
 @Document(collection = "concerts") // Document containing mongodb collection.
 @Data // From the lombok framework, takes care of all the getters, setters etc.
-@AllArgsConstructor // From the lombok framework, creates a constructor that takes all the parameters.
+@AllArgsConstructor // From the lombok framework, creates a constructor that takes all the
+                    // parameters.
 @NoArgsConstructor // From the lombok framework, creates a constructor that takes no parameters.
 public class Movie {
     @Id
