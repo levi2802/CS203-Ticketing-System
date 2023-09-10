@@ -3,15 +3,9 @@ package com.cs203.TicketWarrior.Registration.models;
 import java.util.Collection;
 import java.util.List;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
 import lombok.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import jakarta.validation.constraints.NotBlank;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,7 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+//@Entity
 @Document(collection = "users")
 public class User implements UserDetails {
 
@@ -35,7 +29,7 @@ public class User implements UserDetails {
     private String password;
 
     // Declare as enum, using String to represent instead of integer
-    @Enumerated(EnumType.STRING)
+//    @Enumerated(EnumType.STRING)
     private ERole role;
 
     public User(String username, String password) {

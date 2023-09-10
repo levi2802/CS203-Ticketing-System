@@ -1,6 +1,8 @@
 package com.cs203.TicketWarrior.Registration.controllers;
 
-import com.cs203.TicketWarrior.Registration.payload.LoginRequest;
+import com.cs203.TicketWarrior.Registration.payload.*;
+import com.cs203.TicketWarrior.Registration.services.AuthenticationService;
+import lombok.RequiredArgsConstructor;
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,8 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
 import com.cs203.TicketWarrior.Registration.models.User;
-import com.cs203.TicketWarrior.Registration.payload.MessageResponse;
-import com.cs203.TicketWarrior.Registration.payload.RegisterRequest;
 import com.cs203.TicketWarrior.Registration.repository.RoleRepository;
 import com.cs203.TicketWarrior.Registration.repository.UserRepository;
 import com.cs203.TicketWarrior.Registration.services.UserService;
@@ -29,38 +29,33 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/auth")
+@RequiredArgsConstructor
 public class AuthController {
+
+    private final AuthenticationService authenticationService;
     
-    @Autowired
-    UserService userService;
-
-    @Autowired
-    AuthenticationManager authenticationManager;
-
     // @Valid perform validation based on the constraints defined in RegisterRequest.java
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
+    public ResponseEntity<AuthenticationResponse> registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
 
-        //Checks if username exists through a method from the UserRepository class
-        if(userService.doesUsernameExist(registerRequest.getUsername())) {
-            return ResponseEntity.badRequest().body(new MessageResponse("Error: Username already taken!"));
-        }
+        return ResponseEntity.ok(authenticationService.register(registerRequest));
 
-        User user = new User(registerRequest.getUsername(), registerRequest.getPassword());
-
-        userService.save(user);
-
-        return new ResponseEntity<User>(user, HttpStatus.CREATED);
+//        //Checks if username exists through a method from the UserRepository class
+//        if(userService.doesUsernameExist(registerRequest.getUsername())) {
+//            return ResponseEntity.badRequest().body(new MessageResponse("Error: Username already taken!"));
+//        }
+//
+//        User user = new User(registerRequest.getUsername(), registerRequest.getPassword());
+//
+//        userService.save(user);
+//
+//        return new ResponseEntity<User>(user, HttpStatus.CREATED);
 
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-        Authentication authentication = authenticationManager.authenticate
-                (new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
-
-        Optional<User> user = userService.findUserByUsername(authentication.getName());
-        return new ResponseEntity<User>(user.get(), HttpStatus.ACCEPTED);
+    @PostMapping("/authenticate")
+    public ResponseEntity<AuthenticationResponse> authenticate(@Valid @RequestBody AuthenticationRequest authenticationRequest) {
+        return ResponseEntity.ok(authenticationService.authenticate(authenticationRequest));
     }
 
     @GetMapping("/test")
