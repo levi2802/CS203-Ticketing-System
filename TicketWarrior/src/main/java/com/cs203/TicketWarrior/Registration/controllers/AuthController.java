@@ -1,6 +1,5 @@
 package com.cs203.TicketWarrior.Registration.controllers;
 
-import com.cs203.TicketWarrior.Registration.payload.LoginRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
