@@ -1,6 +1,5 @@
 package com.cs203.TicketWarrior.Registration.controllers;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,16 +8,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.request.WebRequest;
 
 import com.cs203.TicketWarrior.Registration.models.User;
 import com.cs203.TicketWarrior.Registration.payload.MessageResponse;
 import com.cs203.TicketWarrior.Registration.payload.RegisterRequest;
-import com.cs203.TicketWarrior.Registration.repository.RoleRepository;
-import com.cs203.TicketWarrior.Registration.repository.UserRepository;
 import com.cs203.TicketWarrior.Registration.services.UserService;
 
-import ch.qos.logback.core.model.Model;
 import jakarta.validation.Valid;
 
 @RestController
