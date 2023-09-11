@@ -1,0 +1,46 @@
+#Available {
+	width: 25px;
+	height: 25px;
+	background: green;
+	border-radius: 25%;
+	clip-path: polygon(0 0, 100% 0, 100% 70%, 80% 80%, 80% 100%, 20% 100%, 20% 80%, 0 70%);
+}
+
+#AvailableLegend {
+	width: 25px;
+	height: 25px;
+	background: green;
+	border-radius: 25%;
+	clip-path: polygon(0 0, 100% 0, 100% 70%, 80% 80%, 80% 100%, 20% 100%, 20% 80%, 0 70%);
+}
+
+#Available:hover{
+	background: lightgreen;
+	cursor: pointer;
+    transform: translateY(-2px);
+	clip-path: polygon(0 0, 100% 0, 100% 70%, 80% 80%, 80% 100%, 20% 100%, 20% 80%, 0 70%);
+}
+
+#selected {
+	width: 25px;
+	height: 25px;
+	background: lightgreen;
+	border-radius: 25%;
+	clip-path: polygon(0 0, 100% 0, 100% 70%, 80% 80%, 80% 100%, 20% 100%, 20% 80%, 0 70%);
+}
+
+
+#Unavailable {
+	width: 25px;
+	height: 25px;
+	background: grey;
+	border-radius: 25%;
+	clip-path: polygon(0 0, 100% 0, 100% 70%, 80% 80%, 80% 100%, 20% 100%, 20% 80%, 0 70%);
+}
+
+.Row {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	margin: 3px;
+}
