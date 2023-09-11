@@ -1,4 +1,4 @@
-div.seats{
+div.minibox{
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -7,8 +7,8 @@ div.seats{
   margin-right: auto;
   display: block;
   text-align: center;
-  padding: 3px;
   border: 2px solid black;
+  transform: scale(0.9);
 }
 
 #stage-container {
@@ -103,8 +103,7 @@ div.orderSummary{
 body {
   margin: 0;
   padding: 0;
-  /* Add some padding to create space for the footer */
-  padding-bottom: 100px; /* Adjust as needed */
+  padding-bottom: 100px;
 }
 
 /* Style for the fixed footer */
@@ -113,7 +112,7 @@ body {
   background: gray;
   bottom: 0;
   width: 100%;
-  padding: 1px 0; /* Adjust padding as needed */
+  padding: 1px 0; 
   text-align: center;
 }
 
@@ -121,7 +120,6 @@ body {
   background: gray;
   display: flex; 
   align-items: center; 
-
 }
 
 .imageContainer {

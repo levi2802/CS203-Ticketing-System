@@ -4,6 +4,7 @@ import Seat from '../Seat/Seat.js';
 import sample1 from "../../HomePage/images/image1.png";
 import PG from "../../HomePage/images/PG.png"
 import Button from '@mui/material/Button'
+import Timer from './Timer';
 
 class SeatApp extends Component {
   constructor(props){
@@ -169,19 +170,18 @@ class SeatApp extends Component {
     
     return (
       <div>
+        <Timer/>
+        <div className = 'minibox' style={{display: showSummary ? 'none':'block'}}>
         <div className='movieInfo'>
           <div className='imageContainer'>
             <img src={sample1} alt="" style={{ height: "200px", width: "400px" }} />
           </div>
-          <div>
+          <div align='left'>
             <h1>Teenage Mutant Ninja Turtles: Mutant Mayhem (忍者龟：变种大乱斗)</h1>
             <p>Run Time: 1 hr 39 mins</p>
             <p>Rating: <img src={PG} alt="" style={{ height: "25px", width: "35px" }}/>some violence</p>
           </div>
         </div>
-
-        <div className = 'seats' style={{display: showSummary ? 'none':'block'}}>
-          <h2 align = "left">Seats</h2>
           <div id="stage-container">
             <svg width="500" height="100" >
             </svg>
@@ -214,6 +214,7 @@ class SeatApp extends Component {
               ))}
             </div>
           </div>
+
           <div>
             <h3>Legend</h3>
               <pre>
@@ -222,7 +223,9 @@ class SeatApp extends Component {
                 <div id = 'selected' style={{ display: 'inline-block', marginLeft: '10px'}}></div>Selected
               </pre>
           </div>
-          <footer class="footer">
+        </div>
+
+        <footer class="footer">
             <div className='inputs'>
               <pre>
                 Quantity: {chosenSeats.length}
@@ -232,8 +235,7 @@ class SeatApp extends Component {
               </pre>
               <Button variant="contained" onClick={this.handleCheckout} disabled={chosenSeats.length === 0 ? true:false}>checkout</Button>
             </div>
-          </footer>
-        </div>
+        </footer>
 
         <div className='orderSummary' style={{display: showSummary ? 'block':'none'}}>
           <pre>
