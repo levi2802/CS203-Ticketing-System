@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom'
 import './styles.css';
 import axios from 'axios';
@@ -24,11 +24,15 @@ function UsernamePassword() {
         event.preventDefault();
         axios.post('http://localhost:8080/api/auth/register', formData).then(response => {
             console.log(response.data);
+            setMessage(response.data.message);
+            alert(message);
         }).catch(error => {
             console.log('Error: ', error);
         })
         
     };
+
+    const [message, setMessage] = useState(''); // State variable to store the message
 
     return (
         <>

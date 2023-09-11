@@ -26,6 +26,13 @@ public class AuthenticationService {
 
     public AuthenticationResponse register(RegisterRequest registerRequest) {
 
+        if (userService.doesUsernameExist(registerRequest.getUsername())) {
+            return AuthenticationResponse.builder()
+                    .message("Username already taken.")
+                    .status("Fail")
+                    .build();
+        }
+
         var user = User.builder()
                 .username(registerRequest.getUsername())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
@@ -38,6 +45,8 @@ public class AuthenticationService {
 
         return AuthenticationResponse.builder()
                 .token(jwtToken)
+                .message("Success! Account Registered!")
+                .status("Success")
                 .build();
     }
 
@@ -56,6 +65,7 @@ public class AuthenticationService {
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
+                .message("Success!")
                 .build();
     }
 }

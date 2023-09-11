@@ -36,9 +36,12 @@ public class AuthController {
     
     // @Valid perform validation based on the constraints defined in RegisterRequest.java
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
+
 
         return ResponseEntity.ok(authenticationService.register(registerRequest));
+
+
 
 //        //Checks if username exists through a method from the UserRepository class
 //        if(userService.doesUsernameExist(registerRequest.getUsername())) {

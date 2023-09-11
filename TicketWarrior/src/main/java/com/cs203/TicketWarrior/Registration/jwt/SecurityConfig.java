@@ -27,6 +27,8 @@ public class SecurityConfig {
 
         //Implement whitelisting for users that are creating acc and when logging in as token is not available yet
         http
+                .cors()
+                .and()
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
