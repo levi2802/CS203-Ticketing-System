@@ -1,6 +1,7 @@
 package com.cs203.TicketWarrior.Registration.jwt;
 
 import com.cs203.TicketWarrior.Registration.repository.UserRepository;
+import com.cs203.TicketWarrior.Registration.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,11 +19,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class ApplicationConfig {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     @Bean
     public UserDetailsService userDetailsService(){
-        return username -> userRepository.findUserByUsername(username)
+        return username -> userService.findUserByUsername(username)
                 .orElseThrow(()-> new UsernameNotFoundException("User not found"));
     }
 
