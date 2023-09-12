@@ -36,7 +36,7 @@ public class AuthController {
     
     // @Valid perform validation based on the constraints defined in RegisterRequest.java
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody AuthenticationRequest registerRequest) {
 
 
         return ResponseEntity.ok(authenticationService.register(registerRequest));

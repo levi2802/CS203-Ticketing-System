@@ -15,5 +15,5 @@ public class AuthenticationResponse {
 
     private String message;
 
-    private String status;
+    private Boolean isSuccessful;
 }

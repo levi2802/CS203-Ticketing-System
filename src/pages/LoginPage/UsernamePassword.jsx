@@ -1,16 +1,20 @@
 import React, { useState } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './styles.css';
 import axios from 'axios';
 
 function UsernamePassword() {
 
-    const [formData, setData] = useState (
-        {
-            username : '',
-            password : ''
-        }
-    );
+    const API_URL = "http://localhost:8080/api/auth/";
+
+    const initialFormData = {
+        username: '',
+        password: ''
+    };
+
+    const navigate = useNavigate();
+
+    const [formData, setData] = useState (initialFormData);
 
     const handleChange = event => {
         const { name, value } = event.target;
@@ -24,6 +28,15 @@ function UsernamePassword() {
         event.preventDefault();
         axios.post('http://localhost:8080/api/auth/authenticate', formData).then(response => {
             console.log(response.data);
+            if (response.data.isSuccessful) {
+                localStorage.setItem('accessToken', response.data.token);
+                setData(initialFormData);
+                alert("Login successful!");
+                navigate('/');
+            } else {
+                alert("Login Failed. Please try again.");
+                setData(initialFormData);
+            }
         }).catch(error => {
             console.log('Error: ', error);
         })

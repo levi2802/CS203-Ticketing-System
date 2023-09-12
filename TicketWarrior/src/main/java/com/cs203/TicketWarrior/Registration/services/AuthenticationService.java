@@ -5,9 +5,9 @@ import com.cs203.TicketWarrior.Registration.models.ERole;
 import com.cs203.TicketWarrior.Registration.models.User;
 import com.cs203.TicketWarrior.Registration.payload.AuthenticationRequest;
 import com.cs203.TicketWarrior.Registration.payload.AuthenticationResponse;
-import com.cs203.TicketWarrior.Registration.payload.RegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthenticationService {
 
-    private final UserService userService;
+    private final UserDetailsServiceImpl userService;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -24,12 +24,12 @@ public class AuthenticationService {
 
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationResponse register(RegisterRequest registerRequest) {
+    public AuthenticationResponse register(AuthenticationRequest registerRequest) {
 
         if (userService.doesUsernameExist(registerRequest.getUsername())) {
             return AuthenticationResponse.builder()
                     .message("Username already taken.")
-                    .status("Fail")
+                    .isSuccessful(false)
                     .build();
         }
 
@@ -46,26 +46,35 @@ public class AuthenticationService {
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .message("Success! Account Registered!")
-                .status("Success")
+                .isSuccessful(true)
                 .build();
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest) {
 
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        authenticationRequest.getUsername(),
-                        authenticationRequest.getPassword()
-                )
-        );
 
-        var user = userService.findUserByUsername(authenticationRequest.getUsername())
-                .orElseThrow();
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            authenticationRequest.getUsername(),
+                            authenticationRequest.getPassword()
+                    )
+            );
 
-        var jwtToken = jwtService.generateToken(user);
-        return AuthenticationResponse.builder()
-                .token(jwtToken)
-                .message("Success!")
-                .build();
+            var user = userService.loadUserByUsername(authenticationRequest.getUsername());
+
+            var jwtToken = jwtService.generateToken(user);
+            return AuthenticationResponse.builder()
+                    .token(jwtToken)
+                    .message("Success!")
+                    .isSuccessful(true)
+                    .build();
+        } catch(BadCredentialsException error) {
+            return AuthenticationResponse.builder()
+                    .token(null)
+                    .message("Fail!")
+                    .isSuccessful(false)
+                    .build();
+        }
     }
 }

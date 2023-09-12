@@ -23,18 +23,30 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     // Overwrite loadUserByUsername method from UserDetailsService class (Spring Security)
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+        return userRepository.findUserByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User '" + username + "' not found"));
         // Call repository to find user by his username
+//        Optional<User> user = userRepository.findUserByUsername(username);
+//
+//        // If user is not found
+//        if (!user.isPresent()) {
+//            throw new UsernameNotFoundException("Username not found: " + username);
+//        }
+//        UserDetails userDetails = org.springframework.security.core.userdetails.User.builder()
+//                .username(user.get().getUsername())
+//                .password(user.get().getPassword())
+//                .build();
+//
+//        return userDetails;
+    }
+
+    public boolean doesUsernameExist(String username) {
         Optional<User> user = userRepository.findUserByUsername(username);
+        return user.isPresent();
+    }
 
-        // If user is not found
-        if (!user.isPresent()) {
-            throw new UsernameNotFoundException("Username not found: " + username);
-        }
-        UserDetails userDetails = org.springframework.security.core.userdetails.User.builder()
-                .username(user.get().getUsername())
-                .password(user.get().getPassword())
-                .build();
-
-        return userDetails;
+    public void save(User user) {
+        userRepository.save(user);
     }
 }
