@@ -8,7 +8,7 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-    
+
     private final UserRepository userRepository;
 
     public UserService(UserRepository userRepository) {
@@ -17,6 +17,11 @@ public class UserService {
 
     public Boolean doesUsernameExist(String username) {
         Optional<User> user = userRepository.findUserByUsername(username);
+        return user.isPresent();
+    }
+
+    public Boolean doesUserIdExist(String userId) {
+        Optional<User> user = userRepository.findById(userId);
         return user.isPresent();
     }
 
