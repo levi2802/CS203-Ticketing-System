@@ -29,6 +29,5 @@ public class PurchaseController {
     public Purchase createPurchase(@RequestBody Purchase purchase) {
         return purchaseService.createPurchase(purchase);
     }
-
-    // other methods...
+    
 }

@@ -33,162 +33,162 @@ import { json } from 'react-router-dom';
 //const seatmodel = mongoose.model("seat", SeatSchema);
 
 class SeatApp extends Component {
-  template = function(row, coloumn, type, availability){}
+  template = function (row, coloumn, type, availability) { }
   Unavailable = [];
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.state = {seats: [], chosenSeats: [], showSummary: false};
+    this.state = { seats: [], chosenSeats: [], showSummary: false };
   }
 
-  async componentDidMount(){
+  async componentDidMount() {
     let seats = [];
 
     //How many seats to create r=row i=col
-    for(let r = 0; r < 4; r++){
-      for(let i = 0; i < 14; i++){
-        seats.push({row: r, num: i,avail:true});
+    for (let r = 0; r < 4; r++) {
+      for (let i = 0; i < 14; i++) {
+        seats.push({ row: r, num: i, avail: true });
       }
     }
-    
-    //example
-    await axios.get("http://localhost:8080/api/v1/seats/OccupiedSeats")
-    .then(json => json.data.forEach(data=> this.Unavailable.push([data.row, data.coloumn])))
-    .catch(console.error);
-    
-    console.log(this.Unavailable);
 
+    await axios.get("http://localhost:8080/api/v1/seats/OccupiedSeats")
+      .then(json => json.data.forEach(data => this.Unavailable.push([data.row, data.coloumn])))
+      .catch(console.error);
+
+    //console.log(this.Unavailable);
 
     //code to make seat unavail r = row c = col
-    for(let i = 0; i < seats.length;i++){
-        for(let j = 0; j < this.Unavailable.length; j++){
-          let r = this.Unavailable[j][0];
-          let c = this.Unavailable[j][1];
-          if(seats[i].row === r && seats[i].num === c ){
-            seats[i].avail = false;
-          }
+    for (let i = 0; i < seats.length; i++) {
+      for (let j = 0; j < this.Unavailable.length; j++) {
+        let r = this.Unavailable[j][0];
+        let c = this.Unavailable[j][1];
+        if (seats[i].row === r && seats[i].num === c) {
+          seats[i].avail = false;
         }
+      }
     }
 
     //Updating
-    this.setState({seats});
-    }
+    this.setState({ seats });
+  }
 
-    handleSeatSelect = (row, num) => {
-      const {seats} = this.state;
-      //object of the seat that i clicked
-      const selectedSeat = seats.find(seat => seat.row === row && seat.num === num);
-    
-      //A list of selected seat numbers
-      const selectedSeatNumbers = [];
-      seats.forEach(seat => {
-        if (seat.row === row && seat.selected) {
-          selectedSeatNumbers.push(seat.num);
-        }
-      });
-    
-      //Seat picking algo
-      const updatedSeats = seats.map(seat => {
-        if (seat.row === row && seat.num === num) {
-          if (selectedSeatNumbers.includes(num)) {
-            // If clicked seat is in selected group
-            if (selectedSeatNumbers.length > 1) {
-              // Check if it's the maximum or minimum seat number in the group
-              let maxSelected = Math.max(...selectedSeatNumbers);
-              let minSelected = Math.min(...selectedSeatNumbers);
-              //Only allow the outsides to be 'de-selected'
-              if (num === maxSelected || num === minSelected) {
-                seat.selected = !seat.selected;
-              } 
-              else {
-                // Show pop-up message
-                alert("Please choose a seat with no space between.");
-              }
-            } 
-            else {
+  handleSeatSelect = (row, num) => {
+    const { seats } = this.state;
+    //object of the seat that i clicked
+    const selectedSeat = seats.find(seat => seat.row === row && seat.num === num);
+
+    //A list of selected seat numbers
+    const selectedSeatNumbers = [];
+    seats.forEach(seat => {
+      if (seat.row === row && seat.selected) {
+        selectedSeatNumbers.push(seat.num);
+      }
+    });
+
+    //Seat picking algo
+    const updatedSeats = seats.map(seat => {
+      if (seat.row === row && seat.num === num) {
+        if (selectedSeatNumbers.includes(num)) {
+          // If clicked seat is in selected group
+          if (selectedSeatNumbers.length > 1) {
+            // Check if it's the maximum or minimum seat number in the group
+            let maxSelected = Math.max(...selectedSeatNumbers);
+            let minSelected = Math.min(...selectedSeatNumbers);
+            //Only allow the outsides to be 'de-selected'
+            if (num === maxSelected || num === minSelected) {
               seat.selected = !seat.selected;
             }
-          } 
-          else if (
-            selectedSeatNumbers.length === 0 || selectedSeatNumbers.includes(num - 1) ||
-            selectedSeatNumbers.includes(num + 1) || selectedSeatNumbers.includes(num)
-          ) {
-            seat.selected = !seat.selected;
-          } 
+            else {
+              // Show pop-up message
+              alert("Please choose a seat with no space between.");
+            }
+          }
           else {
-            // Show pop-up message
-            alert("Please choose a seat with no space between.");
+            seat.selected = !seat.selected;
           }
         }
-        return seat;
-      });
-
-      // Update chosenSeats array
-      const updatedChosenSeats = seats.filter((seat) => seat.selected).map((seat) => seat.num + 1);
-    
-      this.setState({
-        seats: updatedSeats,
-        chosenSeats: updatedChosenSeats
-      });
-
-      //log of selected/unselected seat
-      if (selectedSeat.selected) {
-        console.log(`Selected seat: {row: ${row}, column: ${num}}`);
-      } 
-      else {
-        console.log(`Unselected seat: {row: ${row}, column: ${num}}`);
+        else if (
+          selectedSeatNumbers.length === 0 || selectedSeatNumbers.includes(num - 1) ||
+          selectedSeatNumbers.includes(num + 1) || selectedSeatNumbers.includes(num)
+        ) {
+          seat.selected = !seat.selected;
+        }
+        else {
+          // Show pop-up message
+          alert("Please choose a seat with no space between.");
+        }
       }
-    }
+      return seat;
+    });
 
-    handleCheckout = () => {
-    const {chosenSeats} = this.state;
+    // Update chosenSeats array
+    const updatedChosenSeats = seats.filter((seat) => seat.selected).map((seat) => seat.num + 1);
+
+    this.setState({
+      seats: updatedSeats,
+      chosenSeats: updatedChosenSeats
+    });
+
+    //log of selected/unselected seat
+    if (selectedSeat.selected) {
+      console.log(`Selected seat: {row: ${row}, column: ${num}}`);
+    }
+    else {
+      console.log(`Unselected seat: {row: ${row}, column: ${num}}`);
+    }
+  }
+
+  handleCheckout = () => {
+    const { chosenSeats } = this.state;
     if (chosenSeats.length === 0) {
       alert("Please select at least one seat before checkout");
-    } 
+    }
     else {
-      this.setState({showSummary: true});
-      }
-    };
-
-    handleCancel = () => {
-      const {chosenSeats} = this.state;
-      this.setState({showSummary: false});
+      this.setState({ showSummary: true });
     }
+  };
 
-    //Handling confirm button to give info to backend
-    handleConfirm = async () => {
-      const {seats} = this.state;
-      const selectedSeats = seats.filter(seat => seat.selected)
+  handleCancel = () => {
+    const { chosenSeats } = this.state;
+    this.setState({ showSummary: false });
+  }
+
+  //Handling confirm button to give info to backend
+  handleConfirm = async () => {
+    const { seats } = this.state;
+    const selectedSeats = seats.filter(seat => seat.selected)
       .map(seat => {
-        const {row, num} = seat;
-        return {row, num};
+        const { row, num } = seat;
+        return { row, num };
       })
-      await selectedSeats.forEach(seat => this.addSeatToDB(seat));
-    }
+    await selectedSeats.forEach(seat => this.addSeatToDB(seat));
+  }
 
 
-    addSeatToDB = (seat) => {
-      try{
+  addSeatToDB = (seat) => {
+    try {
       axios.post("http://localhost:8080/api/v1/seats/PostSeats", {
         row: seat.row,
         coloumn: seat.num,
         type: "standard",
         availability: false,
-      }, {validateStatus: function (status) {
-        if(status <500) return true;
-        else alert("double input" + status);
-        return true; // Resolve only if the status code is less than 500
-        }}).then(this.Unavailable.push([seat.row, seat.num]));
-      }catch{
-        alert("double input");
-      }
-      
-      
-      console.log(this.Unavailable);
+      }, {
+        validateStatus: function (status) {
+          if (status < 500) alert("seat at row: " + (seat.row + 1) + " coloumn: " + (seat.num + 1) + " booked successfully");
+          else alert("double input for seat at row: " + (seat.row + 1) + " coloumn: " + (seat.num + 1) + " error code:" + status);
+          return true; // Resolve only if the status code is less than 500
+        }
+      }).then(this.Unavailable.push([seat.row, seat.num]));
+    } catch {
+      alert("double input");
     }
-  
-  
+
+
+    console.log(this.Unavailable);
+  }
+
+
   render() {
-    const {seats, showSummary} = this.state;
+    const { seats, showSummary } = this.state;
 
     //create array with nulls
     const seatsGrid = [];
@@ -216,7 +216,7 @@ class SeatApp extends Component {
 
     //This code allows for conversion of row from int to char
     const rowName = [];
-    for(let i = 0; i < seatsGrid.length; i++){
+    for (let i = 0; i < seatsGrid.length; i++) {
       let temp = 'A'.charCodeAt(0) + i;
       rowName.push(String.fromCharCode(temp));
     }
@@ -224,10 +224,10 @@ class SeatApp extends Component {
     const chosenSeats = seats.filter(seat => seat.selected).map(seat => seat.num + 1);
     const chosenRow = seats.filter(seat => seat.selected).map(seat => seat.row + 1);
     const availableSeats = seats.filter(seat => seat.avail && !seat.selected).length;
-    
+
     return (
       <div>
-        <div className='lock' style={{display: showSummary ? 'none':'block'}}>
+        <div className='lock' style={{ display: showSummary ? 'none' : 'block' }}>
           <div id="stage-container">
             <svg width="500" height="100" >
             </svg>
@@ -253,7 +253,7 @@ class SeatApp extends Component {
             </div>
 
             <div className='right'>
-            {[0, 1, 2, 3].map(rowIndex => (
+              {[0, 1, 2, 3].map(rowIndex => (
                 <div className="Row" key={rowIndex}>
                   {seatsGrid[rowIndex].slice(10, 14)}
                 </div>
@@ -263,9 +263,9 @@ class SeatApp extends Component {
 
           <div className='inputs'>
             <pre>
-              <div id = 'Unavailable' style={{ display: 'inline-block'}}></div>Unavailable
-              <div id = 'AvailableLegend' style={{ display: 'inline-block', marginLeft: '10px'}}></div>Available
-              <div id = 'selected' style={{ display: 'inline-block', marginLeft: '10px'}}></div>Selected
+              <div id='Unavailable' style={{ display: 'inline-block' }}></div>Unavailable
+              <div id='AvailableLegend' style={{ display: 'inline-block', marginLeft: '10px' }}></div>Available
+              <div id='selected' style={{ display: 'inline-block', marginLeft: '10px' }}></div>Selected
             </pre>
             <pre>
               Seats available: {availableSeats}/{seatsGrid.length * seatsGrid[0].length}
@@ -282,15 +282,15 @@ class SeatApp extends Component {
           </div>
         </div>
 
-        <div className='orderSummary' style={{display: showSummary ? 'block':'none'}}>
+        <div className='orderSummary' style={{ display: showSummary ? 'block' : 'none' }}>
           <pre>
-          Seats: {chosenSeats.map((seatNum, index) => {
-            const rowLabel = rowName[chosenRow[index] - 1];
-            return `${rowLabel}${seatNum}`;
-          }).join(", ")}
+            Seats: {chosenSeats.map((seatNum, index) => {
+              const rowLabel = rowName[chosenRow[index] - 1];
+              return `${rowLabel}${seatNum}`;
+            }).join(", ")}
           </pre>
           <pre>
-          Total cost: ${chosenSeats.length * 8}
+            Total cost: ${chosenSeats.length * 8}
           </pre>
           <button onClick={this.handleCancel}>Cancel</button>
           <button onClick={this.handleConfirm}>Confirm</button>

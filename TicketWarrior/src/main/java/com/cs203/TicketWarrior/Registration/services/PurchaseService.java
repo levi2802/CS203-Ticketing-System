@@ -38,7 +38,7 @@ public class PurchaseService {
         }
 
         // update the seat status to not available
-        seats.forEach(seat -> seat.setAvailable(false));
+        seats.forEach(seat -> seat.setAvailability(false));
         seatRepository.saveAll(seats);
 
         // save the purchase
