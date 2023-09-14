@@ -1,16 +1,20 @@
-import React, { useState } from "react";
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from 'react-router-dom';
 import './styles.css';
 import axios from 'axios';
 
 function UsernamePassword() {
 
-    const [formData, setData] = useState (
-        {
-            username : '',
-            password : ''
-        }
-    );
+    const API_URL = "http://localhost:8080/api/auth/";
+
+    const initialFormData = {
+        username: '',
+        password: ''
+    };
+
+    const navigate = useNavigate();
+
+    const [formData, setData] = useState(initialFormData);
 
     const handleChange = event => {
         const { name, value } = event.target;
@@ -22,13 +26,25 @@ function UsernamePassword() {
 
     const handleSubmit = event => {
         event.preventDefault();
-        axios.post('http://localhost:8080/api/auth/register', formData).then(response => {
+        axios.post(API_URL + "register", formData).then(response => {
             console.log(response.data);
+            if (response.data.isSuccessful) {
+                localStorage.setItem('accessToken', response.data.token);
+                setData(initialFormData);
+                alert("Registration successful!");
+                navigate('/');
+            } else {
+                alert("Registration failed. Please enter a different username.");
+                setData(initialFormData);
+            }
+
         }).catch(error => {
             console.log('Error: ', error);
         })
         
     };
+
+    const [message, setMessage] = useState(''); // State variable to store the message
 
     return (
         <>
