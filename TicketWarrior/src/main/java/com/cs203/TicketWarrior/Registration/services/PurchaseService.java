@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 import com.cs203.TicketWarrior.Registration.models.*;
 import com.cs203.TicketWarrior.Registration.repository.*;
-import com.cs203.TicketWarrior.Registration.exceptions.SeatNotAvailableException;
+import com.cs203.TicketWarrior.Registration.Exceptions.SeatNotAvailableException;
 
 @Service
 public class PurchaseService {
