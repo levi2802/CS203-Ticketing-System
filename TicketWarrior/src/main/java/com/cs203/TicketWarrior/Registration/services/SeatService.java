@@ -25,11 +25,6 @@ public class SeatService{
         return SeatRepository.findAll();
     }
 
-    // public Optional<Seat> findAllOccupiedSeat() {
-    //     Optional<Seat> seat = SeatRepository.findAllOccupiedSeats(true);
-    //     return seat;
-    // }
-
     public Seat insert(Seat seat) throws Exception {
         Seat foundSeat = SeatRepository.findbySeat(seat);
         if(foundSeat != null){
@@ -43,4 +38,14 @@ public class SeatService{
         return SeatRepository.findAllOccupiedSeats();
         
     }
+
+
+    // public List<Seat> findAvailableSeats() {
+    //     return SeatRepository.findAllAvailableSeats();
+    // }
+
+    // public List<Seat> saveAll(List<Seat> seats) {
+    //     return SeatRepository.saveAll(seats);
+    // }
+
 }

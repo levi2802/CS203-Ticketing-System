@@ -12,6 +12,5 @@ import java.util.Optional;
 public interface SeatRepository extends MongoRepository<Seat, String>, SeatRepositoryCustom {
 
     String mongoTemplate = null;
-    
-
 }
+
