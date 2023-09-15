@@ -1,0 +1,127 @@
+div.minibox{
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: auto;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  text-align: center;
+  border: 2px solid black;
+  transform: scale(0.9);
+}
+
+#stage-container {
+  position: relative;
+  margin: 0 auto;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border-bottom:5px solid #555;
+  border-radius: 0 0 100px 100px;
+}
+
+svg {
+	margin: 0px;
+  border-top: 30% solid #555;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+#stage {
+  position: absolute;
+  text-transform: uppercase;
+  text-align: center;
+  color: black;
+  top: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+div.layout{
+  margin: 5%;
+  display: flex;
+  justify-content: space-between;
+  overflow-x: hidden; 
+  max-width: 100%; /* Ensure the container doesn't exceed the viewport width */
+  padding: 0 20px; 
+}
+
+div.center {
+  flex: 1;
+  width: auto;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0 10px;
+}
+
+div.left {
+  flex: 1;
+  width: auto;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0 10px;
+}
+
+div.right {
+  flex: 1;
+  width: auto;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0 10px;
+}
+
+div.inputs{
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: auto;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  text-align: center;
+  padding: 3px;
+}
+
+div.orderSummary{
+  border: 2px solid black;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: auto;
+  display: inline-block;
+  text-align: center;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  padding-bottom: 100px;
+}
+
+/* Style for the fixed footer */
+.footer {
+  position: fixed;
+  background: gray;
+  bottom: 0;
+  width: 100%;
+  padding: 1px 0; 
+  text-align: center;
+}
+
+.movieInfo {
+  background: gray;
+  display: flex; 
+  align-items: center; 
+}
+
+.imageContainer {
+  margin-right: 10px;
+}

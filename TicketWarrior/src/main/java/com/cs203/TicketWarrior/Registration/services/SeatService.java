@@ -1,32 +1,51 @@
 package com.cs203.TicketWarrior.Registration.services;
 
+import com.cs203.TicketWarrior.Registration.models.Movie;
+import com.cs203.TicketWarrior.Registration.models.Seat;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
+import com.cs203.TicketWarrior.Registration.repository.SeatRepository;
+import com.cs203.TicketWarrior.Registration.repository.SeatRepositoryImpl;
 
 import java.util.List;
-import java.util.stream.Collectors;
-
-import com.cs203.TicketWarrior.Registration.models.Seat;
-import com.cs203.TicketWarrior.Registration.repository.SeatRepository;
+import java.util.Optional;
 
 @Service
-public class SeatService {
-
+public class SeatService{
     @Autowired
-    private SeatRepository seatRepository;
+    private SeatRepository SeatRepository;
 
-    public List<Seat> findAll() {
-        return seatRepository.findAll();
+    public SeatService(SeatRepository SeatRepository) {
+        this.SeatRepository = SeatRepository;
     }
 
-    public List<Seat> findAvailableSeats() {
-        List<Seat> allSeats = seatRepository.findAll();
-        return allSeats.stream().filter(Seat::isAvailable).collect(Collectors.toList());
+    public List<Seat> allSeats() {
+        return SeatRepository.findAll();
     }
 
-    public List<Seat> saveAll(List<Seat> seats) {
-        return seatRepository.saveAll(seats);
+    public Seat insert(Seat seat) throws Exception {
+        Seat foundSeat = SeatRepository.findbySeat(seat);
+        if(foundSeat != null){
+            throw new Exception("entity already exist");
+        }
+        SeatRepository.insert(seat);
+        return seat;
     }
 
-    // other methods...
+    public List<Seat> findAllOccupiedSeats(){
+        return SeatRepository.findAllOccupiedSeats();
+        
+    }
+
+
+    // public List<Seat> findAvailableSeats() {
+    //     return SeatRepository.findAllAvailableSeats();
+    // }
+
+    // public List<Seat> saveAll(List<Seat> seats) {
+    //     return SeatRepository.saveAll(seats);
+    // }
+
 }

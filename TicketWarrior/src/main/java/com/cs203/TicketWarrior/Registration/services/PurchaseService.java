@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 import com.cs203.TicketWarrior.Registration.models.*;
 import com.cs203.TicketWarrior.Registration.repository.*;
-import com.cs203.TicketWarrior.Registration.Exceptions.*;
+import com.cs203.TicketWarrior.Registration.Exceptions.SeatNotAvailableException;
 
 @Service
 public class PurchaseService {
@@ -38,7 +38,7 @@ public class PurchaseService {
         }
 
         // update the seat status to not available
-        seats.forEach(seat -> seat.setAvailable(false));
+        seats.forEach(seat -> seat.setAvailability(false));
         seatRepository.saveAll(seats);
 
         // save the purchase

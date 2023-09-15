@@ -3,7 +3,6 @@ package com.cs203.TicketWarrior.Registration.repository;
 import com.cs203.TicketWarrior.Registration.models.Movie;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
-
 import java.util.Optional;
 
 public interface MovieRepository extends MongoRepository<Movie, ObjectId> {

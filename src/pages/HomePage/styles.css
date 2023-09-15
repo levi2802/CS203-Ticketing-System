@@ -22,8 +22,12 @@
 }
 
 .buy-btn {
-    margin-left: 45rem;
+    margin-left: 42.5rem;
     margin-top: 2rem;
     height: 50px;
     width: 100px;
+}
+
+.profile {
+    height: 40px;
 }

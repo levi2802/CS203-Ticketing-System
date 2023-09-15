@@ -8,7 +8,7 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-    
+
     private final UserRepository userRepository;
 
     public UserService(UserRepository userRepository) {
@@ -20,7 +20,23 @@ public class UserService {
         return user.isPresent();
     }
 
+    public Boolean doesEmailExist(String email) {
+        Optional<User> user = userRepository.findUserByEmail(email);
+        return user.isPresent();
+    }
+
+    public Boolean doesUserIdExist(String userId) {
+        Optional<User> user = userRepository.findById(userId);
+        return user.isPresent();
+    }
+
     public void save(User user) {
         userRepository.save(user);
     }
+
+    public Optional<User> findUserByUsername(String username) {
+        return userRepository.findUserByUsername(username);
+    }
+
+
 }
