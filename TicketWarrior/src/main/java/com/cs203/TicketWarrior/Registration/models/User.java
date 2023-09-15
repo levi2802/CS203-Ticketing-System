@@ -23,6 +23,9 @@ public class User implements UserDetails {
     private String id;
 
     @NonNull
+    private String email;
+
+    @NonNull
     private String username;
 
     @NonNull
@@ -32,8 +35,9 @@ public class User implements UserDetails {
 //    @Enumerated(EnumType.STRING)
     private ERole role;
 
-    public User(String username, String password) {
+    public User(String username, String email, String password) {
         this.username = username;
+        this.email = email;
         this.password = password;
     }
 
