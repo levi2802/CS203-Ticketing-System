@@ -20,6 +20,11 @@ public class UserService {
         return user.isPresent();
     }
 
+    public Boolean doesEmailExist(String email) {
+        Optional<User> user = userRepository.findUserByEmail(email);
+        return user.isPresent();
+    }
+
     public Boolean doesUserIdExist(String userId) {
         Optional<User> user = userRepository.findById(userId);
         return user.isPresent();
@@ -33,8 +38,5 @@ public class UserService {
         return userRepository.findUserByUsername(username);
     }
 
-    public boolean doesEmailExist(String email) {
-        Optional<User> user = userRepository.findUserByEmail(email);
-        return user.isPresent();
-    }
+
 }

@@ -28,16 +28,23 @@ public class AuthenticationService {
 
     public AuthenticationResponse register(AuthenticationRequest registerRequest) {
 
-        if (userService.doesUsernameExist(registerRequest.getUsername()) || userService.doesEmailExist(registerRequest.getEmail())) {
+        if (userService.doesUsernameExist(registerRequest.getUsername())) {
             return AuthenticationResponse.builder()
-                    .message("Username or email already taken.")
+                    .message("Username already taken.")
+                    .isSuccessful(false)
+                    .build();
+        }
+
+        if (userService.doesEmailExist(registerRequest.getEmail())) {
+            return AuthenticationResponse.builder()
+                    .message("Email already taken.")
                     .isSuccessful(false)
                     .build();
         }
 
         var user = User.builder()
                 .username(registerRequest.getUsername())
-                .email(registerRequest.getEmail())
+//                .email(registerRequest.getEmail())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
                 .role(ERole.USER)
                 .build();

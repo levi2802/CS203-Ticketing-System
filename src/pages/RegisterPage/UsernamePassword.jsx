@@ -8,6 +8,7 @@ function UsernamePassword() {
     const API_URL = "http://localhost:8080/api/auth/";
 
     const initialFormData = {
+        email: '',
         username: '',
         password: ''
     };
@@ -55,6 +56,8 @@ function UsernamePassword() {
 
             <form onSubmit={handleSubmit}>
                 <div className="login-details">
+                    <label htmlFor="inputEmail" className="form-label">Email:</label>
+                    <input placeholder="Enter Email" type="text" className="login-input" name="email" value={formData.email} onChange={handleChange} />
                     <label htmlFor="inputUsername" className="form-label">Username:</label>
                     <input placeholder="Enter Username" type="text" className="login-input" name="username" value={formData.username} onChange={handleChange} />
                     <label htmlFor="inputPassword" className="form-label">Password:</label> 
