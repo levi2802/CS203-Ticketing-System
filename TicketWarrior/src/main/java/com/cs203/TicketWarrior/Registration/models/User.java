@@ -10,12 +10,11 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-//@Entity
+// @Entity
 @Document(collection = "users")
 public class User implements UserDetails {
 
@@ -32,7 +31,7 @@ public class User implements UserDetails {
     private String password;
 
     // Declare as enum, using String to represent instead of integer
-//    @Enumerated(EnumType.STRING)
+    // @Enumerated(EnumType.STRING)
     private ERole role;
 
     public User(String email, String username, String password) {
