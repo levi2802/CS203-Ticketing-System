@@ -1,8 +1,6 @@
 package com.cs203.TicketWarrior.Registration.controllers;
 
-import com.cs203.TicketWarrior.Registration.models.Movie;
 import com.cs203.TicketWarrior.Registration.models.Seat;
-import com.cs203.TicketWarrior.Registration.services.MovieService;
 import com.cs203.TicketWarrior.Registration.services.SeatService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*")

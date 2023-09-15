@@ -1,16 +1,10 @@
 package com.cs203.TicketWarrior.Registration.services;
 
-import com.cs203.TicketWarrior.Registration.models.Movie;
 import com.cs203.TicketWarrior.Registration.models.Seat;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 import com.cs203.TicketWarrior.Registration.repository.SeatRepository;
-import com.cs203.TicketWarrior.Registration.repository.SeatRepositoryImpl;
-
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class SeatService{

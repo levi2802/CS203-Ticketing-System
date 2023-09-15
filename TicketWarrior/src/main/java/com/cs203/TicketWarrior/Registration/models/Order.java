@@ -1,20 +1,12 @@
 package com.cs203.TicketWarrior.Registration.models;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import jakarta.validation.OverridesAttribute.List;
 import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDateTime; // Imports the LocalDateTime class. 
 
-import jakarta.persistence.CascadeType; // import jakarta persistence classes
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn; // import the JoinColumn class
 

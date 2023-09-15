@@ -1,11 +1,6 @@
 package com.cs203.TicketWarrior.Registration.controllers;
 
 import java.util.List;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import com.cs203.TicketWarrior.Registration.repository.OrderRepository;
-import com.cs203.TicketWarrior.Registration.repository.UserRepository;
 import com.cs203.TicketWarrior.Registration.services.OrderService;
 import com.cs203.TicketWarrior.Registration.services.UserService;
 import com.cs203.TicketWarrior.Registration.models.Order;

@@ -6,8 +6,6 @@ import org.springframework.stereotype.Service;
 import com.cs203.TicketWarrior.Registration.repository.OrderRepository;
 import java.util.List;
 
-import java.util.Optional;
-
 @Service
 public class OrderService {
     @Autowired
