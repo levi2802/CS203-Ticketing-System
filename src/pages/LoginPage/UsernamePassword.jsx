@@ -8,6 +8,7 @@ function UsernamePassword() {
     const API_URL = "http://localhost:8080/api/auth/";
 
     const initialFormData = {
+        email: 'null',
         username: '',
         password: ''
     };

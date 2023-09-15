@@ -35,7 +35,7 @@ function UsernamePassword() {
                 alert("Registration successful!");
                 navigate('/');
             } else {
-                alert("Registration failed. Please enter a different username.");
+                alert("Registration failed. Please enter a different username/email.");
                 setData(initialFormData);
             }
 

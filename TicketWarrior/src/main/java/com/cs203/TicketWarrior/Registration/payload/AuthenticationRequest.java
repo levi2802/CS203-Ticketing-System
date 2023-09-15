@@ -2,10 +2,7 @@ package com.cs203.TicketWarrior.Registration.payload;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @Builder
@@ -19,4 +16,9 @@ public class AuthenticationRequest {
     private String username;
     @NotBlank
     private String password;
+
+    public AuthenticationRequest (String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 }
