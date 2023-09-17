@@ -9,6 +9,4 @@ public interface SeatRepositoryCustom {
     List<Seat> findAllOccupiedSeats();
 
     Seat findbySeat(Seat seat);
-
-    Seat findById(String seatId);
 }
