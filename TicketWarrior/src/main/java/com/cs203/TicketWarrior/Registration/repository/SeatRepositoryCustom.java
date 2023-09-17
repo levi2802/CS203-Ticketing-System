@@ -5,8 +5,10 @@ import java.util.Optional;
 
 import com.cs203.TicketWarrior.Registration.models.Seat;
 
-
 public interface SeatRepositoryCustom {
     List<Seat> findAllOccupiedSeats();
+
     Seat findbySeat(Seat seat);
+
+    Seat findById(String seatId);
 }

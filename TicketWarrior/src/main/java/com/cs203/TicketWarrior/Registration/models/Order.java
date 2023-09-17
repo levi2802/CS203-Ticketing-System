@@ -1,21 +1,15 @@
 package com.cs203.TicketWarrior.Registration.models;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDateTime; // Imports the LocalDateTime class. 
 
 import jakarta.persistence.CascadeType; // import jakarta persistence classes
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.JoinColumn; // import the JoinColumn class
@@ -54,4 +48,15 @@ public class Order {
 
     @NotBlank
     private double totalPrice; // Every order has a total price.
+
+    // Get the IDs of the seats booked for this order, in string form.
+    public List<String> getSeatIDs() {
+        List<String> SeatIds = new ArrayList<String>();
+
+        for (Seat seat : seats) {
+            SeatIds.add(seat.getId());
+        }
+
+        return SeatIds;
+    }
 }

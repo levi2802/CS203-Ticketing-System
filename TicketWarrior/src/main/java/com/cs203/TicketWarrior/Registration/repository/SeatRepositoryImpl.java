@@ -17,25 +17,34 @@ import java.util.Optional;
 
 public class SeatRepositoryImpl implements SeatRepositoryCustom {
 
-    
     private final MongoTemplate mongoTemplate;
-    
+
     @Autowired
-    public SeatRepositoryImpl(MongoTemplate mongoTemplate){
+    public SeatRepositoryImpl(MongoTemplate mongoTemplate) {
         this.mongoTemplate = mongoTemplate;
     }
+
     public List<Seat> findAllOccupiedSeats() {
         // TODO Auto-generated method stub
         final Query query = new Query();
         query.addCriteria(Criteria.where("availability").is(false));
         return mongoTemplate.find(query, Seat.class);
-        //throw new UnsupportedOperationException("Unimplemented method 'findAllOccupiedSeats'");
+        // throw new UnsupportedOperationException("Unimplemented method
+        // 'findAllOccupiedSeats'");
     }
 
-    public Seat findbySeat(Seat seat){
+    public Seat findbySeat(Seat seat) {
         final Query query = new Query();
         query.addCriteria(Criteria.where("row").is(seat.getRow()));
         query.addCriteria(Criteria.where("coloumn").is(seat.getColoumn()));
-        return  mongoTemplate.findOne(query, Seat.class);
+        return mongoTemplate.findOne(query, Seat.class);
     }
+
+    // // Find a seat with a matching seatId to the input seatId.
+    // public Seat findById(String seatId) {
+    // final Query query = new Query();
+    // query.addCriteria(Criteria.where("id").is(seatId));
+
+    // return mongoTemplate.findOne(query, Seat.class);
+    // }
 }

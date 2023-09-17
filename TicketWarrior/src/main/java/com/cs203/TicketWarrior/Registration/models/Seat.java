@@ -37,11 +37,16 @@ public class Seat {
     // private float price;
     // private SeatType seatType;
 
-    public void Updateall(int row, int coloumn, String type, Boolean availability) {
+    public void Updateall(Order order, int row, int coloumn, String type, Boolean availability) {
+        this.order = order;
         this.row = row;
         this.coloumn = coloumn;
         this.type = type;
         this.availability = availability;
+    }
+
+    public void UpdateOrder(Order order) {
+        this.order = order;
     }
 
     public boolean isAvailable() {
