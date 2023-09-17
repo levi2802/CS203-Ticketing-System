@@ -10,23 +10,34 @@ import org.springframework.data.mongodb.core.mapping.DocumentReference;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
+
 import java.util.*;
 
 @Document(collection = "seats") // Document containing mongodb collection.
 @Data // From the lombok framework, takes care of all the getters, setters etc.
-@AllArgsConstructor // From the lombok framework, creates a constructor that takes all the parameters.
+@AllArgsConstructor // From the lombok framework, creates a constructor that takes all the
+                    // parameters.
 @NoArgsConstructor // From the lombok framework, creates a constructor that takes no parameters.
 public class Seat {
-     @Id
-	private String id;
+    @Id
+    private String id;
+
+    @ManyToOne
+    // the column "order_id" will be in the auto-generated table "seats"
+    // nullable = false: add not-null constraint to the database column "user_id"
+    @JoinColumn(name = "order_id", nullable = false)
+    private Order order; // Multiple seats can belong to the same order.
+
     private int row;
     private int coloumn;
     private String type;
     private Boolean availability;
     // private float price;
-	// private SeatType seatType;
+    // private SeatType seatType;
 
-    public void Updateall(int row, int coloumn, String type, Boolean availability){
+    public void Updateall(int row, int coloumn, String type, Boolean availability) {
         this.row = row;
         this.coloumn = coloumn;
         this.type = type;
@@ -37,4 +48,3 @@ public class Seat {
         return this.availability;
     }
 }
-
