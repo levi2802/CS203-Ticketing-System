@@ -10,8 +10,8 @@ public class OrderNotFoundException extends RuntimeException {
      */
     private static final long serialVersionUID = 1L;
 
-    public OrderNotFoundException(String userId, String orderId) {
-        super("Could not find order " + orderId + " made by user " + userId);
+    public OrderNotFoundException(String orderId) {
+        super("Order not found with ID: " + orderId);
     }
 
 }

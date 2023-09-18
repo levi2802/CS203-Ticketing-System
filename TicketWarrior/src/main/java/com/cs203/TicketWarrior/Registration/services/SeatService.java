@@ -7,7 +7,7 @@ import com.cs203.TicketWarrior.Registration.repository.SeatRepository;
 import java.util.List;
 
 @Service
-public class SeatService{
+public class SeatService {
     @Autowired
     private SeatRepository SeatRepository;
 
@@ -19,27 +19,12 @@ public class SeatService{
         return SeatRepository.findAll();
     }
 
-    public Seat insert(Seat seat) throws Exception {
-        Seat foundSeat = SeatRepository.findbySeat(seat);
-        if(foundSeat != null){
-            throw new Exception("entity already exist");
-        }
-        SeatRepository.insert(seat);
-        return seat;
-    }
-
-    public List<Seat> findAllOccupiedSeats(){
-        return SeatRepository.findAllOccupiedSeats();
-        
-    }
-
-
     // public List<Seat> findAvailableSeats() {
-    //     return SeatRepository.findAllAvailableSeats();
+    // return SeatRepository.findAllAvailableSeats();
     // }
 
     // public List<Seat> saveAll(List<Seat> seats) {
-    //     return SeatRepository.saveAll(seats);
+    // return SeatRepository.saveAll(seats);
     // }
 
 }

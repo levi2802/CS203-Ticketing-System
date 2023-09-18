@@ -37,13 +37,13 @@ public class OrderController {
     public Order getOrderByUserIdAndOrderId(@PathVariable(value = "userId") String userId,
             @PathVariable(value = "orderId") String orderId) {
 
-        return orderService.getOrder(orderId, userId);
+        return orderService.getOrder(orderId);
     }
 
     // Post a new order
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/users/{userId}/orders")
-    public Order addorder(@PathVariable(value = "userId") String userId, @RequestBody Order order) {
+    public Order addOrder(@PathVariable(value = "userId") String userId, @RequestBody Order order) {
         if (userService.doesUserIdExist(userId)) {
             return orderService.addOrder(order);
         }
@@ -55,8 +55,8 @@ public class OrderController {
     public Order updateOrder(@PathVariable(value = "userId") String userId,
             @PathVariable(value = "orderId") String orderId,
             @RequestBody Order newOrderInfo) {
-        if (orderService.getOrder(orderId, userId) == null) {
-            throw new OrderNotFoundException(userId, orderId);
+        if (orderService.getOrder(orderId) == null) {
+            throw new OrderNotFoundException(orderId);
         }
         Order order = orderService.updateOrder(orderId, newOrderInfo);
         return order;
@@ -66,8 +66,8 @@ public class OrderController {
     @DeleteMapping("/users/{userId}/orders/{orderId}")
     public void deleteOrder(@PathVariable(value = "userId") String userId,
             @PathVariable(value = "orderId") String orderId) {
-        if (orderService.getOrder(orderId, userId) == null) {
-            throw new OrderNotFoundException(userId, orderId);
+        if (orderService.getOrder(orderId) == null) {
+            throw new OrderNotFoundException(orderId);
         }
         orderService.deleteOrder(orderId);
     }
