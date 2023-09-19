@@ -16,19 +16,21 @@ public class Seat {
     private int row;
     private int coloumn;
     private String type;
-    private Boolean availability;
+    private Boolean occupied;
+    private String userID;
+    //private String moviescreenID;
     // private float price;
 	// private SeatType seatType;
 
-    public void Updateall(int row, int coloumn, String type, Boolean availability){
+    public void Updateall(int row, int coloumn, String type, Boolean occupied){
         this.row = row;
         this.coloumn = coloumn;
         this.type = type;
-        this.availability = availability;
+        this.occupied = occupied;
     }
 
     public boolean isAvailable() {
-        return this.availability;
+        return this.occupied;
     }
 }
 

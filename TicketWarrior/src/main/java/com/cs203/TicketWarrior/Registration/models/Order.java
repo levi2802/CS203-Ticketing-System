@@ -33,11 +33,17 @@ public class Order {
     @NotBlank
     private LocalDateTime purchaseDateTime; // Every order has a purchase date and time.
 
-    @NotBlank
-    private Movie movie; // Every order is for a movie.
+    // @NotBlank
+    // private Movie movie; // Every order is for a movie. (movie name)
 
     @NotBlank
-    private ArrayList<String> seats; // Every order has a number of seats attached to it.
+    private String movieName;
+
+    // @NotBlank
+    // private LocalDateTime moviescreentime;
+
+    @NotBlank
+    private ArrayList<String> seats; // Every order has a number of seats attached to it. {[a1,a2,a3]}
 
     @NotBlank
     private int totalPrice; // Every order has a total price.
