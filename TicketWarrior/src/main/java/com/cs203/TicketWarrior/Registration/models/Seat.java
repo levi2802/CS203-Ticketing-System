@@ -8,21 +8,22 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "seats") // Document containing mongodb collection.
 @Data // From the lombok framework, takes care of all the getters, setters etc.
-@AllArgsConstructor // From the lombok framework, creates a constructor that takes all the parameters.
+@AllArgsConstructor // From the lombok framework, creates a constructor that takes all the
+                    // parameters.
 @NoArgsConstructor // From the lombok framework, creates a constructor that takes no parameters.
 public class Seat {
-     @Id
-	private String id;
+    @Id
+    private String id;
     private int row;
     private int coloumn;
     private String type;
     private Boolean occupied;
     private String userID;
-    //private String moviescreenID;
+    // private String movieScreenId;
     // private float price;
-	// private SeatType seatType;
+    // private SeatType seatType;
 
-    public void Updateall(int row, int coloumn, String type, Boolean occupied){
+    public void Updateall(int row, int coloumn, String type, Boolean occupied) {
         this.row = row;
         this.coloumn = coloumn;
         this.type = type;
@@ -33,4 +34,3 @@ public class Seat {
         return this.occupied;
     }
 }
-

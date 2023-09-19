@@ -21,9 +21,4 @@ public class SeatController {
     public ResponseEntity<List<Seat>> getAllSeat() {
         return new ResponseEntity<List<Seat>>(seatService.allSeats(), HttpStatus.OK); // Sends Http status code 200.
     }
-
-    @GetMapping("/OccupiedSeats")
-    public ResponseEntity<List<Seat>> findAllOccupiedSeats(){
-        return new ResponseEntity<List<Seat>>(seatService.findOccupiedSeats(), HttpStatus.OK);// Sends Http status code 200.
-    }
 }

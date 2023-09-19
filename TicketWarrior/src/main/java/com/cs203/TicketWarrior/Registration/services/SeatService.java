@@ -19,11 +19,6 @@ public class SeatService {
         return SeatRepository.findAll();
     }
 
-    public List<Seat> findOccupiedSeats(){
-        return SeatRepository.findOccupiedSeats();
-        
-    }
-
     // public List<Seat> findAvailableSeats() {
     // return SeatRepository.findAllAvailableSeats();
     // }
