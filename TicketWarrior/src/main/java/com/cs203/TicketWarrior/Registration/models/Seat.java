@@ -15,17 +15,17 @@ public class Seat {
     @Id
     private String id;
     private int row;
-    private int coloumn;
+    private int column;
     private String type;
     private Boolean occupied;
-    private String userID;
+    private String userId;
     // private String movieScreenId;
     // private float price;
     // private SeatType seatType;
 
-    public void Updateall(int row, int coloumn, String type, Boolean occupied) {
+    public void Updateall(int row, int column, String type, Boolean occupied) {
         this.row = row;
-        this.coloumn = coloumn;
+        this.column = column;
         this.type = type;
         this.occupied = occupied;
     }

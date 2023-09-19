@@ -1,201 +1,115 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import './SeatApp.css';
 import Seat from '../Seat/Seat.js';
-import axios, { formToJSON } from 'axios';
-import { json } from 'react-router-dom';
+import axios from 'axios';
 import sample1 from "../../HomePage/images/image1.png";
 import PG from "../../HomePage/images/PG.png"
 import Button from '@mui/material/Button'
 import Timer from './Timer';
 
 class SeatApp extends Component {
-  template = function (row, coloumn, type, availability) { }
-  unavailable = [];
   constructor(props) {
     super(props);
-    this.state = { seats: [], chosenSeats: [], showSummary: false };
+    this.state = { seats: this.initializeSeats(4, 14), chosenSeats: [], showSummary: false, unavailable: [] };
+  }
+
+  initializeSeats(rows, cols) {
+    return Array.from({ length: rows }).flatMap((_, row) =>
+      Array.from({ length: cols }).map((_, col) => ({ row, num: col, avail: true, selected: false }))
+    );
   }
 
   async componentDidMount() {
-    let seats = [];
-
-    //How many seats to create r=row i=col
-    for (let r = 0; r < 4; r++) {
-      for (let i = 0; i < 14; i++) {
-        seats.push({ row: r, num: i, avail: true });
-      }
+    try {
+      const response = await axios.get("http://localhost:8080/api/v1/seats/OccupiedSeats");
+      const unavailable = response.data.map(data => [data.row, data.coloumn]);
+      const seats = this.state.seats.map(seat => ({
+        ...seat,
+        avail: !unavailable.some(([row, col]) => row === seat.row && col === seat.num)
+      }));
+      this.setState({ seats, unavailable });
+    } catch (error) {
+      console.error(error);
     }
-
-    await axios.get("http://localhost:8080/api/v1/seats/OccupiedSeats")
-      .then(json => json.data.forEach(data => this.unavailable.push([data.row, data.coloumn])))
-      .catch(console.error);
-
-    //console.log(this.Unavailable);
-
-    //code to make seat unavail r = row c = col
-    for (let i = 0; i < seats.length; i++) {
-      for (let j = 0; j < this.unavailable.length; j++) {
-        let r = this.unavailable[j][0];
-        let c = this.unavailable[j][1];
-        if (seats[i].row === r && seats[i].num === c) {
-          seats[i].avail = false;
-        }
-      }
-    }
-
-    //Updating
-    this.setState({ seats });
   }
 
   handleSeatSelect = (row, num) => {
-    const { seats } = this.state;
-    //object of the seat that i clicked
-    const selectedSeat = seats.find(seat => seat.row === row && seat.num === num);
+    let { seats } = this.state;
+    let selectedSeatNumbers = seats.filter(seat => seat.row === row && seat.selected).map(seat => seat.num);
 
-    //A list of selected seat numbers
-    const selectedSeatNumbers = [];
-    seats.forEach(seat => {
-      if (seat.row === row && seat.selected) {
-        selectedSeatNumbers.push(seat.num);
-      }
-    });
+    let maxSelected = Math.max(...selectedSeatNumbers, -1);
+    let minSelected = Math.min(...selectedSeatNumbers, 15);
 
-    //Seat picking algo
-    const updatedSeats = seats.map(seat => {
+    seats = seats.map(seat => {
       if (seat.row === row && seat.num === num) {
-        if (selectedSeatNumbers.includes(num)) {
-          // If clicked seat is in selected group
-          if (selectedSeatNumbers.length > 1) {
-            // Check if it's the maximum or minimum seat number in the group
-            let maxSelected = Math.max(...selectedSeatNumbers);
-            let minSelected = Math.min(...selectedSeatNumbers);
-            //Only allow the outsides to be 'de-selected'
-            if (num === maxSelected || num === minSelected) {
-              seat.selected = !seat.selected;
-            }
-            else {
-              // Show pop-up message
-              alert("Please choose a seat with no space between.");
-            }
-          }
-          else {
-            seat.selected = !seat.selected;
-          }
-        }
-        else if (
-          selectedSeatNumbers.length === 0 || selectedSeatNumbers.includes(num - 1) ||
-          selectedSeatNumbers.includes(num + 1) || selectedSeatNumbers.includes(num)
-        ) {
+        if (!seat.selected || num === maxSelected || num === minSelected) {
           seat.selected = !seat.selected;
-        }
-        else {
-          // Show pop-up message
+        } else {
           alert("Please choose a seat with no space between.");
         }
       }
       return seat;
     });
 
-    // Update chosenSeats array
-    const updatedChosenSeats = seats.filter((seat) => seat.selected).map((seat) => seat.num + 1);
-
     this.setState({
-      seats: updatedSeats,
-      chosenSeats: updatedChosenSeats
+      seats,
+      chosenSeats: seats.filter(seat => seat.selected).map(seat => seat.num + 1)
     });
-
-    //log of selected/unselected seat
-    if (selectedSeat.selected) {
-      console.log(`Selected seat: {row: ${row}, column: ${num}}`);
-    }
-    else {
-      console.log(`Unselected seat: {row: ${row}, column: ${num}}`);
-    }
   }
 
-  handleCheckout = () => {
-    const { chosenSeats } = this.state;
-    this.setState({ showSummary: true });
-  };
+  handleCheckout = () => this.setState({ showSummary: true });
 
-  handleCancel = () => {
-    const { chosenSeats } = this.state;
-    this.setState({ showSummary: false });
-  }
+  handleCancel = () => this.setState({ showSummary: false });
 
-  //Handling confirm button to give info to backend
   handleConfirm = async () => {
-    const { seats } = this.state;
-    const selectedSeats = seats.filter(seat => seat.selected)
-      .map(seat => {
-        const { row, num } = seat;
-        return { row, num };
-      })
-    await selectedSeats.forEach(seat => this.addSeatToDB(seat));
-  }
-
-
-  addSeatToDB = (seat) => {
+    const selectedSeats = this.state.seats.filter(seat => seat.selected);
+    const selectedSeatStrings = selectedSeats.map(seat => `row: ${seat.row + 1}, column: ${seat.num + 1}`);
     try {
-      axios.post("http://localhost:8080/api/v1/seats/PostSeats", {
-        row: seat.row,
-        coloumn: seat.num,
-        type: "standard",
-        availability: false,
-      }, {
-        validateStatus: function (status) {
-          if (status < 500) alert("seat at row: " + (seat.row + 1) + " coloumn: " + (seat.num + 1) + " booked successfully");
-          else alert("double input for seat at row: " + (seat.row + 1) + " coloumn: " + (seat.num + 1) + " error code:" + status);
-          return true; // Resolve only if the status code is less than 500
-        }
-      }).then(this.unavailable.push([seat.row, seat.num]));
-    } catch {
-      alert("double input");
+      await this.createOrder(selectedSeatStrings);
+    } catch (error) {
+      console.error('Error creating order: ', error);
     }
-
-
-    console.log(this.unavailable);
   }
 
+  createOrder = async (selectedSeatStrings) => {
+    const orderData = {
+      user: { id: this.state.userId },  // Assuming you have userId in state
+      movie: { id: this.state.movieId },  // Assuming you have movieId in state
+      seats: selectedSeatStrings,
+      purchaseDateTime: new Date().toISOString(),
+      totalPrice: this.state.totalPrice,  // Assuming you have totalPrice in state
+    };
+
+    try {
+      const response = await axios.post("http://localhost:8080/users/{userId}/orders", orderData);
+      console.log('Order created successfully: ', response);
+      // Navigate to a confirmation page or show a success message
+    } catch (error) {
+      console.error('Error creating order: ', error);
+      // Show an error message to the user
+    }
+  }
+
+
+  renderSeatsGrid = (startIndex, endIndex) => {
+    const seatsGrid = this.state.seats.reduce((acc, seat) => {
+      acc[seat.row] = [...(acc[seat.row] || []), (
+        <Seat key={`${seat.row}-${seat.num}`} {...seat} onSeatSelect={this.handleSeatSelect} />
+      )];
+      return acc;
+    }, []);
+    return seatsGrid.map((row, index) => (
+      <div className="Row" key={index}>
+        {String.fromCharCode('A'.charCodeAt(0) + index)}
+        {row.slice(startIndex, endIndex)}
+      </div>
+    ));
+  }
 
   render() {
-    const { seats, showSummary } = this.state;
-
-    //create array with nulls
-    const seatsGrid = [];
-    for (let i = 0; i < 4; i++) {
-      let row = [];
-      for (let j = 0; j < 14; j++) {
-        row.push(null);
-      }
-      seatsGrid.push(row);
-    }
-
-    for (let i = 0; i < seats.length; i++) {
-      let seat = seats[i];
-      seatsGrid[seat.row][seat.num] = (
-        <Seat
-          row={seat.row}
-          num={seat.num}
-          avail={seat.avail}
-          selected={seat.selected}
-          onSeatSelect={this.handleSeatSelect}
-          key={seat.row + seat.num}
-        />
-      );
-    }
-
-    //This code allows for conversion of row from int to char
-    const rowName = [];
-    for (let i = 0; i < seatsGrid.length; i++) {
-      let temp = 'A'.charCodeAt(0) + i;
-      rowName.push(String.fromCharCode(temp));
-    }
-
-    const chosenSeats = seats.filter(seat => seat.selected).map(seat => seat.num + 1);
+    const { seats, showSummary, chosenSeats } = this.state;
+    const rowName = [...Array(4)].map((_, i) => String.fromCharCode('A'.charCodeAt(0) + i));
     const chosenRow = seats.filter(seat => seat.selected).map(seat => seat.row + 1);
-    const availableSeats = seats.filter(seat => seat.avail && !seat.selected).length;
-
 
     return (
       <div>

@@ -3,11 +3,12 @@ const PurchaseComponent = ({ userId, movieId, seats, totalPrice }) => {
   const handleConfirmPurchase = async () => {
     try {
       const orderData = {
-        user: { id: userId }, // User ID passed as a prop
-        movie: { id: movieId }, // Movie ID passed as a prop
-        seats, // Seat IDs passed as a prop
-        purchaseDateTime: new Date().toISOString(), // Current date and time
-        totalPrice, // Total price passed as a prop
+        // id: generateUniqueId(), // function to generate a unique ID for the order
+        user: { id: userId }, // user ID passed as a prop
+        purchaseDateTime: new Date().toISOString(), // current date and time
+        movieName, // assuming movieName is a string representing the name of the movie
+        seats, // array of seat IDs (as strings)
+        totalPrice, // total price passed as a prop
       };
       const response = await createPurchase(userId, orderData);
       console.log('Order created successfully: ', response);
@@ -17,6 +18,7 @@ const PurchaseComponent = ({ userId, movieId, seats, totalPrice }) => {
       // Show an error message to the user
     }
   };
+  
 
   return (
     <div>

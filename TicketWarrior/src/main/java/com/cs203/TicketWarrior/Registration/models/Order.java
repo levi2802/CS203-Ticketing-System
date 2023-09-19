@@ -25,8 +25,6 @@ public class Order {
     private String id; // Every order has its own id.
 
     @ManyToOne
-    // the column "user_id" will be in the auto-generated table "orders"
-    // nullable = false: add not-null constraint to the database column "user_id"
     @JoinColumn(name = "user_id", nullable = false)
     private User user; // Multiple orders can belong to the same user.
 
