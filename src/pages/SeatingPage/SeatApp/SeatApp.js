@@ -10,7 +10,7 @@ import Timer from './Timer';
 
 class SeatApp extends Component {
   template = function (row, coloumn, type, availability) { }
-  Unavailable = [];
+  unavailable = [];
   constructor(props) {
     super(props);
     this.state = { seats: [], chosenSeats: [], showSummary: false };
@@ -27,16 +27,16 @@ class SeatApp extends Component {
     }
 
     await axios.get("http://localhost:8080/api/v1/seats/OccupiedSeats")
-      .then(json => json.data.forEach(data => this.Unavailable.push([data.row, data.coloumn])))
+      .then(json => json.data.forEach(data => this.unavailable.push([data.row, data.coloumn])))
       .catch(console.error);
 
     //console.log(this.Unavailable);
 
     //code to make seat unavail r = row c = col
     for (let i = 0; i < seats.length; i++) {
-      for (let j = 0; j < this.Unavailable.length; j++) {
-        let r = this.Unavailable[j][0];
-        let c = this.Unavailable[j][1];
+      for (let j = 0; j < this.unavailable.length; j++) {
+        let r = this.unavailable[j][0];
+        let c = this.unavailable[j][1];
         if (seats[i].row === r && seats[i].num === c) {
           seats[i].avail = false;
         }
@@ -113,10 +113,10 @@ class SeatApp extends Component {
     }
   }
 
-    handleCheckout = () => {
-    const {chosenSeats} = this.state;
-    this.setState({showSummary: true});
-    };
+  handleCheckout = () => {
+    const { chosenSeats } = this.state;
+    this.setState({ showSummary: true });
+  };
 
   handleCancel = () => {
     const { chosenSeats } = this.state;
@@ -148,13 +148,13 @@ class SeatApp extends Component {
           else alert("double input for seat at row: " + (seat.row + 1) + " coloumn: " + (seat.num + 1) + " error code:" + status);
           return true; // Resolve only if the status code is less than 500
         }
-      }).then(this.Unavailable.push([seat.row, seat.num]));
+      }).then(this.unavailable.push([seat.row, seat.num]));
     } catch {
       alert("double input");
     }
 
 
-    console.log(this.Unavailable);
+    console.log(this.unavailable);
   }
 
 
@@ -195,22 +195,22 @@ class SeatApp extends Component {
     const chosenSeats = seats.filter(seat => seat.selected).map(seat => seat.num + 1);
     const chosenRow = seats.filter(seat => seat.selected).map(seat => seat.row + 1);
     const availableSeats = seats.filter(seat => seat.avail && !seat.selected).length;
-    
-    
+
+
     return (
       <div>
-        <Timer/>
-        <div className = 'minibox' style={{display: showSummary ? 'none':'block'}}>
-        <div className='movieInfo'>
-          <div className='imageContainer'>
-            <img src={sample1} alt="" style={{ height: "200px", width: "400px" }} />
+        <Timer />
+        <div className='minibox' style={{ display: showSummary ? 'none' : 'block' }}>
+          <div className='movieInfo'>
+            <div className='imageContainer'>
+              <img src={sample1} alt="" style={{ height: "200px", width: "400px" }} />
+            </div>
+            <div align='left'>
+              <h1>Teenage Mutant Ninja Turtles: Mutant Mayhem (忍者龟：变种大乱斗)</h1>
+              <p>Run Time: 1 hr 39 mins</p>
+              <p>Rating: <img src={PG} alt="" style={{ height: "25px", width: "35px" }} />some violence</p>
+            </div>
           </div>
-          <div align='left'>
-            <h1>Teenage Mutant Ninja Turtles: Mutant Mayhem (忍者龟：变种大乱斗)</h1>
-            <p>Run Time: 1 hr 39 mins</p>
-            <p>Rating: <img src={PG} alt="" style={{ height: "25px", width: "35px" }}/>some violence</p>
-          </div>
-        </div>
           <div id="stage-container">
             <svg width="500" height="100" >
             </svg>
@@ -246,27 +246,27 @@ class SeatApp extends Component {
 
           <div>
             <h3>Legend</h3>
-              <pre>
-                <div id = 'Unavailable' style={{ display: 'inline-block'}}></div>Unavailable
-                <div id = 'AvailableLegend' style={{ display: 'inline-block', marginLeft: '10px'}}></div>Available
-                <div id = 'selected' style={{ display: 'inline-block', marginLeft: '10px'}}></div>Selected
-              </pre>
+            <pre>
+              <div id='Unavailable' style={{ display: 'inline-block' }}></div>Unavailable
+              <div id='AvailableLegend' style={{ display: 'inline-block', marginLeft: '10px' }}></div>Available
+              <div id='selected' style={{ display: 'inline-block', marginLeft: '10px' }}></div>Selected
+            </pre>
           </div>
         </div>
 
         <footer class="footer">
-            <div className='inputs'>
-              <pre>
-                Quantity: {chosenSeats.length}
-              </pre>
-              <pre>
-                Cost: ${chosenSeats.length * 8}
-              </pre>
-              <Button variant="contained" onClick={this.handleCheckout} disabled={chosenSeats.length === 0 ? true:false}>checkout</Button>
-            </div>
+          <div className='inputs'>
+            <pre>
+              Quantity: {chosenSeats.length}
+            </pre>
+            <pre>
+              Cost: ${chosenSeats.length * 8}
+            </pre>
+            <Button variant="contained" onClick={this.handleCheckout} disabled={chosenSeats.length === 0 ? true : false}>checkout</Button>
+          </div>
         </footer>
 
-        <div className='orderSummary' style={{display: showSummary ? 'block':'none'}}>
+        <div className='orderSummary' style={{ display: showSummary ? 'block' : 'none' }}>
           <pre>
             Qty: {chosenSeats.length}
           </pre>
