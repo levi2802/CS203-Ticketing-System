@@ -10,4 +10,9 @@ public interface OrderRepository extends MongoRepository<Order, String> /* JpaRe
 
     List<Order> findByUserId(String userId);
 
+    static List<Order> findByMovieName(String movieName) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findByMovieName'");
+    }
+
 }

@@ -5,6 +5,8 @@ import com.cs203.TicketWarrior.Registration.models.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.cs203.TicketWarrior.Registration.repository.OrderRepository;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,6 +28,15 @@ public class OrderService {
 
     public List<Order> getOrdersByUser(String userId) {
         return orders.findByUserId(userId);
+    }
+
+    public List<String> getOccupiedSeatsByMovieId(String movieName) {
+        List<Order> orders = OrderRepository.findByMovieName(movieName);
+        List<String> occupiedSeats = new ArrayList<>();
+        for (Order order : orders) {
+            occupiedSeats.addAll(order.getSeats());
+        }
+        return occupiedSeats;
     }
 
     public Order addOrder(Order order) {

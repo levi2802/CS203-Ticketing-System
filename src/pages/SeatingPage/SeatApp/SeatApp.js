@@ -21,11 +21,11 @@ class SeatApp extends Component {
 
   async componentDidMount() {
     try {
-      const response = await axios.get("http://localhost:8080/api/v1/seats/OccupiedSeats");
-      const unavailable = response.data.map(data => [data.row, data.coloumn]);
+      const response = await axios.get("/movies/{movieId}/occupiedSeats");
+      const unavailable = response.data.map(data => `row: ${data.row}, column: ${data.column}`);
       const seats = this.state.seats.map(seat => ({
         ...seat,
-        avail: !unavailable.some(([row, col]) => row === seat.row && col === seat.num)
+        avail: !unavailable.includes(`row: ${seat.row + 1}, column: ${seat.num + 1}`)
       }));
       this.setState({ seats, unavailable });
     } catch (error) {
@@ -36,21 +36,25 @@ class SeatApp extends Component {
   handleSeatSelect = (row, num) => {
     let { seats } = this.state;
     let selectedSeatNumbers = seats.filter(seat => seat.row === row && seat.selected).map(seat => seat.num);
-
+  
     let maxSelected = Math.max(...selectedSeatNumbers, -1);
     let minSelected = Math.min(...selectedSeatNumbers, 15);
-
+  
     seats = seats.map(seat => {
       if (seat.row === row && seat.num === num) {
-        if (!seat.selected || num === maxSelected || num === minSelected) {
-          seat.selected = !seat.selected;
+        if (seat.avail) {
+          if (!seat.selected || num === maxSelected || num === minSelected) {
+            seat.selected = !seat.selected;
+          } else {
+            alert("Please choose seats without a space between.");
+          }
         } else {
-          alert("Please choose a seat with no space between.");
+          alert("This seat is already occupied.");
         }
       }
       return seat;
     });
-
+  
     this.setState({
       seats,
       chosenSeats: seats.filter(seat => seat.selected).map(seat => seat.num + 1)

@@ -40,6 +40,11 @@ public class OrderController {
         return orderService.getOrder(orderId);
     }
 
+    @GetMapping("/movies/{movieId}/occupiedSeats")
+    public List<String> getOccupiedSeatsByMovieId(@PathVariable(value = "movieName") String movieName) {
+        return orderService.getOccupiedSeatsByMovieId(movieName);
+    }
+
     // Post a new order
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/users/{userId}/orders")
