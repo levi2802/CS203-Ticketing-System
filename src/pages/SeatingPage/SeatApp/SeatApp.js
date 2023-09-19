@@ -47,10 +47,10 @@ class SeatApp extends Component {
     this.setState({ seats });
   }
 
-  handleSeatSelect = (row, num) => {
+  handleSeatSelect = (row, col) => {
     const { seats } = this.state;
     //object of the seat that i clicked
-    const selectedSeat = seats.find(seat => seat.row === row && seat.num === num);
+    const selectedSeat = seats.find(seat => seat.row === row && seat.num === col);
 
     //A list of selected seat numbers
     const selectedSeatNumbers = [];
@@ -62,15 +62,15 @@ class SeatApp extends Component {
 
     //Seat picking algo
     const updatedSeats = seats.map(seat => {
-      if (seat.row === row && seat.num === num) {
-        if (selectedSeatNumbers.includes(num)) {
+      if (seat.row === row && seat.num === col) {
+        if (selectedSeatNumbers.includes(col)) {
           // If clicked seat is in selected group
           if (selectedSeatNumbers.length > 1) {
             // Check if it's the maximum or minimum seat number in the group
             let maxSelected = Math.max(...selectedSeatNumbers);
             let minSelected = Math.min(...selectedSeatNumbers);
             //Only allow the outsides to be 'de-selected'
-            if (num === maxSelected || num === minSelected) {
+            if (col === maxSelected || col === minSelected) {
               seat.selected = !seat.selected;
             }
             else {
@@ -83,8 +83,8 @@ class SeatApp extends Component {
           }
         }
         else if (
-          selectedSeatNumbers.length === 0 || selectedSeatNumbers.includes(num - 1) ||
-          selectedSeatNumbers.includes(num + 1) || selectedSeatNumbers.includes(num)
+          selectedSeatNumbers.length === 0 || selectedSeatNumbers.includes(col - 1) ||
+          selectedSeatNumbers.includes(col + 1) || selectedSeatNumbers.includes(col)
         ) {
           seat.selected = !seat.selected;
         }
@@ -106,10 +106,10 @@ class SeatApp extends Component {
 
     //log of selected/unselected seat
     if (selectedSeat.selected) {
-      console.log(`Selected seat: {row: ${row}, column: ${num}}`);
+      console.log(`Selected seat: {row: ${row}, column: ${col}}`);
     }
     else {
-      console.log(`Unselected seat: {row: ${row}, column: ${num}}`);
+      console.log(`Unselected seat: {row: ${row}, column: ${col}}`);
     }
   }
 
