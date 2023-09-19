@@ -198,9 +198,9 @@ class SeatApp extends Component {
     
     
     return (
-      <div>
-        <Timer/>
+      <div style={{ backgroundColor: 'black' }}>
         <div className = 'minibox' style={{display: showSummary ? 'none':'block'}}>
+        <div><Timer/></div>
         <div className='movieInfo'>
           <div className='imageContainer'>
             <img src={sample1} alt="" style={{ height: "200px", width: "400px" }} />
@@ -254,7 +254,7 @@ class SeatApp extends Component {
           </div>
         </div>
 
-        <footer class="footer">
+        <footer class="footer" style={{display: showSummary ? 'none':'block'}}>
             <div className='inputs'>
               <pre>
                 Quantity: {chosenSeats.length}
@@ -262,11 +262,12 @@ class SeatApp extends Component {
               <pre>
                 Cost: ${chosenSeats.length * 8}
               </pre>
-              <Button variant="contained" onClick={this.handleCheckout} disabled={chosenSeats.length === 0 ? true:false}>checkout</Button>
+              <Button variant="contained" onClick={this.handleCheckout} disabled={chosenSeats.length === 0 ? true:false} style={{ background: 'grey' }}>checkout</Button>
             </div>
         </footer>
 
         <div className='orderSummary' style={{display: showSummary ? 'block':'none'}}>
+        <Timer/>
           <pre>
             Qty: {chosenSeats.length}
           </pre>
@@ -279,8 +280,8 @@ class SeatApp extends Component {
           <pre>
             Total cost: ${chosenSeats.length * 8}
           </pre>
-          <button onClick={this.handleCancel}>Cancel</button>
-          <button onClick={this.handleConfirm}>Confirm</button>
+          <Button variant="contained" onClick={this.handleCancel} style={{ background: 'grey' }}>Cancel</Button>
+          <Button variant="contained" onClick={this.handleCancel} style={{ background: 'grey' }}>Confirm</Button>
         </div>
 
       </div>
