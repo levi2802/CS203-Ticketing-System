@@ -167,6 +167,7 @@ class SeatApp extends Component {
     } catch {
       alert("error, need troubleshoot, well i expected an error");
     }
+    console.log("purchase add (without seat id list) success")
   }
 
   addSeatToDB = (seat, username) => {
@@ -324,7 +325,7 @@ class SeatApp extends Component {
             Total cost: ${chosenSeats.length * 8}
           </pre>
           <Button variant="contained" onClick={this.handleCancel} style={{ background: 'grey' }}>Cancel</Button>
-          <Button variant="contained" onClick={this.handleCancel} style={{ background: 'grey' }}>Confirm</Button>
+          <Button variant="contained" onClick={this.handleConfirm} style={{ background: 'grey' }}>Confirm</Button>
         </div>
 
       </div>
