@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import SeatApp from "./SeatApp/SeatApp"
-import NavbarLogin from "../HomePage/NavbarLogin";
-import Navbar from "../HomePage/Navbar";
+import NavBar from "../NavBar/NavBar";
+import NavBarLoggedIn from "../NavBar/NavBarLoggedIn";
 
 function SeatPage(){
 
@@ -19,7 +19,7 @@ function SeatPage(){
 
     return (
         <>
-            {hasToken ? <NavbarLogin/> : <Navbar/>}
+            {hasToken ? <NavBarLoggedIn/> : <NavBar/>}
             <SeatApp/>
         </>
     )
