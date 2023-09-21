@@ -16,6 +16,7 @@ class SeatApp extends Component {
     this.state = { seats: [], chosenSeats: [], showSummary: false };
   }
 
+
   async componentDidMount() {
     let seats = [];
 
@@ -113,10 +114,10 @@ class SeatApp extends Component {
     }
   }
 
-    handleCheckout = () => {
-    const {chosenSeats} = this.state;
-    this.setState({showSummary: true});
-    };
+  handleCheckout = () => {
+    const { chosenSeats } = this.state;
+    this.setState({ showSummary: true });
+  };
 
   handleCancel = () => {
     const { chosenSeats } = this.state;
@@ -161,6 +162,14 @@ class SeatApp extends Component {
   render() {
     const { seats, showSummary } = this.state;
 
+    // Movie Image url
+    const movieImage = localStorage.getItem("movieImage");
+
+    // Movie title
+    const title = localStorage.getItem("movieTitle");
+
+    console.log(title);
+
     //create array with nulls
     const seatsGrid = [];
     for (let i = 0; i < 4; i++) {
@@ -195,22 +204,22 @@ class SeatApp extends Component {
     const chosenSeats = seats.filter(seat => seat.selected).map(seat => seat.num + 1);
     const chosenRow = seats.filter(seat => seat.selected).map(seat => seat.row + 1);
     const availableSeats = seats.filter(seat => seat.avail && !seat.selected).length;
-    
-    
+
+
     return (
       <div>
-        <Timer/>
-        <div className = 'minibox' style={{display: showSummary ? 'none':'block'}}>
-        <div className='movieInfo'>
-          <div className='imageContainer'>
-            <img src={sample1} alt="" style={{ height: "200px", width: "400px" }} />
+        <Timer />
+        <div className='minibox' style={{ display: showSummary ? 'none' : 'block' }}>
+          <div className='movieInfo'>
+            <div className='imageContainer'>
+              <img src={`https://image.tmdb.org/t/p/original/${movieImage}`} alt="" style={{ height: "200px", width: "400px" }} />
+            </div>
+            <div align='left'>
+              <h1>{title}</h1>
+              <p>Run Time: 1 hr 39 mins</p>
+              <p>Rating: <img src={PG} alt="" style={{ height: "25px", width: "35px" }} />some violence</p>
+            </div>
           </div>
-          <div align='left'>
-            <h1>Teenage Mutant Ninja Turtles: Mutant Mayhem (忍者龟：变种大乱斗)</h1>
-            <p>Run Time: 1 hr 39 mins</p>
-            <p>Rating: <img src={PG} alt="" style={{ height: "25px", width: "35px" }}/>some violence</p>
-          </div>
-        </div>
           <div id="stage-container">
             <svg width="500" height="100" >
             </svg>
@@ -246,27 +255,27 @@ class SeatApp extends Component {
 
           <div>
             <h3>Legend</h3>
-              <pre>
-                <div id = 'Unavailable' style={{ display: 'inline-block'}}></div>Unavailable
-                <div id = 'AvailableLegend' style={{ display: 'inline-block', marginLeft: '10px'}}></div>Available
-                <div id = 'selected' style={{ display: 'inline-block', marginLeft: '10px'}}></div>Selected
-              </pre>
+            <pre>
+              <div id='Unavailable' style={{ display: 'inline-block' }}></div>Unavailable
+              <div id='AvailableLegend' style={{ display: 'inline-block', marginLeft: '10px' }}></div>Available
+              <div id='selected' style={{ display: 'inline-block', marginLeft: '10px' }}></div>Selected
+            </pre>
           </div>
         </div>
 
         <footer class="footer">
-            <div className='inputs'>
-              <pre>
-                Quantity: {chosenSeats.length}
-              </pre>
-              <pre>
-                Cost: ${chosenSeats.length * 8}
-              </pre>
-              <Button variant="contained" onClick={this.handleCheckout} disabled={chosenSeats.length === 0 ? true:false}>checkout</Button>
-            </div>
+          <div className='inputs'>
+            <pre>
+              Quantity: {chosenSeats.length}
+            </pre>
+            <pre>
+              Cost: ${chosenSeats.length * 8}
+            </pre>
+            <Button variant="contained" onClick={this.handleCheckout} disabled={chosenSeats.length === 0 ? true : false}>checkout</Button>
+          </div>
         </footer>
 
-        <div className='orderSummary' style={{display: showSummary ? 'block':'none'}}>
+        <div className='orderSummary' style={{ display: showSummary ? 'block' : 'none' }}>
           <pre>
             Qty: {chosenSeats.length}
           </pre>

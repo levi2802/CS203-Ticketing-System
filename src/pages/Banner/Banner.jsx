@@ -20,6 +20,11 @@ function Banner() {
         fetchData();
     }, []);
 
+    console.log(movie);
+
+    localStorage.setItem("movieImage", movie.poster_path);
+    localStorage.setItem("movieTitle", movie.title);
+
     function truncate(str, n) {
         return str?.length > n ? str.substr(0, n - 1) + "..." : str;
     }
