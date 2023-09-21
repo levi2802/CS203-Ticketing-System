@@ -15,38 +15,38 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 
-
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthController {
 
     private final AuthenticationService authenticationService;
-    
-    // @Valid perform validation based on the constraints defined in RegisterRequest.java
+
+    // @Valid perform validation based on the constraints defined in
+    // RegisterRequest.java
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody AuthenticationRequest registerRequest) {
 
-
         return ResponseEntity.ok(authenticationService.register(registerRequest));
 
-
-
-//        //Checks if username exists through a method from the UserRepository class
-//        if(userService.doesUsernameExist(registerRequest.getUsername())) {
-//            return ResponseEntity.badRequest().body(new MessageResponse("Error: Username already taken!"));
-//        }
-//
-//        User user = new User(registerRequest.getUsername(), registerRequest.getPassword());
-//
-//        userService.save(user);
-//
-//        return new ResponseEntity<User>(user, HttpStatus.CREATED);
+        // //Checks if username exists through a method from the UserRepository class
+        // if(userService.doesUsernameExist(registerRequest.getUsername())) {
+        // return ResponseEntity.badRequest().body(new MessageResponse("Error: Username
+        // already taken!"));
+        // }
+        //
+        // User user = new User(registerRequest.getUsername(),
+        // registerRequest.getPassword());
+        //
+        // userService.save(user);
+        //
+        // return new ResponseEntity<User>(user, HttpStatus.CREATED);
 
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> authenticate(@Valid @RequestBody AuthenticationRequest authenticationRequest) {
+    public ResponseEntity<AuthenticationResponse> authenticate(
+            @Valid @RequestBody AuthenticationRequest authenticationRequest) {
         return ResponseEntity.ok(authenticationService.authenticate(authenticationRequest));
     }
 
@@ -55,10 +55,6 @@ public class AuthController {
         return "Hello world";
     }
 }
-
-
-
-
 
 // 1. User registers at the front end page
 // 2. Payload request is created and send to the controller

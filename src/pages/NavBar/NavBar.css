@@ -35,6 +35,29 @@
     width: 30px;
 }
 
+.loginNavbar {
+    position: fixed;
+    color: goldenrod;
+    right: 80px;
+    width: 30px;
+    object-fit: contain;
+}
+
+.registerNavbar {
+    position: fixed;
+    color: goldenrod;
+    right: 150px;
+    width: 30px;
+    object-fit: contain;
+}
+
+.logoutButton {
+    position: fixed;
+    color: goldenrod;
+    right: 80px;
+    width: 60px;
+    object-fit: contain;
+}
 
 .button-container {
     text-align: end;

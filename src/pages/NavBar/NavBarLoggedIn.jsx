@@ -4,10 +4,14 @@ import userProfile from "./user_profile.png";
 import './NavBar.css';
 import { useEffect } from "react";
 import { useState } from "react";
-import Button from '@mui/material/Button';
 import { Link } from "react-router-dom";
 
-function NavBar() {
+function NavBarLoggedIn() {
+
+    const handleLogout = () => {
+        localStorage.removeItem('accessToken');
+        window.location.reload();
+    }
 
     const [show, handleShow] = useState(false);
 
@@ -31,17 +35,14 @@ function NavBar() {
     return (
         <div className={`nav ${show && "nav_black"}`}>
             <Link to="/"><img className="nav_logo" src={logo} alt="Wicket Logo" /></Link>
-            <div className="button-container">
-                <Button variant="text" style={{ color: 'gold' }} href="/login">Login</Button>
-                <Button variant="text" style={{ color: 'gold' }} href="/register">Register</Button>
-                <Button><img
-                    className="nav_avatar"
-                    src={userProfile}
-                    alt="user logo"
-                /></Button>
-            </div>
+            <img
+                className="nav_avatar"
+                src={userProfile}
+                alt="user logo"
+            />
+            <button className="logoutButton" onClick={handleLogout}>Logout</button>
         </div>
     )
 }
 
-export default NavBar;
+export default NavBarLoggedIn;

@@ -1,5 +1,6 @@
 package com.cs203.TicketWarrior.Registration.repository;
 
+import com.cs203.TicketWarrior.Registration.models.MovieScreening;
 import com.cs203.TicketWarrior.Registration.models.Seat;
 import com.cs203.TicketWarrior.Registration.models.User;
 
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-public interface SeatRepository extends MongoRepository<Seat, String>, SeatRepositoryCustom {
-
-    String mongoTemplate = null;
+public interface MovieScreeningRepository extends MongoRepository<MovieScreening, String>, MovieScreeningCustom{
+    
 }

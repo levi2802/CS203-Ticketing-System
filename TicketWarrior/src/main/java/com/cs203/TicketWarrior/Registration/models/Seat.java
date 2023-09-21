@@ -34,6 +34,7 @@ public class Seat {
     private int coloumn;
     private String type;
     private Boolean availability;
+    //private String username;
     // private float price;
     // private SeatType seatType;
 
@@ -43,12 +44,20 @@ public class Seat {
         this.coloumn = coloumn;
         this.type = type;
         this.availability = availability;
+        //this.username = username;
     }
 
     // Method to update the order this seat is assigned to.
     public void UpdateOrder(Order order) {
         this.order = order;
     }
+
+    // Link seat to input order
+    public Seat UpdateOrderOfSeat(Order order) {
+        this.order = order;
+        return this;
+    }
+
 
     public boolean isAvailable() {
         return this.availability;
