@@ -138,9 +138,9 @@ class SeatApp extends Component {
         const { row, num } = seat;
         return { row, num };
       })
+      
     await selectedSeats.forEach(seat => this.addSeatToDB(seat));
   }
-
 
   addSeatToDB = (seat) => {
     try {

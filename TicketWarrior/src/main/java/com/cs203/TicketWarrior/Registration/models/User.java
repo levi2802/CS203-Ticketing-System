@@ -3,6 +3,9 @@ package com.cs203.TicketWarrior.Registration.models;
 import java.util.Collection;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.OneToMany;
+
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -29,6 +32,11 @@ public class User implements UserDetails {
 
     @NonNull
     private String password;
+
+    // A user can have 0 to many orders. We choose to cascade deletions, and delete
+    // orphaned orders.
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Order> orders;
 
     // Declare as enum, using String to represent instead of integer
     // @Enumerated(EnumType.STRING)

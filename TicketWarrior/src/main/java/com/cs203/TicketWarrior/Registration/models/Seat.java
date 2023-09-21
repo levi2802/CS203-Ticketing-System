@@ -45,9 +45,10 @@ public class Seat {
         this.availability = availability;
     }
 
-    // Method to update the order this seat is assigned to.
-    public void UpdateOrder(Order order) {
+    // Link seat to input order
+    public Seat UpdateOrderOfSeat(Order order) {
         this.order = order;
+        return this;
     }
 
     public boolean isAvailable() {

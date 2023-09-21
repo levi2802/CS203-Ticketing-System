@@ -13,4 +13,3 @@ public interface SeatRepository extends MongoRepository<Seat, String>, SeatRepos
 
     String mongoTemplate = null;
 }
-

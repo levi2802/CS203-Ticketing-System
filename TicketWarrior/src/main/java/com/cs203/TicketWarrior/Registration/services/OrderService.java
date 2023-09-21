@@ -1,15 +1,16 @@
 package com.cs203.TicketWarrior.Registration.services;
 
 import com.cs203.TicketWarrior.Registration.models.Order;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.cs203.TicketWarrior.Registration.repository.OrderRepository;
-import java.util.List;
 
-import java.util.Optional;
+import java.util.List;
 
 @Service
 public class OrderService {
+
     @Autowired
     private OrderRepository orders;
 
