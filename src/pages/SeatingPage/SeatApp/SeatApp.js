@@ -86,7 +86,13 @@ class SeatApp extends Component {
           selectedSeatNumbers.length === 0 || selectedSeatNumbers.includes(num - 1) ||
           selectedSeatNumbers.includes(num + 1) || selectedSeatNumbers.includes(num)
         ) {
+          // Check if the number of selected seats exceeds 10
+        if (selectedSeatNumbers.length < 10) {
           seat.selected = !seat.selected;
+        } else {
+          // Show pop-up message
+          alert("You cannot book more than 10 seats.");
+        }
         }
         else {
           // Show pop-up message
