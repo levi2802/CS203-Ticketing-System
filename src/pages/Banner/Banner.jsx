@@ -4,6 +4,7 @@ import requests from "../request";
 import './Banner.css';
 import YouTube from "react-youtube";
 import movieTrailer from "movie-trailer";
+import { useNavigate } from "react-router-dom";
 
 function Banner() {
     const [movie, setMovie] = useState([]);
@@ -48,6 +49,13 @@ function Banner() {
         }
     }
 
+    // Navigate to the seating page on button click
+    const navigate = useNavigate();
+
+    const handleButtonClick = () => {
+        navigate('/seating');
+    }
+
     return (
         <header className="banner" style={{
             backgroundSize: 'cover',
@@ -60,12 +68,12 @@ function Banner() {
 
                 <div className="banner_buttons">
                     <button className="banner_button" onClick={() => handleClick(movie)}>Play Trailer</button>
-                    <button className="banner_button">Buy Tickets</button>
+                    <button className="banner_button" onClick={handleButtonClick}>Buy Tickets</button>
                 </div>
 
                 <h1 className="banner_description">{truncate(movie?.overview, 150)}</h1>
             </div>
-            
+
             {trailerUrl && <YouTube className="youtube_container" videoId={trailerUrl} opts={opts} />}
 
             <div className="banner--fadeBottom" />
