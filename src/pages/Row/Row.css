@@ -1,0 +1,64 @@
+.row {
+    margin: 20px;
+    color: #fff;
+}
+
+.row_posters {
+    display: flex;
+    overflow-y: hidden;
+    overflow-x: scroll;
+    padding: 20px;
+}
+
+.row_posters::-webkit-scrollbar {
+    display: none;
+}
+
+.row_poster {
+    object-fit: contain;
+    width: 100%;
+    max-height: 100px;
+    transition: transform 450ms;
+    margin-right: 10px;
+}
+
+.row_poster:hover {
+    transform: scale(1.08);
+}
+
+.row_posterLarge {
+    max-height: 250px;
+}
+
+.row_posterLarge:hover {
+    transform: scale(1.09);
+}
+
+.row_posterInnerWrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.row_posterInnerWrapper.row_posterLarge {
+    max-height: 250px;
+}
+
+.row_posterInnerWrapper:hover .buyTicketsButton {
+    display: block;
+}
+
+.row_posterInnerWrapper:hover.row_posterLarge .buyTicketsButton {
+    display: block;
+}
+
+.buyTicketsButton {
+    display: none;
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ff9900;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
