@@ -10,18 +10,20 @@ function NavBar() {
 
     const [show, handleShow] = useState(false);
 
+    const handleScroll = () => {
+        // Scroll is greater than 100 pixels down from the top
+        if (window.scrollY > 100) {
+            handleShow(true);
+        } else {
+            handleShow(false);
+        }
+    };
+
     useEffect(() => {
-        window.addEventListener("scroll", () => {
-            // Scroll is greater than 100 pixels down from the top
-            if (window.scrollY > 100) {
-                handleShow(true);
-            } else {
-                handleShow(false);
-            }
-        });
+        window.addEventListener("scroll", handleScroll);
 
         return () => {
-            window.removeEventListener("scroll");
+            window.removeEventListener("scroll", handleScroll);
         };
     }, []);
 
