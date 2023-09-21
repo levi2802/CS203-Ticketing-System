@@ -66,18 +66,19 @@ class SeatApp extends Component {
   handleCancel = () => this.setState({ showSummary: false });
 
   handleConfirm = async () => {
+    const username = localStorage.getItem('username');
     const selectedSeats = this.state.seats.filter(seat => seat.selected);
     const selectedSeatStrings = selectedSeats.map(seat => `row: ${seat.row + 1}, column: ${seat.num + 1}`);
     try {
-      await this.createOrder(selectedSeatStrings);
+      await this.createOrder(selectedSeatStrings, username);
     } catch (error) {
       console.error('Error creating order: ', error);
     }
   }
 
-  createOrder = async (selectedSeatStrings) => {
+  createOrder = async (selectedSeatStrings, username) => {
     const orderData = {
-      user: { id: this.state.userId },  // Assuming you have userId in state
+      user: username,
       movie: { id: this.state.movieId },  // Assuming you have movieId in state
       seats: selectedSeatStrings,
       purchaseDateTime: new Date().toISOString(),
@@ -115,6 +116,8 @@ class SeatApp extends Component {
     const rowName = [...Array(4)].map((_, i) => String.fromCharCode('A'.charCodeAt(0) + i));
     const chosenRow = seats.filter(seat => seat.selected).map(seat => seat.row + 1);
 
+    const seatsGrid = this.renderSeatsGrid(0, 14);
+
     return (
       <div>
         <Timer />
@@ -137,28 +140,15 @@ class SeatApp extends Component {
 
           <div className='layout'>
             <div className='left'>
-              {rowName.map((rowLabel, rowIndex) => (
-                <div className="Row" key={rowIndex}>
-                  {rowLabel}
-                  {seatsGrid[rowIndex].slice(0, 4)}
-                </div>
-              ))}
+              {seatsGrid.slice(0, 4)}
             </div>
 
             <div className='center'>
-              {[0, 1, 2, 3].map(rowIndex => (
-                <div className="Row" key={rowIndex}>
-                  {seatsGrid[rowIndex].slice(4, 10)}
-                </div>
-              ))}
+              {seatsGrid.slice(4, 10)}
             </div>
 
             <div className='right'>
-              {[0, 1, 2, 3].map(rowIndex => (
-                <div className="Row" key={rowIndex}>
-                  {seatsGrid[rowIndex].slice(10, 14)}
-                </div>
-              ))}
+              {seatsGrid.slice(10, 14)}
             </div>
           </div>
 

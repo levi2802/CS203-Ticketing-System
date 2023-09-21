@@ -30,6 +30,7 @@ function UsernamePassword() {
             console.log(response.data);
             if (response.data.isSuccessful) {
                 localStorage.setItem('accessToken', response.data.token);
+                localStorage.setItem('username', formData.username);
                 setData(initialFormData);
                 alert("Login successful!");
                 navigate('/');
