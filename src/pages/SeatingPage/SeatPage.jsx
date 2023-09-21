@@ -1,11 +1,11 @@
 import React from "react";
 import SeatApp from "./SeatApp/SeatApp"
-import Navbar from "../HomePage/Navbar";
+import NavBar from "../NavBar/NavBar";
 
 function SeatPage() {
     return (
         <>
-            <Navbar/>
+            <NavBar/>
             <SeatApp/>
         </>
     )

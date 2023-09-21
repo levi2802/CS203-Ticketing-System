@@ -29,7 +29,7 @@ function NavBar() {
 
     return (
         <div className={`nav ${show && "nav_black"}`}>
-            <img className="nav_logo" src={logo} alt="Wicket Logo" />
+            <Link to="/"><img className="nav_logo" src={logo} alt="Wicket Logo" /></Link>
             <img
                 className="nav_avatar"
                 src={userProfile}
