@@ -20,7 +20,7 @@ public class SecurityConfig {
     private final AuthenticationProvider authenticationProvider;
 
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         //Implement whitelisting for users that are creating acc and when logging in as token is not available yet
         http
@@ -37,3 +37,4 @@ public class SecurityConfig {
         return http.build();
     }
 }
+
