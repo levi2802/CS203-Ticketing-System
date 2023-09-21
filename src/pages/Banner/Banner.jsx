@@ -23,7 +23,7 @@ function Banner() {
     console.log(movie);
 
     localStorage.setItem("movieImage", movie.poster_path);
-    localStorage.setItem("movieTitle", movie.title);
+    localStorage.setItem("movieTitle", movie?.title || movie?.name || movie?.original_name);
 
     function truncate(str, n) {
         return str?.length > n ? str.substr(0, n - 1) + "..." : str;
