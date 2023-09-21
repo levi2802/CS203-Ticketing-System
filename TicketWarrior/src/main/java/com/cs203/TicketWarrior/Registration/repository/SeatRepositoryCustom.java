@@ -9,4 +9,5 @@ import com.cs203.TicketWarrior.Registration.models.Seat;
 public interface SeatRepositoryCustom {
     List<Seat> findAllOccupiedSeats();
     Seat findbySeat(Seat seat);
+    List<Seat> findbyusername(String user_id);
 }

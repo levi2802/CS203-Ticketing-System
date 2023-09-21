@@ -15,7 +15,7 @@ public class PurchaseController {
     @Autowired
     private PurchaseService purchaseService;
 
-    @GetMapping("/")
+    @GetMapping
     public List<Purchase> getAllPurchases() {
         return purchaseService.findAll();
     }
@@ -25,7 +25,7 @@ public class PurchaseController {
         return purchaseService.findByUserId(userId);
     }
 
-    @PostMapping("/")
+    @PostMapping("/postPurchase")
     public Purchase createPurchase(@RequestBody Purchase purchase) {
         return purchaseService.createPurchase(purchase);
     }

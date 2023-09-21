@@ -38,7 +38,10 @@ public class SeatService{
         return SeatRepository.findAllOccupiedSeats();
         
     }
-
+    public List<Seat> findbyID(String user_id){
+        return SeatRepository.findbyusername(user_id);
+        
+    }
 
     // public List<Seat> findAvailableSeats() {
     //     return SeatRepository.findAllAvailableSeats();

@@ -23,14 +23,22 @@ public class Seat {
     private int coloumn;
     private String type;
     private Boolean availability;
+    private String username;
     // private float price;
 	// private SeatType seatType;
 
-    public void Updateall(int row, int coloumn, String type, Boolean availability){
+    public void Updateall(Order order, int row, int coloumn, String type, Boolean availability, String username) {
+        //this.order = order;
         this.row = row;
         this.coloumn = coloumn;
         this.type = type;
         this.availability = availability;
+        this.username = username;
+    }
+
+    // Method to update the order this seat is assigned to.
+    public void UpdateOrder(Order order) {
+        //this.order = order;
     }
 
     public boolean isAvailable() {

@@ -11,6 +11,7 @@ import Timer from './Timer';
 class SeatApp extends Component {
   template = function (row, coloumn, type, availability) { }
   Unavailable = [];
+  d = new Date();
   constructor(props) {
     super(props);
     this.state = { seats: [], chosenSeats: [], showSummary: false };
@@ -113,10 +114,10 @@ class SeatApp extends Component {
     }
   }
 
-    handleCheckout = () => {
-    const {chosenSeats} = this.state;
-    this.setState({showSummary: true});
-    };
+  handleCheckout = () => {
+    const { chosenSeats } = this.state;
+    this.setState({ showSummary: true });
+  };
 
   handleCancel = () => {
     const { chosenSeats } = this.state;
@@ -126,22 +127,49 @@ class SeatApp extends Component {
   //Handling confirm button to give info to backend
   handleConfirm = async () => {
     const { seats } = this.state;
+    // grabbing username
+    const username = localStorage.getItem('username');
+    //this is a placeholder atm
+    const movieName = "Teenage Mutant Ninja Turtles: Mutant Mayhem (忍者龟：变种大乱斗)";
     const selectedSeats = seats.filter(seat => seat.selected)
       .map(seat => {
         const { row, num } = seat;
         return { row, num };
       })
-    await selectedSeats.forEach(seat => this.addSeatToDB(seat));
+    //adding purchased seats to backend
+    await selectedSeats.forEach(seat => this.addSeatToDB(seat, username));
+    
+    //grabing the seat ids created
+    let seatIDs = [];
+    const findseatstring = "http://localhost:8080/api/v1/seats/findSeats/" + username
+    await axios.get(findseatstring)
+      .then(json => json.data.forEach(data => seatIDs.push(data._id)))
+      .catch(console.error);
+    console.log(seatIDs);
+    // creating purchase object
+    await this.addPurchaseOrder(username, seatIDs, movieName);
   }
 
+  addPurchaseOrder = (username, seatIDs, movieName) => {
+    try {
+      axios.post("http://localhost:8080/api/purchases/postPurchase", {
+        userId: username,
+        movieId: movieName,
+        //seatIds: seatIDs,
+      }).then();
+    } catch {
+      alert("error, need troubleshoot, well i expected an error");
+    }
+  }
 
-  addSeatToDB = (seat) => {
+  addSeatToDB = (seat, username) => {
     try {
       axios.post("http://localhost:8080/api/v1/seats/PostSeats", {
         row: seat.row,
         coloumn: seat.num,
         type: "standard",
         availability: false,
+        username: username
       }, {
         validateStatus: function (status) {
           if (status < 500) alert("seat at row: " + (seat.row + 1) + " coloumn: " + (seat.num + 1) + " booked successfully");
@@ -195,22 +223,22 @@ class SeatApp extends Component {
     const chosenSeats = seats.filter(seat => seat.selected).map(seat => seat.num + 1);
     const chosenRow = seats.filter(seat => seat.selected).map(seat => seat.row + 1);
     const availableSeats = seats.filter(seat => seat.avail && !seat.selected).length;
-    
-    
+
+
     return (
       <div>
-        <Timer/>
-        <div className = 'minibox' style={{display: showSummary ? 'none':'block'}}>
-        <div className='movieInfo'>
-          <div className='imageContainer'>
-            <img src={sample1} alt="" style={{ height: "200px", width: "400px" }} />
+        <Timer />
+        <div className='minibox' style={{ display: showSummary ? 'none' : 'block' }}>
+          <div className='movieInfo'>
+            <div className='imageContainer'>
+              <img src={sample1} alt="" style={{ height: "200px", width: "400px" }} />
+            </div>
+            <div align='left'>
+              <h1>Teenage Mutant Ninja Turtles: Mutant Mayhem (忍者龟：变种大乱斗)</h1>
+              <p>Run Time: 1 hr 39 mins</p>
+              <p>Rating: <img src={PG} alt="" style={{ height: "25px", width: "35px" }} />some violence</p>
+            </div>
           </div>
-          <div align='left'>
-            <h1>Teenage Mutant Ninja Turtles: Mutant Mayhem (忍者龟：变种大乱斗)</h1>
-            <p>Run Time: 1 hr 39 mins</p>
-            <p>Rating: <img src={PG} alt="" style={{ height: "25px", width: "35px" }}/>some violence</p>
-          </div>
-        </div>
           <div id="stage-container">
             <svg width="500" height="100" >
             </svg>
@@ -246,27 +274,27 @@ class SeatApp extends Component {
 
           <div>
             <h3>Legend</h3>
-              <pre>
-                <div id = 'Unavailable' style={{ display: 'inline-block'}}></div>Unavailable
-                <div id = 'AvailableLegend' style={{ display: 'inline-block', marginLeft: '10px'}}></div>Available
-                <div id = 'selected' style={{ display: 'inline-block', marginLeft: '10px'}}></div>Selected
-              </pre>
+            <pre>
+              <div id='Unavailable' style={{ display: 'inline-block' }}></div>Unavailable
+              <div id='AvailableLegend' style={{ display: 'inline-block', marginLeft: '10px' }}></div>Available
+              <div id='selected' style={{ display: 'inline-block', marginLeft: '10px' }}></div>Selected
+            </pre>
           </div>
         </div>
 
         <footer class="footer">
-            <div className='inputs'>
-              <pre>
-                Quantity: {chosenSeats.length}
-              </pre>
-              <pre>
-                Cost: ${chosenSeats.length * 8}
-              </pre>
-              <Button variant="contained" onClick={this.handleCheckout} disabled={chosenSeats.length === 0 ? true:false}>checkout</Button>
-            </div>
+          <div className='inputs'>
+            <pre>
+              Quantity: {chosenSeats.length}
+            </pre>
+            <pre>
+              Cost: ${chosenSeats.length * 8}
+            </pre>
+            <Button variant="contained" onClick={this.handleCheckout} disabled={chosenSeats.length === 0 ? true : false}>checkout</Button>
+          </div>
         </footer>
 
-        <div className='orderSummary' style={{display: showSummary ? 'block':'none'}}>
+        <div className='orderSummary' style={{ display: showSummary ? 'block' : 'none' }}>
           <pre>
             Qty: {chosenSeats.length}
           </pre>
