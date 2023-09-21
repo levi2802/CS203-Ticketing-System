@@ -45,8 +45,10 @@ public class Seat {
         this.availability = availability;
     }
 
-    public void UpdateOrder(Order order) {
+    // Link seat to input order
+    public Seat UpdateOrderOfSeat(Order order) {
         this.order = order;
+        return this;
     }
 
     public boolean isAvailable() {

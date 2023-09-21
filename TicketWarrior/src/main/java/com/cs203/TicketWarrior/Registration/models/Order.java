@@ -43,7 +43,7 @@ public class Order {
 
     // An order can have 1 to many seats. We choose to cascade deletions, and delete
     // orphaned orders.
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<Seat> seats;
 
     @NotBlank
@@ -58,5 +58,11 @@ public class Order {
         }
 
         return SeatIds;
+    }
+
+    // Add seat to this order's list of seats
+    public Seat addSeat(Seat seat) {
+        this.seats.add(seat);
+        return seat;
     }
 }

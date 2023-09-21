@@ -40,11 +40,11 @@ public class SeatRepositoryImpl implements SeatRepositoryCustom {
         return mongoTemplate.findOne(query, Seat.class);
     }
 
-    // // Find a seat with a matching seatId to the input seatId.
-    // public Seat findById(String seatId) {
-    // final Query query = new Query();
-    // query.addCriteria(Criteria.where("id").is(seatId));
+    // Find a seat with a matching seatId to the input seatId.
+    public Seat findById(String seatId) {
+        final Query query = new Query();
+        query.addCriteria(Criteria.where("id").is(seatId));
 
-    // return mongoTemplate.findOne(query, Seat.class);
-    // }
+        return mongoTemplate.findOne(query, Seat.class);
+    }
 }

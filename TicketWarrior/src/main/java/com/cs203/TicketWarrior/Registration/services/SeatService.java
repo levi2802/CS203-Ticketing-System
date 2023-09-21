@@ -27,19 +27,26 @@ public class SeatService {
         return SeatRepository.findAll();
     }
 
-    public Seat insert(Seat seat, Order order) throws Exception {
+    public Seat insert(Seat seat) throws Exception {
         Seat foundSeat = SeatRepository.findbySeat(seat);
         if (foundSeat != null) {
             throw new Exception("entity already exist");
         }
-        seat.UpdateOrder(order);
-        SeatRepository.insert(seat);
-        return seat;
+        Seat insertedSeat = SeatRepository.insert(seat);
+
+        return insertedSeat;
     }
 
     public List<Seat> findAllOccupiedSeats() {
         return SeatRepository.findAllOccupiedSeats();
+    }
 
+    public Optional<Seat> findSeatById(String seatId) {
+        return SeatRepository.findById(seatId);
+    }
+
+    public Seat updateSeat(Seat seat) {
+        return SeatRepository.save(seat);
     }
 
     // public List<Seat> findAvailableSeats() {
