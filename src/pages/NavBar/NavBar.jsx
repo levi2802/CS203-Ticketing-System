@@ -4,6 +4,7 @@ import userProfile from "./user_profile.png";
 import './NavBar.css';
 import { useEffect } from "react";
 import { useState } from "react";
+import Button from '@mui/material/Button';
 import { Link } from "react-router-dom";
 
 function NavBar() {
@@ -30,13 +31,15 @@ function NavBar() {
     return (
         <div className={`nav ${show && "nav_black"}`}>
             <Link to="/"><img className="nav_logo" src={logo} alt="Wicket Logo" /></Link>
-            <img
-                className="nav_avatar"
-                src={userProfile}
-                alt="user logo"
-            />
-            <Link className="login" to="/login">Login</Link>
-            <Link className="register" to="/register">Register</Link>
+            <div className="button-container">
+                <Button variant="text" className="login" style={{ color: 'gold' }} href="/login">Login</Button>
+                <Button variant="text" className="register" style={{ color: 'gold' }} href="/register">Register</Button>
+                <Button><img
+                    className="nav_avatar"
+                    src={userProfile}
+                    alt="user logo"
+                /></Button>
+            </div>
         </div>
     )
 }

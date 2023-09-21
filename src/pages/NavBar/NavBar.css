@@ -35,18 +35,8 @@
     width: 30px;
 }
 
-.login {
-    position: fixed;
-    color: aqua;
-    right: 80px;
-    width: 30px;
-    object-fit: contain;
-}
 
-.register {
-    position: fixed;
-    color: aqua;
-    right: 150px;
-    width: 30px;
-    object-fit: contain;
+.button-container {
+    text-align: end;
+    padding-right: 2rem;
 }
