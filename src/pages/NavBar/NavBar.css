@@ -35,7 +35,7 @@
     width: 30px;
 }
 
-.login {
+.loginNavbar {
     position: fixed;
     color: aqua;
     right: 80px;
@@ -43,7 +43,7 @@
     object-fit: contain;
 }
 
-.register {
+.registerNavbar {
     position: fixed;
     color: aqua;
     right: 150px;

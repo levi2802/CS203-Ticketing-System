@@ -31,6 +31,7 @@ function UsernamePassword() {
             console.log(response.data);
             if (response.data.isSuccessful) {
                 localStorage.setItem('accessToken', response.data.token);
+                localStorage.setItem('username', formData.username);
                 setData(initialFormData);
                 alert("Login successful!");
                 navigate('/');
@@ -45,26 +46,21 @@ function UsernamePassword() {
     };
 
     return (
-        <>
-            <div className="description">
-                <h1>Enter your login details</h1>
-                <h3>Don't have an account? <Link to="/register">Sign up now!</Link></h3>
-            </div>
+        <div className='signUp'>
 
             <form onSubmit={handleSubmit}>
-                <div className="login-details">
-                    <label htmlFor="inputUsername" className="form-label">Username:</label>
-                    <input placeholder="Enter Username" type="text" className="login-input" name="username" value={formData.username} onChange={handleChange} />
-                    <label htmlFor="inputPassword" className="form-label">Password:</label>
-                    <input placeholder="Enter Password" type="password" className="login-input" name="password" value={formData.password} onChange={handleChange}/>
+                <h1>Sign In</h1>
+                <input placeholder="Enter Username" type="text" className="login-input" name="username" value={formData.username} onChange={handleChange} />
+                <input placeholder="Enter Password" type="password" className="login-input" name="password" value={formData.password} onChange={handleChange}/>
+                <button type="submit">Sign In</button>
 
-                    <div className="login-button">
-                        <button type="submit" className="btn btn-primary mt-4 mb-4 mx-auto d-block">Login</button>
-                    </div>
-                </div>
+                <h4>
+                    <span className='signUp-gray'>New to Wicked? </span>
+                    <span ><Link className='signUp-link' to="/register">Sign Up Now.</Link></span>
+                </h4>
             </form>
-        </>
-        
+        </div>
+
 
     )
 }

@@ -31,6 +31,7 @@ function UsernamePassword() {
             console.log(response.data);
             if (response.data.isSuccessful) {
                 localStorage.setItem('accessToken', response.data.token);
+                localStorage.setItem('username', formData.username);
                 setData(initialFormData);
                 alert("Registration successful!");
                 navigate('/');
@@ -42,35 +43,27 @@ function UsernamePassword() {
         }).catch(error => {
             console.log('Error: ', error);
         })
-        
+
     };
 
     const [message, setMessage] = useState(''); // State variable to store the message
 
     return (
-        <>
-            <div className="description">
-                <h1>Create an account now!</h1>
-                <h3>Already have an account? <Link to="/login">Login here!</Link></h3>
-            </div>
+        <div className='signUp'>
 
             <form onSubmit={handleSubmit}>
-                <div className="login-details">
-                    <label htmlFor="inputEmail" className="form-label">Email:</label>
-                    <input placeholder="Enter Email" type="text" className="login-input" name="email" value={formData.email} onChange={handleChange} />
-                    <label htmlFor="inputUsername" className="form-label">Username:</label>
-                    <input placeholder="Enter Username" type="text" className="login-input" name="username" value={formData.username} onChange={handleChange} />
-                    <label htmlFor="inputPassword" className="form-label">Password:</label> 
-                    <input placeholder="Enter Password" type="password" className="login-input" name="password" value={formData.password} onChange={handleChange}/>
+                <h1> Register </h1>
+                <input placeholder="Enter Email" type="text" className="login-input" name="email" value={formData.email} onChange={handleChange} />
+                <input placeholder="Enter Username" type="text" className="login-input" name="username" value={formData.username} onChange={handleChange} />
+                <input placeholder="Enter Password" type="password" className="login-input" name="password" value={formData.password} onChange={handleChange}/>
+                <button type="submit">Register</button>
 
-                    <div className="login-button">
-                        <button type="submit">Register</button>
-                    </div>
-                </div>
+                <h4>
+                    <span className='signUp-gray'>Already got an account? </span>
+                    <span><Link className="signUp-link" to="/login">Sign In Now.</Link></span>
+                </h4>
             </form>
-        </>
-        
-
+        </div>
     )
 }
 

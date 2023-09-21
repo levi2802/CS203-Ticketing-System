@@ -35,8 +35,8 @@ function NavBar() {
                 src={userProfile}
                 alt="user logo"
             />
-            <Link className="login" to="/login">Login</Link>
-            <Link className="register" to="/register">Register</Link>
+            <Link className="loginNavbar" to="/login">Login</Link>
+            <Link className="registerNavbar" to="/register">Register</Link>
         </div>
     )
 }
