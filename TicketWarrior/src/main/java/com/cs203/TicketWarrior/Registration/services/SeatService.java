@@ -48,6 +48,10 @@ public class SeatService {
     public Seat updateSeat(Seat seat) {
         return SeatRepository.save(seat);
     }
+    public List<Seat> findbyID(String user_id){
+        return SeatRepository.findbyusername(user_id);
+        
+    }
 
     // public List<Seat> findAvailableSeats() {
     // return SeatRepository.findAllAvailableSeats();

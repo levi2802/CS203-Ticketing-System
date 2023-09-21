@@ -47,4 +47,10 @@ public class SeatRepositoryImpl implements SeatRepositoryCustom {
 
         return mongoTemplate.findOne(query, Seat.class);
     }
+
+    public List<Seat> findbyusername(String username){
+        final Query query = new Query();
+        query.addCriteria(Criteria.where("username").is(username));
+        return  mongoTemplate.find(query, Seat.class);
+    }
 }

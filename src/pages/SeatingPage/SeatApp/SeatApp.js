@@ -11,6 +11,7 @@ import Timer from './Timer';
 class SeatApp extends Component {
   template = function (row, coloumn, type, availability) { }
   Unavailable = [];
+  d = new Date();
   constructor(props) {
     super(props);
     this.state = { seats: [], chosenSeats: [], showSummary: false };
@@ -133,22 +134,49 @@ class SeatApp extends Component {
   //Handling confirm button to give info to backend
   handleConfirm = async () => {
     const { seats } = this.state;
+    // grabbing username
+    const username = localStorage.getItem('username');
+    //this is a placeholder atm
+    const movieName = "Teenage Mutant Ninja Turtles: Mutant Mayhem (忍者龟：变种大乱斗)";
     const selectedSeats = seats.filter(seat => seat.selected)
       .map(seat => {
         const { row, num } = seat;
         return { row, num };
       })
-      
-    await selectedSeats.forEach(seat => this.addSeatToDB(seat));
+    //adding purchased seats to backend
+    await selectedSeats.forEach(seat => this.addSeatToDB(seat, username));
+    
+    //grabing the seat ids created
+    let seatIDs = [];
+    const findseatstring = "http://localhost:8080/api/v1/seats/findSeats/" + username
+    await axios.get(findseatstring)
+      .then(json => json.data.forEach(data => seatIDs.push(data._id)))
+      .catch(console.error);
+    console.log(seatIDs);
+    // creating purchase object
+    await this.addPurchaseOrder(username, seatIDs, movieName);
   }
 
-  addSeatToDB = (seat) => {
+  addPurchaseOrder = (username, seatIDs, movieName) => {
+    try {
+      axios.post("http://localhost:8080/api/purchases/postPurchase", {
+        userId: username,
+        movieId: movieName,
+        //seatIds: seatIDs,
+      }).then();
+    } catch {
+      alert("error, need troubleshoot, well i expected an error");
+    }
+  }
+
+  addSeatToDB = (seat, username) => {
     try {
       axios.post("http://localhost:8080/api/v1/seats/PostSeats", {
         row: seat.row,
         coloumn: seat.num,
         type: "standard",
         availability: false,
+        username: username
       }, {
         validateStatus: function (status) {
           if (status < 500) alert("seat at row: " + (seat.row + 1) + " coloumn: " + (seat.num + 1) + " booked successfully");

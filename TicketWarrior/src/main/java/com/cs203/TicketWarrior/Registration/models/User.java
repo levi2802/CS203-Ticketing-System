@@ -35,8 +35,8 @@ public class User implements UserDetails {
 
     // A user can have 0 to many orders. We choose to cascade deletions, and delete
     // orphaned orders.
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Order> orders;
+    //@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    //private List<Order> orders;
 
     // Declare as enum, using String to represent instead of integer
     // @Enumerated(EnumType.STRING)

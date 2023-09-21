@@ -9,4 +9,5 @@ public interface SeatRepositoryCustom {
     List<Seat> findAllOccupiedSeats();
 
     Seat findbySeat(Seat seat);
+    List<Seat> findbyusername(String user_id);
 }
