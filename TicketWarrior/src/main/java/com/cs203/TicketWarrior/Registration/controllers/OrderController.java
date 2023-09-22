@@ -1,7 +1,6 @@
 package com.cs203.TicketWarrior.Registration.controllers;
 
 import java.util.List;
-
 import com.cs203.TicketWarrior.Registration.services.OrderService;
 import com.cs203.TicketWarrior.Registration.services.UserService;
 import com.cs203.TicketWarrior.Registration.models.Order;
@@ -38,13 +37,18 @@ public class OrderController {
     public Order getOrderByUserIdAndOrderId(@PathVariable(value = "userId") String userId,
             @PathVariable(value = "orderId") String orderId) {
 
-        return orderService.getOrder(orderId, userId);
+        return orderService.getOrder(orderId);
+    }
+
+    @GetMapping("/movies/{movieId}/occupiedSeats")
+    public List<String> getOccupiedSeatsByMovieId(@PathVariable(value = "movieName") String movieName) {
+        return orderService.getOccupiedSeatsByMovieId(movieName);
     }
 
     // Post a new order
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/users/{userId}/orders")
-    public Order addorder(@PathVariable(value = "userId") String userId, @RequestBody Order order) {
+    public Order addOrder(@PathVariable(value = "userId") String userId, @RequestBody Order order) {
         if (userService.doesUserIdExist(userId)) {
             return orderService.addOrder(order);
         }
@@ -56,8 +60,8 @@ public class OrderController {
     public Order updateOrder(@PathVariable(value = "userId") String userId,
             @PathVariable(value = "orderId") String orderId,
             @RequestBody Order newOrderInfo) {
-        if (orderService.getOrder(orderId, userId) == null) {
-            throw new OrderNotFoundException(userId, orderId);
+        if (orderService.getOrder(orderId) == null) {
+            throw new OrderNotFoundException(orderId);
         }
         Order order = orderService.updateOrder(orderId, newOrderInfo);
         return order;
@@ -67,8 +71,8 @@ public class OrderController {
     @DeleteMapping("/users/{userId}/orders/{orderId}")
     public void deleteOrder(@PathVariable(value = "userId") String userId,
             @PathVariable(value = "orderId") String orderId) {
-        if (orderService.getOrder(orderId, userId) == null) {
-            throw new OrderNotFoundException(userId, orderId);
+        if (orderService.getOrder(orderId) == null) {
+            throw new OrderNotFoundException(orderId);
         }
         orderService.deleteOrder(orderId);
     }

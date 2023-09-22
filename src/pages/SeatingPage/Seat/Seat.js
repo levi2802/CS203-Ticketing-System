@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './Seat.css';
 
 class Seat extends Component {
-  
+
 
   constructor(props) {
     super(props);
@@ -21,25 +21,25 @@ class Seat extends Component {
   }
 
   render() {
-  const { avail, reserved, selected } = this.props;
+    const { avail, reserved, selected } = this.props;
 
-  let seatClassName = "Unavailable";
+    let seatClassName = "Unavailable";
 
-  if (reserved) {
-    seatClassName = "Unavailable";
-  } else if (avail) {
-    seatClassName = selected ? "selected" : "Available";
-  }
+    if (reserved) {
+      seatClassName = "Unavailable";
+    } else if (avail) {
+      seatClassName = selected ? "selected" : "Available";
+    }
 
-  return (
-    <div
-      id={seatClassName}
-      title={selected ? "Seat Selected" : (avail ? "Available \n $8" : "Unavailable")}
-      onClick={this.handleSeatClick}
-    >
-      <center>{this.props.num + 1}</center>
-    </div>
-  )
+    return (
+      <div
+        id={seatClassName}
+        title={selected ? "Seat Selected" : (avail ? "Available \n $8" : "Unavailable")}
+        onClick={this.handleSeatClick}
+      >
+        <center>{this.props.num + 1}</center>
+      </div>
+    )
   }
 }
 export default Seat;
