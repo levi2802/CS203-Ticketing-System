@@ -2,10 +2,6 @@ package com.cs203.TicketWarrior.Registration.controllers;
 
 import com.cs203.TicketWarrior.Registration.models.Seat;
 import com.cs203.TicketWarrior.Registration.services.SeatService;
-import com.cs203.TicketWarrior.Registration.services.OrderService;
-import com.cs203.TicketWarrior.Registration.Exceptions.OrderNotFoundException;
-import com.cs203.TicketWarrior.Registration.Exceptions.SeatNotFoundException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
