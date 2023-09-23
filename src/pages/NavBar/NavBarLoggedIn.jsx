@@ -5,6 +5,7 @@ import './NavBar.css';
 import { useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import Button from '@mui/material/Button';
 
 function NavBarLoggedIn() {
 
@@ -35,12 +36,14 @@ function NavBarLoggedIn() {
     return (
         <div className={`nav ${show && "nav_black"}`}>
             <Link to="/"><img className="nav_logo" src={logo} alt="Wicket Logo" /></Link>
-            <img
-                className="nav_avatar"
-                src={userProfile}
-                alt="user logo"
-            />
-            <button className="logoutButton" onClick={handleLogout}>Logout</button>
+            <div className="button-container-logout">
+                <Button variant="text" style={{ color: 'gold' }} onClick={handleLogout}>Logout</Button>
+                <img
+                    className="nav_avatar"
+                    src={userProfile}
+                    alt="user logo"
+                />
+            </div>
         </div>
     )
 }
