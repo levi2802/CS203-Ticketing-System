@@ -4,6 +4,7 @@ import com.cs203.TicketWarrior.Registration.models.Movie;
 import com.cs203.TicketWarrior.Registration.models.Seat;
 import com.cs203.TicketWarrior.Registration.models.Order;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -14,14 +15,12 @@ import com.cs203.TicketWarrior.Registration.repository.SeatRepositoryImpl;
 import java.util.List;
 import java.util.Optional;
 
+@RequiredArgsConstructor
 @Service
 public class SeatService {
-    @Autowired
-    private SeatRepository SeatRepository;
 
-    public SeatService(SeatRepository SeatRepository) {
-        this.SeatRepository = SeatRepository;
-    }
+    private final SeatRepository SeatRepository;
+
 
     public List<Seat> allSeats() {
         return SeatRepository.findAll();

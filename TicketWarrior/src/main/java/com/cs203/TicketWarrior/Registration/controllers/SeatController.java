@@ -10,6 +10,7 @@ import com.cs203.TicketWarrior.Registration.services.OrderService;
 import com.cs203.TicketWarrior.Registration.Exceptions.OrderNotFoundException;
 import com.cs203.TicketWarrior.Registration.Exceptions.SeatNotFoundException;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,14 +20,13 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/v1/seats")
 public class SeatController {
-    @Autowired
-    private SeatService seatService;
+    private final SeatService seatService;
 
-    @Autowired
-    private OrderService orderService;
+    private final OrderService orderService;
 
     @GetMapping
     public ResponseEntity<List<Seat>> getAllSeat() {

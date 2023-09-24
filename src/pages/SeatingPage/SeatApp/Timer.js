@@ -31,7 +31,7 @@ class Timer extends Component {
 
     return (
         
-      <div align='center' style={{ fontSize: 25 }}>
+      <div align='center' style={{ fontSize: '30px', fontFamily: 'Montserrat', fontWeight: 'bold'}}>
         <strong>
           {minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}
         </strong>

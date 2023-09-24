@@ -7,6 +7,7 @@ import com.cs203.TicketWarrior.Registration.services.UserService;
 import com.cs203.TicketWarrior.Registration.models.Order;
 import com.cs203.TicketWarrior.Registration.Exceptions.*;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,14 +18,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+@RequiredArgsConstructor
 @RestController
 public class OrderController {
-    private OrderService orderService;
-    private UserService userService;
-
-    public OrderController(OrderService os) {
-        this.orderService = os;
-    }
+    private final OrderService orderService;
+    private final UserService userService;
 
     // Get all orders made by user
     @GetMapping("/users/{userId}/orders")
