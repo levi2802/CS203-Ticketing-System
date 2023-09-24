@@ -30,7 +30,7 @@ public class SecurityConfig {
         http
                 .cors(Customizer.withDefaults())
                 .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/api/auth/**")
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/api/auth/**","api/v1/seats/OccupiedSeats")
                         .permitAll()
                         .anyRequest()
                         .authenticated())

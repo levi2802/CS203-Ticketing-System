@@ -19,6 +19,7 @@ class SeatApp extends Component {
 
 
   async componentDidMount() {
+
     let seats = [];
 
     //How many seats to create r=row i=col
@@ -131,8 +132,14 @@ class SeatApp extends Component {
     this.setState({ showSummary: false });
   }
 
+
   //Handling confirm button to give info to backend
   handleConfirm = async () => {
+    const accessToken = localStorage.getItem('accessToken');
+    const headers = {
+      'Authorization': `Bearer ${accessToken}`
+    };
+
     const { seats } = this.state;
     // grabbing username
     const username = localStorage.getItem('username');
@@ -149,7 +156,7 @@ class SeatApp extends Component {
     //grabing the seat ids created
     let seatIDs = [];
     const findseatstring = "http://localhost:8080/api/v1/seats/findSeats/" + username
-    await axios.get(findseatstring)
+    await axios.get(findseatstring, { headers })
       .then(json => json.data.forEach(data => seatIDs.push(data._id)))
       .catch(console.error);
     console.log(seatIDs);
@@ -157,16 +164,20 @@ class SeatApp extends Component {
     await this.addPurchaseOrder(username, seatIDs, movieName);
     window.location.href='/';
     alert("Your seats are booked!");
-    window.location.href = '/';
   }
 
   addPurchaseOrder = (username, seatIDs, movieName) => {
     try {
+      const accessToken = localStorage.getItem('accessToken');
+      const headers = {
+        'Authorization': `Bearer ${accessToken}`
+      };
       axios.post("http://localhost:8080/api/purchases/postPurchase", {
         userId: username,
         movieId: movieName,
         //seatIds: seatIDs,
-      }).then();
+      }, {headers:headers})
+          .then();
     } catch {
       alert("error, need troubleshoot, well i expected an error");
     }
@@ -175,6 +186,10 @@ class SeatApp extends Component {
 
   addSeatToDB = (seat, username) => {
     try {
+      const accessToken = localStorage.getItem('accessToken');
+      const headers = {
+        'Authorization': `Bearer ${accessToken}`
+      };
       axios.post("http://localhost:8080/api/v1/seats/PostSeats", {
         row: seat.row,
         coloumn: seat.num,
@@ -182,6 +197,7 @@ class SeatApp extends Component {
         availability: false,
         username: username
       }, {
+        headers: headers,
         validateStatus: function (status) {
           if (status < 500) alert("seat at row: " + (seat.row + 1) + " coloumn: " + (seat.num + 1) + " booked successfully");
           else alert("double input for seat at row: " + (seat.row + 1) + " coloumn: " + (seat.num + 1) + " error code:" + status);
