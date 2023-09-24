@@ -2,6 +2,7 @@ package com.cs203.TicketWarrior.Registration.services;
 import com.cs203.TicketWarrior.Registration.models.MovieScreening;
 import com.cs203.TicketWarrior.Registration.models.Movie;
 import com.cs203.TicketWarrior.Registration.models.Seat;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -11,14 +12,11 @@ import com.cs203.TicketWarrior.Registration.repository.MovieScreeningRepository;
 import java.util.List;
 import java.util.Optional;
 
+@RequiredArgsConstructor
 @Service
 public class MovieScreeningService {
-    @Autowired
-    private MovieScreeningRepository MovieScreeningRepository;
 
-    public MovieScreeningService(MovieScreeningRepository MovieScreeningRepository) {
-        this.MovieScreeningRepository = MovieScreeningRepository;
-    }
+    private final MovieScreeningRepository MovieScreeningRepository;
 
     public List<MovieScreening> allMovieScreening() {
         return MovieScreeningRepository.findAll();

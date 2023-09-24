@@ -1,5 +1,6 @@
 package com.cs203.TicketWarrior.Registration.services;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,14 +12,13 @@ import com.cs203.TicketWarrior.Registration.Exceptions.SeatNotAvailableException
 import com.cs203.TicketWarrior.Registration.models.*;
 import com.cs203.TicketWarrior.Registration.repository.*;
 
+@RequiredArgsConstructor
 @Service
 public class PurchaseService {
 
-    @Autowired
-    private PurchaseRepository purchaseRepository;
+    private final PurchaseRepository purchaseRepository;
 
-    @Autowired
-    private SeatRepository seatRepository;
+    private final SeatRepository seatRepository;
 
     public List<Purchase> findAll() {
         return purchaseRepository.findAll();

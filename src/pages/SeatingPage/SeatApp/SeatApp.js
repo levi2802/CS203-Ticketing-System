@@ -7,6 +7,7 @@ import sample1 from "../../HomePage/images/image1.png";
 import PG from "../../HomePage/images/PG.png"
 import Button from '@mui/material/Button'
 import Timer from './Timer';
+import { useNavigate } from "react-router-dom";
 
 class SeatApp extends Component {
   template = function (row, coloumn, type, availability) { }
@@ -155,6 +156,8 @@ class SeatApp extends Component {
     console.log(seatIDs);
     // creating purchase object
     await this.addPurchaseOrder(username, seatIDs, movieName);
+    window.location.href='/';
+    alert("Your seats are booked!");
   }
 
   addPurchaseOrder = (username, seatIDs, movieName) => {
@@ -247,7 +250,7 @@ class SeatApp extends Component {
         <div className='minibox' style={{ display: showSummary ? 'none' : 'block' }}>
           <div className='movieInfo'>
             <div className='imageContainer'>
-              <img src={`https://image.tmdb.org/t/p/original/${movieImage}`} alt="" style={{ height: "200px", width: "400px" }} />
+              <img src={`https://image.tmdb.org/t/p/original/${movieImage}`} alt="" style={{ height: "200px", width: "auto" }} />
             </div>
             <div align='left'>
               <h1>{title}</h1>

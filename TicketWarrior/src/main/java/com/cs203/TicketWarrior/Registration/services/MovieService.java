@@ -2,14 +2,16 @@ package com.cs203.TicketWarrior.Registration.services;
 
 import com.cs203.TicketWarrior.Registration.models.Movie;
 import com.cs203.TicketWarrior.Registration.repository.MovieRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.*;
 
+@RequiredArgsConstructor
 @Service
 public class MovieService {
-    @Autowired // Let the framework instantiate the interface.
-    private MovieRepository movieRepository;
+
+    private final MovieRepository movieRepository;
     public List<Movie> allMovies() {
         return movieRepository.findAll();
     }

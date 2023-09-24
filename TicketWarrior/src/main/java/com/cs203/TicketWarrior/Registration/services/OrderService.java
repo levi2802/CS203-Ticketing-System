@@ -2,21 +2,18 @@ package com.cs203.TicketWarrior.Registration.services;
 
 import com.cs203.TicketWarrior.Registration.models.Order;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.cs203.TicketWarrior.Registration.repository.OrderRepository;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 public class OrderService {
 
-    @Autowired
-    private OrderRepository orders;
-
-    public OrderService(OrderRepository orders) {
-        this.orders = orders;
-    }
+    private final OrderRepository orders;
 
     public List<Order> listOrders() {
         return orders.findAll();

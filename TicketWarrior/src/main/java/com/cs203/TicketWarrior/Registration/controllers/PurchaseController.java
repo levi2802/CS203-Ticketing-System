@@ -1,5 +1,6 @@
 package com.cs203.TicketWarrior.Registration.controllers;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,11 +10,11 @@ import com.cs203.TicketWarrior.Registration.models.Purchase;
 import com.cs203.TicketWarrior.Registration.services.PurchaseService;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/purchases")
 public class PurchaseController {
     
-    @Autowired
-    private PurchaseService purchaseService;
+    private final PurchaseService purchaseService;
 
     @GetMapping
     public List<Purchase> getAllPurchases() {

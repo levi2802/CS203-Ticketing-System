@@ -2,6 +2,7 @@ package com.cs203.TicketWarrior.Registration.controllers;
 
 import com.cs203.TicketWarrior.Registration.models.Movie;
 import com.cs203.TicketWarrior.Registration.services.MovieService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,10 +13,11 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*")
+@RequiredArgsConstructor
 @RequestMapping("/api/v1/movies")
 public class MovieController {
-    @Autowired
-    private MovieService movieService;
+
+    private final MovieService movieService;
     @GetMapping
     public ResponseEntity<List<Movie>> getAllMovies() {
         return new ResponseEntity<List<Movie>>(movieService.allMovies(), HttpStatus.OK); // Sends Http status code 200.
