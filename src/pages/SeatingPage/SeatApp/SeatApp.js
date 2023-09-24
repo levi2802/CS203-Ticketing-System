@@ -3,7 +3,6 @@ import './SeatApp.css';
 import Seat from '../Seat/Seat.js';
 import axios, { formToJSON } from 'axios';
 import { json } from 'react-router-dom';
-import sample1 from "../../HomePage/images/image1.png";
 import PG from "../../HomePage/images/PG.png"
 import Button from '@mui/material/Button'
 import Timer from './Timer';
@@ -158,6 +157,7 @@ class SeatApp extends Component {
     await this.addPurchaseOrder(username, seatIDs, movieName);
     window.location.href='/';
     alert("Your seats are booked!");
+    window.location.href = '/';
   }
 
   addPurchaseOrder = (username, seatIDs, movieName) => {
@@ -246,11 +246,10 @@ class SeatApp extends Component {
 
     return (
       <div style={{ backgroundColor: 'black' }}>
-        <div><Timer/></div>
         <div className='minibox' style={{ display: showSummary ? 'none' : 'block' }}>
           <div className='movieInfo'>
             <div className='imageContainer'>
-              <img src={`https://image.tmdb.org/t/p/original/${movieImage}`} alt="" style={{ height: "200px", width: "auto" }} />
+              <img src={`https://image.tmdb.org/t/p/original/${movieImage}`} alt="" style={{ height: "150px", width: "auto" }} />
             </div>
             <div align='left'>
               <h1>{title}</h1>
@@ -259,6 +258,7 @@ class SeatApp extends Component {
             </div>
           </div>
           <div id="stage-container">
+            <div><span className='clock'><Timer/></span></div>
             <svg width="500" height="100" >
             </svg>
             <h1 id="stage">Screen</h1>
