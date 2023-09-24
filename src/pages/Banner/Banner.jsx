@@ -73,7 +73,7 @@ function Banner() {
 
                 <div className="banner_buttons">
                     <button className="banner_button" onClick={() => handleClick(movie)}>Play Trailer</button>
-                    <button className="banner_button" onClick={handleButtonClick}>Buy Tickets</button>
+                    <button className="banner_button" onClick={() => handleButtonClick()}>Buy Tickets</button>
                 </div>
 
                 <h1 className="banner_description">{truncate(movie?.overview, 150)}</h1>

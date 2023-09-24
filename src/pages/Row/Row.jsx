@@ -3,6 +3,7 @@ import axios from '../axios';
 import './Row.css';
 import YouTube from "react-youtube";
 import movieTrailer from "movie-trailer";
+import { useNavigate } from "react-router-dom";
 
 const base_url = "http://image.tmdb.org/t/p/original/";
 
@@ -33,6 +34,7 @@ function Row({ title, fetchUrl, isLargeRow }) {
     };
 
     const someMovies = movies.slice(0, 10);
+
     const handleClick = (movie) => {
         if (trailerUrl) {
             // when video is playing set trailer url to empty again
@@ -47,6 +49,21 @@ function Row({ title, fetchUrl, isLargeRow }) {
                     console.log(error);
                 })
         }
+    }
+
+    const setMovieData = (movie) => {
+        localStorage.setItem("movieImage", movie.poster_path);
+        localStorage.setItem("movieTitle", movie?.title || movie?.name || movie?.original_name);
+    }
+
+    const navigate = useNavigate();
+
+    const handleButtonClick = (movie) => {
+        // Saving movie data to local storage
+        setMovieData(movie);
+
+        // Navigate to the seating page on button click
+        navigate('/seating');
     }
 
     return (
@@ -65,14 +82,15 @@ function Row({ title, fetchUrl, isLargeRow }) {
                             src={`${base_url}${isLargeRow ? movie.poster_path : movie.backdrop_path}`}
                             alt={movie.name}
                         />
-                        <button className="buyTicketsButton">Buy Tickets</button>
+
+                        <button className="buyTicketsButton" onClick={() => handleButtonClick(movie)}>Buy Tickets</button>
                     </div>
                 ))}
 
-            </div>
-
-            {trailerUrl && <YouTube videoId={trailerUrl} opts={opts} />}
         </div>
+
+            { trailerUrl && <YouTube videoId={trailerUrl} opts={opts} /> }
+        </div >
     )
 }
 
