@@ -249,7 +249,7 @@ class SeatApp extends Component {
         <div className='minibox' style={{ display: showSummary ? 'none' : 'block' }}>
           <div className='movieInfo'>
             <div className='imageContainer'>
-              <img src={`https://image.tmdb.org/t/p/original/${movieImage}`} alt="" style={{ height: "150px", width: "auto" }} />
+              <img src={`https://image.tmdb.org/t/p/original/${movieImage}`} alt="" style={{ height: "200px", width: "auto" }} />
             </div>
             <div align='left'>
               <h1>{title}</h1>
