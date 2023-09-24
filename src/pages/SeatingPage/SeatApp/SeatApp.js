@@ -136,6 +136,9 @@ class SeatApp extends Component {
   //Handling confirm button to give info to backend
   handleConfirm = async () => {
     const accessToken = localStorage.getItem('accessToken');
+    if (accessToken == null) {
+      window.location.href = '/register'
+    }
     const headers = {
       'Authorization': `Bearer ${accessToken}`
     };
@@ -163,7 +166,8 @@ class SeatApp extends Component {
     // creating purchase object
     await this.addPurchaseOrder(username, seatIDs, movieName);
     window.location.href='/';
-    alert("Your seats are booked!");
+    const alertMessage = `Your seats (${seatIDs.join(', ')}) are booked!`;
+    alert(alertMessage);
   }
 
   addPurchaseOrder = (username, seatIDs, movieName) => {
@@ -199,8 +203,8 @@ class SeatApp extends Component {
       }, {
         headers: headers,
         validateStatus: function (status) {
-          if (status < 500) alert("seat at row: " + (seat.row + 1) + " coloumn: " + (seat.num + 1) + " booked successfully");
-          else alert("double input for seat at row: " + (seat.row + 1) + " coloumn: " + (seat.num + 1) + " error code:" + status);
+          // if (status < 500) alert("seat at row: " + (seat.row + 1) + " coloumn: " + (seat.num + 1) + " booked successfully");
+          // else alert("double input for seat at row: " + (seat.row + 1) + " coloumn: " + (seat.num + 1) + " error code:" + status);
           return true; // Resolve only if the status code is less than 500
         }
       }).then(this.Unavailable.push([seat.row, seat.num]));
