@@ -2,11 +2,12 @@ import React, { Component, useState } from 'react';
 import './SeatApp.css';
 import Seat from '../Seat/Seat.js';
 import axios, { formToJSON } from 'axios';
-import { json } from 'react-router-dom';
+import { json, useParams } from 'react-router-dom';
 import PG from "../../HomePage/images/PG.png"
 import Button from '@mui/material/Button'
 import Timer from './Timer';
 import { useNavigate } from "react-router-dom";
+import { recomposeColor } from '@mui/material';
 
 class SeatApp extends Component {
   template = function (row, coloumn, type, availability) { }
@@ -29,7 +30,9 @@ class SeatApp extends Component {
       }
     }
 
-    await axios.get("http://localhost:8080/api/v1/seats/OccupiedSeats")
+    const moviename = localStorage.getItem("movieTitle");
+    console.log(moviename);
+    await axios.get("http://localhost:8080/api/v1/seats/OccupiedSeats/" + moviename)
       .then(json => json.data.forEach(data => this.Unavailable.push([data.row, data.coloumn])))
       .catch(console.error);
 
@@ -136,8 +139,11 @@ class SeatApp extends Component {
   //Handling confirm button to give info to backend
   handleConfirm = async () => {
     const accessToken = localStorage.getItem('accessToken');
-    if (accessToken == null) {
+    const username = localStorage.getItem('username');
+    if (accessToken == null|| username == null) {
+      alert("please login first before booking");
       window.location.href = '/register'
+      return;
     }
     const headers = {
       'Authorization': `Bearer ${accessToken}`
@@ -145,29 +151,64 @@ class SeatApp extends Component {
 
     const { seats } = this.state;
     // grabbing username
-    const username = localStorage.getItem('username');
-    //this is a placeholder atm
-    const movieName = "Teenage Mutant Ninja Turtles: Mutant Mayhem (忍者龟：变种大乱斗)";
     const selectedSeats = seats.filter(seat => seat.selected)
       .map(seat => {
         const { row, num } = seat;
         return { row, num };
       })
+
+    const movieName = localStorage.getItem("movieTitle");
+    console.log(movieName);
     //adding purchased seats to backend
-    await selectedSeats.forEach(seat => this.addSeatToDB(seat, username));
-    
+    await selectedSeats.forEach(seat => this.addSeatToDB(seat, username, movieName));
+    //TO DO: find better way to find seat object, username does not work
     //grabing the seat ids created
-    let seatIDs = [];
-    const findseatstring = "http://localhost:8080/api/v1/seats/findSeats/" + username
-    await axios.get(findseatstring, { headers })
-      .then(json => json.data.forEach(data => seatIDs.push(data._id)))
-      .catch(console.error);
-    console.log(seatIDs);
+    //let seatIDs = [];
+    // const findseatstring = "http://localhost:8080/api/v1/seats/findSeats/" + username
+    // await axios.get(findseatstring, { headers })
+    //   .then(json => json.data.forEach(data => seatIDs.push(data._id)))
+    //   .catch(console.error);
+    // console.log(seatIDs);
     // creating purchase object
-    await this.addPurchaseOrder(username, seatIDs, movieName);
+    //await this.addPurchaseOrder(username, seatIDs, movieName);
+    const rowName = [];
+    for (let i = 0; i < seats.length; i++) {
+      let temp = 'A'.charCodeAt(0) + i;
+      rowName.push(String.fromCharCode(temp));
+    }
     window.location.href='/';
-    const alertMessage = `Your seats (${seatIDs.join(', ')}) are booked!`;
+    let selectedSeatsString = "";
+    selectedSeats.forEach(seat => selectedSeatsString = selectedSeatsString + rowName[seat.row] + seat.num + ', ')
+    const alertMessage = "Your seats:" + selectedSeatsString + "for the movie: " + movieName + " are booked!";
     alert(alertMessage);
+  }
+
+  addSeatToDB = (seat, username, movieName) => {
+    try {
+      const accessToken = localStorage.getItem('accessToken');
+      const headers = {
+        'Authorization': `Bearer ${accessToken}`
+      };
+      axios.post("http://localhost:8080/api/v1/seats/PostSeats", {
+        row: seat.row,
+        coloumn: seat.num,
+        type: "standard",
+        availability: false,
+        username: username,
+        movieName: movieName
+      }, {
+        headers: headers,
+        validateStatus: function (status) {
+
+          return true; // Resolve only if the status code is less than 500
+        }
+      }).then(this.Unavailable.push([seat.row, seat.num]));
+    } catch {
+      alert("how did you get here? please report steps done to team");
+    }
+
+
+    console.log(this.Unavailable);
   }
 
   addPurchaseOrder = (username, seatIDs, movieName) => {
@@ -183,37 +224,9 @@ class SeatApp extends Component {
       }, {headers:headers})
           .then();
     } catch {
-      alert("error, need troubleshoot, well i expected an error");
+      alert("how did you get here? please report steps done to team");
     }
     console.log("purchase add (without seat id list) success")
-  }
-
-  addSeatToDB = (seat, username) => {
-    try {
-      const accessToken = localStorage.getItem('accessToken');
-      const headers = {
-        'Authorization': `Bearer ${accessToken}`
-      };
-      axios.post("http://localhost:8080/api/v1/seats/PostSeats", {
-        row: seat.row,
-        coloumn: seat.num,
-        type: "standard",
-        availability: false,
-        username: username
-      }, {
-        headers: headers,
-        validateStatus: function (status) {
-          // if (status < 500) alert("seat at row: " + (seat.row + 1) + " coloumn: " + (seat.num + 1) + " booked successfully");
-          // else alert("double input for seat at row: " + (seat.row + 1) + " coloumn: " + (seat.num + 1) + " error code:" + status);
-          return true; // Resolve only if the status code is less than 500
-        }
-      }).then(this.Unavailable.push([seat.row, seat.num]));
-    } catch {
-      alert("double input");
-    }
-
-
-    console.log(this.Unavailable);
   }
 
 

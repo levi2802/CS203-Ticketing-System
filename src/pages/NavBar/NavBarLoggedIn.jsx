@@ -11,6 +11,7 @@ function NavBarLoggedIn() {
 
     const handleLogout = () => {
         localStorage.removeItem('accessToken');
+        localStorage.removeItem('username');
         window.location.reload();
     }
 
