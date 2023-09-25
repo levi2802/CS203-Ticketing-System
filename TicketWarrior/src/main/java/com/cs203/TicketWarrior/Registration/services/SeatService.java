@@ -36,8 +36,8 @@ public class SeatService {
         return insertedSeat;
     }
 
-    public List<Seat> findAllOccupiedSeats() {
-        return SeatRepository.findAllOccupiedSeats();
+    public List<Seat> findAllOccupiedSeats(String movieName) {
+        return SeatRepository.findAllOccupiedSeats(movieName);
     }
 
     public Optional<Seat> findSeatById(String seatId) {

@@ -34,7 +34,8 @@ public class Seat {
     private int coloumn;
     private String type;
     private Boolean availability;
-    //private String username;
+    private String username;
+    private String movieName;
     // private float price;
     // private SeatType seatType;
 

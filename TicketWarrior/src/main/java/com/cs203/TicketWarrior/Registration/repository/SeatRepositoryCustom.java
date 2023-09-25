@@ -6,7 +6,7 @@ import java.util.Optional;
 import com.cs203.TicketWarrior.Registration.models.Seat;
 
 public interface SeatRepositoryCustom {
-    List<Seat> findAllOccupiedSeats();
+    List<Seat> findAllOccupiedSeats(String movieName);
 
     Seat findbySeat(Seat seat);
     List<Seat> findbyusername(String user_id);
