@@ -52,7 +52,7 @@ function Row({ title, fetchUrl, isLargeRow }) {
     }
 
     const setMovieData = (movie) => {
-        localStorage.setItem("movieImage", movie.poster_path);
+        localStorage.setItem("movieImage", movie?.poster_path);
         localStorage.setItem("movieTitle", movie?.title || movie?.name || movie?.original_name);
     }
 

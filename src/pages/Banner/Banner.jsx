@@ -7,7 +7,7 @@ import movieTrailer from "movie-trailer";
 import { useNavigate } from "react-router-dom";
 
 function Banner() {
-    const [movie, setMovie] = useState([]);
+    const [movie, setMovie] = useState(null);
 
     const [trailerUrl, setTrailerUrl] = useState("");
 
@@ -20,9 +20,7 @@ function Banner() {
         fetchData();
     }, []);
 
-    console.log(movie);
-
-    localStorage.setItem("movieImage", movie.poster_path);
+    localStorage.setItem("movieImage", movie?.poster_path);
     localStorage.setItem("movieTitle", movie?.title || movie?.name || movie?.original_name);
 
     function truncate(str, n) {
