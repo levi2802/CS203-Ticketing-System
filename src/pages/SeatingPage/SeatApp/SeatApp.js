@@ -93,12 +93,12 @@ class SeatApp extends Component {
           selectedSeatNumbers.includes(col + 1) || selectedSeatNumbers.includes(col)
         ) {
           // Check if the number of selected seats exceeds 10
-        if (selectedSeatNumbers.length < 10) {
-          seat.selected = !seat.selected;
-        } else {
-          // Show pop-up message
-          alert("You cannot book more than 10 seats.");
-        }
+          if (selectedSeatNumbers.length < 10) {
+            seat.selected = !seat.selected;
+          } else {
+            // Show pop-up message
+            alert("You cannot book more than 10 seats.");
+          }
         }
         else {
           // Show pop-up message
@@ -140,7 +140,7 @@ class SeatApp extends Component {
   handleConfirm = async () => {
     const accessToken = localStorage.getItem('accessToken');
     const username = localStorage.getItem('username');
-    if (accessToken == null|| username == null) {
+    if (accessToken == null || username == null) {
       alert("please login first before booking");
       window.location.href = '/register'
       return;
@@ -176,11 +176,15 @@ class SeatApp extends Component {
       let temp = 'A'.charCodeAt(0) + i;
       rowName.push(String.fromCharCode(temp));
     }
-    window.location.href='/';
+    window.location.href = '/';
     let selectedSeatsString = "";
-    selectedSeats.forEach(seat => selectedSeatsString = selectedSeatsString + rowName[seat.row] + seat.num + ', ')
-    const alertMessage = "Your seats:" + selectedSeatsString + "for the movie: " + movieName + " are booked!";
+    selectedSeats.forEach(seat => {
+      seat.num += 1;  // Increment seat.num by 1
+      selectedSeatsString = selectedSeatsString + rowName[seat.row] + seat.num + ', ';
+    })
+    const alertMessage = "Your seats: " + selectedSeatsString + "for the movie: " + movieName + " are booked!";
     alert(alertMessage);
+
   }
 
   addSeatToDB = (seat, username, movieName) => {
@@ -221,8 +225,8 @@ class SeatApp extends Component {
         userId: username,
         movieId: movieName,
         //seatIds: seatIDs,
-      }, {headers:headers})
-          .then();
+      }, { headers: headers })
+        .then();
     } catch {
       alert("how did you get here? please report steps done to team");
     }
@@ -291,7 +295,7 @@ class SeatApp extends Component {
             </div>
           </div>
           <div id="stage-container">
-            <div><span className='clock'><Timer/></span></div>
+            <div><span className='clock'><Timer /></span></div>
             <svg width="500" height="100" >
             </svg>
             <h1 id="stage">Screen</h1>
@@ -334,20 +338,20 @@ class SeatApp extends Component {
           </div>
         </div>
 
-        <footer class="footer" style={{display: showSummary ? 'none':'block'}}>
-            <div className='inputs'>
-              <pre>
-                Quantity: {chosenSeats.length}
-              </pre>
-              <pre>
-                Cost: ${chosenSeats.length * 8}
-              </pre>
-              <Button variant="contained" onClick={this.handleCheckout} disabled={chosenSeats.length === 0 ? true:false} style={{ background: 'grey' }}>checkout</Button>
-            </div>
+        <footer class="footer" style={{ display: showSummary ? 'none' : 'block' }}>
+          <div className='inputs'>
+            <pre>
+              Quantity: {chosenSeats.length}
+            </pre>
+            <pre>
+              Cost: ${chosenSeats.length * 8}
+            </pre>
+            <Button variant="contained" onClick={this.handleCheckout} disabled={chosenSeats.length === 0 ? true : false} style={{ background: 'grey' }}>checkout</Button>
+          </div>
         </footer>
 
-        <div className='orderSummary' style={{display: showSummary ? 'block':'none'}}>
-        <Timer/>
+        <div className='orderSummary' style={{ display: showSummary ? 'block' : 'none' }}>
+          <Timer />
           <pre>
             Qty: {chosenSeats.length}
           </pre>
