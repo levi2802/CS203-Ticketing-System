@@ -171,6 +171,7 @@ class SeatApp extends Component {
     // console.log(seatIDs);
     // creating purchase object
     //await this.addPurchaseOrder(username, seatIDs, movieName);
+    let seatIDs = [];
     const rowName = [];
     for (let i = 0; i < seats.length; i++) {
       let temp = 'A'.charCodeAt(0) + i;
@@ -180,11 +181,14 @@ class SeatApp extends Component {
     let selectedSeatsString = "";
     selectedSeats.forEach(seat => {
       seat.num += 1;  // Increment seat.num by 1
-      selectedSeatsString = selectedSeatsString + rowName[seat.row] + seat.num + ', ';
+      let seatID = rowName[seat.row] + seat.num;
+      selectedSeatsString = selectedSeatsString + seatID + ', ';
+      seatIDs.push(seatID);
     })
     const alertMessage = "Your seats: " + selectedSeatsString + "for the movie: " + movieName + " are booked!";
     alert(alertMessage);
-
+    console.log(seatIDs);
+    await this.addPurchaseOrder(username, seatIDs, movieName);
   }
 
   addSeatToDB = (seat, username, movieName) => {
@@ -216,6 +220,7 @@ class SeatApp extends Component {
   }
 
   addPurchaseOrder = (username, seatIDs, movieName) => {
+    console.log(seatIDs);
     try {
       const accessToken = localStorage.getItem('accessToken');
       const headers = {
@@ -224,7 +229,7 @@ class SeatApp extends Component {
       axios.post("http://localhost:8080/api/purchases/postPurchase", {
         userId: username,
         movieId: movieName,
-        //seatIds: seatIDs,
+        seatIDs: seatIDs,
       }, { headers: headers })
         .then();
     } catch {
