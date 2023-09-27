@@ -56,7 +56,7 @@ function Banner() {
     const navigate = useNavigate();
 
     const handleButtonClick = () => {
-        navigate('/seating');
+        navigate('/Timing');
     }
 
     return (

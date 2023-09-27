@@ -279,6 +279,9 @@ class SeatApp extends Component {
     const chosenSeats = seats.filter(seat => seat.selected).map(seat => seat.num + 1);
     const chosenRow = seats.filter(seat => seat.selected).map(seat => seat.row + 1);
     const availableSeats = seats.filter(seat => seat.avail && !seat.selected).length;
+    const location = localStorage.getItem("selectedLoc");
+    const time = localStorage.getItem("selectedTime");
+    const currentDate = new Date().toLocaleDateString();
 
 
     return (
@@ -290,12 +293,13 @@ class SeatApp extends Component {
             </div>
             <div align='left'>
               <h1>{title}</h1>
-              <p>Run Time: 1 hr 39 mins</p>
-              <p>Rating: <img src={PG} alt="" style={{ height: "25px", width: "35px" }} />some violence</p>
+              <p>{location}</p>
+              <p>{currentDate}</p>
+              <p>{time}</p>
             </div>
           </div>
           <div id="stage-container">
-            <div><span className='clock'><Timer /></span></div>
+            <div><span><Timer /></span></div>
             <svg width="500" height="100" >
             </svg>
             <h1 id="stage">Screen</h1>

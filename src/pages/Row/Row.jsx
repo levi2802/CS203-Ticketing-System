@@ -63,7 +63,7 @@ function Row({ title, fetchUrl, isLargeRow }) {
         setMovieData(movie);
 
         // Navigate to the seating page on button click
-        navigate('/seating');
+        navigate('/Timing');
     }
 
     return (
