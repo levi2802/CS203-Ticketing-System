@@ -93,7 +93,8 @@ class SeatApp extends Component {
           selectedSeatNumbers.includes(col + 1) || selectedSeatNumbers.includes(col)
         ) {
           // Check if the number of selected seats exceeds 10
-          if (selectedSeatNumbers.length < 10) {
+          const chosenSeats = seats.filter(seat => seat.selected).map(seat => seat.num + 1);
+          if (chosenSeats.length < 10) {
             seat.selected = !seat.selected;
           } else {
             // Show pop-up message
