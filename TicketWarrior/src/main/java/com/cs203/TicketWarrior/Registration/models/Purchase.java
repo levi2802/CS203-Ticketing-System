@@ -22,10 +22,16 @@ public class Purchase {
 	private String id;
 	private String userId;
 	private String movieId;
-	//private List<String> seatIds;
+	private List<String> seatIDs;
 	private LocalDateTime timestamp;
 	// private PaymentMethod paymentMethod;
 	// private Status status;
+
+	public Purchase(String userId, String movieId, List<String> seatIDs) {
+		this.userId = userId;
+		this.movieId = movieId;
+		this.seatIDs = seatIDs;
+	}
 
 	public void setTimeStamp(LocalDateTime timestamp){
 		this.timestamp = timestamp;

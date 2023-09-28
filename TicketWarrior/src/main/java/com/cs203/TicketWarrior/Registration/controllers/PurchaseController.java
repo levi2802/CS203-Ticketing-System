@@ -28,6 +28,7 @@ public class PurchaseController {
 
     @PostMapping("/postPurchase")
     public Purchase createPurchase(@RequestBody Purchase purchase) {
+        System.out.println(purchase.getSeatIDs());
         return purchaseService.createPurchase(purchase);
     }
     
