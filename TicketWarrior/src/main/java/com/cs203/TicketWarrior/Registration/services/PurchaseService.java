@@ -2,6 +2,8 @@ package com.cs203.TicketWarrior.Registration.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,9 +27,7 @@ public class PurchaseService {
     }
 
     public List<Purchase> findByUserId(String userId) {
-        return purchaseRepository.findAll().stream()
-                .filter(purchase -> purchase.getUserId().equals(userId))
-                .collect(Collectors.toList());
+        return purchaseRepository.findByUserId(userId);
     }
 
     public Purchase createPurchase(Purchase purchase) {
