@@ -8,6 +8,13 @@ import Button from '@mui/material/Button'
 import Timer from './Timer';
 import { useNavigate } from "react-router-dom";
 import { recomposeColor } from '@mui/material';
+import * as util from './SeatUtils';
+import OrderSummary from './Components/OrderSummary';
+import MovieLegend from './Components/MovieLegend';
+import Stage from './Components/stage';
+import MovieSeats from './Components/MovieSeats';
+import MovieInfo from './Components/MovieInfo';
+
 
 class SeatApp extends Component {
   template = function (row, coloumn, type, availability) { }
@@ -20,15 +27,9 @@ class SeatApp extends Component {
 
 
   async componentDidMount() {
-
-    let seats = [];
-
-    //How many seats to create r=row i=col
-    for (let r = 0; r < 4; r++) {
-      for (let i = 0; i < 14; i++) {
-        seats.push({ row: r, num: i, avail: true });
-      }
-    }
+    let Row = 4;
+    let Col = 14;
+    let seats = util.generateSeats(Row, Col);
 
     const moviename = localStorage.getItem("movieTitle");
     console.log(moviename);
@@ -38,16 +39,8 @@ class SeatApp extends Component {
 
     //console.log(this.Unavailable);
 
-    //code to make seat unavail r = row c = col
-    for (let i = 0; i < seats.length; i++) {
-      for (let j = 0; j < this.Unavailable.length; j++) {
-        let r = this.Unavailable[j][0];
-        let c = this.Unavailable[j][1];
-        if (seats[i].row === r && seats[i].num === c) {
-          seats[i].avail = false;
-        }
-      }
-    }
+    //code to make seat unavail
+    util.makeUnavail(seats, this.Unavailable);
 
     //Updating
     this.setState({ seats });
@@ -67,47 +60,7 @@ class SeatApp extends Component {
     });
 
     //Seat picking algo
-    const updatedSeats = seats.map(seat => {
-      if (seat.row === row && seat.num === col) {
-        if (selectedSeatNumbers.includes(col)) {
-          // If clicked seat is in selected group
-          if (selectedSeatNumbers.length > 1) {
-            // Check if it's the maximum or minimum seat number in the group
-            let maxSelected = Math.max(...selectedSeatNumbers);
-            let minSelected = Math.min(...selectedSeatNumbers);
-            //Only allow the outsides to be 'de-selected'
-            if (col === maxSelected || col === minSelected) {
-              seat.selected = !seat.selected;
-            }
-            else {
-              // Show pop-up message
-              alert("Please choose a seat with no space between.");
-            }
-          }
-          else {
-            seat.selected = !seat.selected;
-          }
-        }
-        else if (
-          selectedSeatNumbers.length === 0 || selectedSeatNumbers.includes(col - 1) ||
-          selectedSeatNumbers.includes(col + 1) || selectedSeatNumbers.includes(col)
-        ) {
-          // Check if the number of selected seats exceeds 10
-          const chosenSeats = seats.filter(seat => seat.selected).map(seat => seat.num + 1);
-          if (chosenSeats.length < 10) {
-            seat.selected = !seat.selected;
-          } else {
-            // Show pop-up message
-            alert("You cannot book more than 10 seats.");
-          }
-        }
-        else {
-          // Show pop-up message
-          alert("Please choose a seat with no space between.");
-        }
-      }
-      return seat;
-    });
+    const updatedSeats = util.handleSeatSelect(seats, row, col);
 
     // Update chosenSeats array
     const updatedChosenSeats = seats.filter((seat) => seat.selected).map((seat) => seat.num + 1);
@@ -252,14 +205,9 @@ class SeatApp extends Component {
     console.log(title);
 
     //create array with nulls
-    const seatsGrid = [];
-    for (let i = 0; i < 4; i++) {
-      let row = [];
-      for (let j = 0; j < 14; j++) {
-        row.push(null);
-      }
-      seatsGrid.push(row);
-    }
+    let Row = 4;
+    let Col = 14;
+    const seatsGrid = util.nullArray(Row, Col);
 
     for (let i = 0; i < seats.length; i++) {
       let seat = seats[i];
@@ -274,17 +222,10 @@ class SeatApp extends Component {
         />
       );
     }
-
-    //This code allows for conversion of row from int to char
-    const rowName = [];
-    for (let i = 0; i < seatsGrid.length; i++) {
-      let temp = 'A'.charCodeAt(0) + i;
-      rowName.push(String.fromCharCode(temp));
-    }
+    const rowName = util.charConverter(seatsGrid);
 
     const chosenSeats = seats.filter(seat => seat.selected).map(seat => seat.num + 1);
     const chosenRow = seats.filter(seat => seat.selected).map(seat => seat.row + 1);
-    const availableSeats = seats.filter(seat => seat.avail && !seat.selected).length;
     const location = localStorage.getItem("selectedLoc");
     const time = localStorage.getItem("selectedTime");
     const currentDate = new Date().toLocaleDateString();
@@ -293,60 +234,26 @@ class SeatApp extends Component {
     return (
       <div style={{ backgroundColor: 'black' }}>
         <div className='minibox' style={{ display: showSummary ? 'none' : 'block' }}>
-          <div className='movieInfo'>
-            <div className='imageContainer'>
-              <img src={`https://image.tmdb.org/t/p/original/${movieImage}`} alt="" style={{ height: "200px", width: "auto" }} />
-            </div>
-            <div align='left'>
-              <h1>{title}</h1>
-              <p>{location}</p>
-              <p>{currentDate}</p>
-              <p>{time}</p>
-            </div>
-          </div>
-          <div id="stage-container">
-            <div><span><Timer /></span></div>
-            <svg width="500" height="100" >
-            </svg>
-            <h1 id="stage">Screen</h1>
-          </div>
-
-          <div className='layout'>
-            <div className='left'>
-              {rowName.map((rowLabel, rowIndex) => (
-                <div className="Row" key={rowIndex}>
-                  {rowLabel}
-                  {seatsGrid[rowIndex].slice(0, 4)}
-                </div>
-              ))}
-            </div>
-
-            <div className='center'>
-              {[0, 1, 2, 3].map(rowIndex => (
-                <div className="Row" key={rowIndex}>
-                  {seatsGrid[rowIndex].slice(4, 10)}
-                </div>
-              ))}
-            </div>
-
-            <div className='right'>
-              {[0, 1, 2, 3].map(rowIndex => (
-                <div className="Row" key={rowIndex}>
-                  {seatsGrid[rowIndex].slice(10, 14)}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <h3>Legend</h3>
-            <pre>
-              <div id='Unavailable' style={{ display: 'inline-block' }}></div>Unavailable
-              <div id='AvailableLegend' style={{ display: 'inline-block', marginLeft: '10px' }}></div>Available
-              <div id='selected' style={{ display: 'inline-block', marginLeft: '10px' }}></div>Selected
-            </pre>
-          </div>
+        <MovieInfo
+          movieImage={movieImage}
+          title={title}
+          location={location}
+          currentDate={currentDate}
+          time={time}
+        />
+          <Stage/>
+          <MovieSeats rowName={rowName} seatsGrid={seatsGrid} />
+          <MovieLegend/>
         </div>
+
+        <OrderSummary
+          chosenSeats={chosenSeats}
+          rowName={rowName}
+          chosenRow={chosenRow}
+          handleCancel={this.handleCancel}
+          handleConfirm={this.handleConfirm}
+          showSummary={showSummary}
+        />
 
         <footer class="footer" style={{ display: showSummary ? 'none' : 'block' }}>
           <div className='inputs'>
@@ -359,25 +266,6 @@ class SeatApp extends Component {
             <Button variant="contained" onClick={this.handleCheckout} disabled={chosenSeats.length === 0 ? true : false} style={{ background: 'grey' }}>checkout</Button>
           </div>
         </footer>
-
-        <div className='orderSummary' style={{ display: showSummary ? 'block' : 'none' }}>
-          <Timer />
-          <pre>
-            Qty: {chosenSeats.length}
-          </pre>
-          <pre>
-            Seats: {chosenSeats.map((seatNum, index) => {
-              const rowLabel = rowName[chosenRow[index] - 1];
-              return `${rowLabel}${seatNum}`;
-            }).join(", ")}
-          </pre>
-          <pre>
-            Total cost: ${chosenSeats.length * 8}
-          </pre>
-          <Button variant="contained" onClick={this.handleCancel} style={{ background: 'grey' }}>Cancel</Button>
-          <Button variant="contained" onClick={this.handleConfirm} style={{ background: 'grey' }}>Confirm</Button>
-        </div>
-
       </div>
     );
   }
