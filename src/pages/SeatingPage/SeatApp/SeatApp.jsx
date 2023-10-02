@@ -3,7 +3,6 @@ import './SeatApp.css';
 import Seat from '../Seat/Seat.js';
 import axios, { formToJSON } from 'axios';
 import { json, useParams } from 'react-router-dom';
-import PG from "../../HomePage/images/PG.png"
 import Button from '@mui/material/Button'
 import Timer from './Timer';
 import { useNavigate } from "react-router-dom";
