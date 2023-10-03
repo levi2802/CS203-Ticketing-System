@@ -13,7 +13,7 @@ import com.cs203.TicketWarrior.Registration.services.PurchaseService;
 @RequiredArgsConstructor
 @RequestMapping("/api/purchases")
 public class PurchaseController {
-    
+
     private final PurchaseService purchaseService;
 
     @GetMapping
@@ -31,5 +31,5 @@ public class PurchaseController {
         System.out.println(purchase.getSeatIDs());
         return purchaseService.createPurchase(purchase);
     }
-    
+
 }
