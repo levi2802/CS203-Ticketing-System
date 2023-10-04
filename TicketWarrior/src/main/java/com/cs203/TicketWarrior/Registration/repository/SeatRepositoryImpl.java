@@ -1,25 +1,15 @@
 package com.cs203.TicketWarrior.Registration.repository;
 
 import com.cs203.TicketWarrior.Registration.models.Seat;
-import com.cs203.TicketWarrior.Registration.models.User;
-import com.cs203.TicketWarrior.Registration.repository.SeatRepository;
-
-import org.bson.types.ObjectId;
-import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.stereotype.Repository;
-
 import java.util.List;
-import java.util.Optional;
 
 public class SeatRepositoryImpl implements SeatRepositoryCustom {
 
     private final MongoTemplate mongoTemplate;
 
-    @Autowired
     public SeatRepositoryImpl(MongoTemplate mongoTemplate) {
         this.mongoTemplate = mongoTemplate;
     }

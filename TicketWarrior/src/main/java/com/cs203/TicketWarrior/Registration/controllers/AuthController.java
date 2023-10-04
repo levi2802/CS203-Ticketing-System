@@ -1,10 +1,8 @@
 package com.cs203.TicketWarrior.Registration.controllers;
 
-import org.apache.catalina.connector.Response;
 import com.cs203.TicketWarrior.Registration.payload.*;
 import com.cs203.TicketWarrior.Registration.services.AuthenticationService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.GetMapping;

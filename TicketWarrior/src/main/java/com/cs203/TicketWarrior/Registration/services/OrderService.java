@@ -3,7 +3,6 @@ package com.cs203.TicketWarrior.Registration.services;
 import com.cs203.TicketWarrior.Registration.models.Order;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.cs203.TicketWarrior.Registration.repository.OrderRepository;
 
