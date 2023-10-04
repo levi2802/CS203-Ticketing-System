@@ -5,7 +5,7 @@ import axios from 'axios';
 
 function UsernamePassword() {
 
-    const API_URL = "52.221.230.42:8080/api/auth/";
+    const API_URL = "52.221.230.42/api/auth/";
 
     const initialFormData = {
         email: '',
