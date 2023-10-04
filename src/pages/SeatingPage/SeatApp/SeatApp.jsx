@@ -32,7 +32,7 @@ class SeatApp extends Component {
 
     const moviename = localStorage.getItem("movieTitle");
     console.log(moviename);
-    await axios.get("http://localhost:8080/api/v1/seats/OccupiedSeats/" + moviename)
+    await axios.get("52.221.230.42:8080/api/v1/seats/OccupiedSeats/" + moviename)
       .then(json => json.data.forEach(data => this.Unavailable.push([data.row, data.coloumn])))
       .catch(console.error);
 
@@ -198,7 +198,7 @@ class SeatApp extends Component {
       const headers = {
         'Authorization': `Bearer ${accessToken}`
       };
-      axios.post("http://localhost:8080/api/v1/seats/PostSeats", {
+      axios.post("52.221.230.42:8080/api/v1/seats/PostSeats", {
         row: seat.row,
         coloumn: seat.num,
         type: "standard",
@@ -227,7 +227,7 @@ class SeatApp extends Component {
       const headers = {
         'Authorization': `Bearer ${accessToken}`
       };
-      axios.post("http://localhost:8080/api/purchases/postPurchase", {
+      axios.post("52.221.230.42:8080/api/purchases/postPurchase", {
         userId: username,
         movieId: movieName,
         seatIDs: seatIDs,
