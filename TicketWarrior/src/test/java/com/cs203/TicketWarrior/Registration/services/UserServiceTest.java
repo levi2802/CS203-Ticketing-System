@@ -5,31 +5,26 @@ import com.cs203.TicketWarrior.Registration.repository.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class UserServiceTest {
 
     @Mock
     private UserRepository userRepository;
-    private AutoCloseable autoCloseable;
     private UserService userServiceTest;
 
     @BeforeEach
     void setUp() {
-        //Initialise all mocks into this test class
-        autoCloseable = MockitoAnnotations.openMocks(this);
         userServiceTest = new UserService(userRepository);
-    }
-
-    @AfterEach
-    void tearDown() throws Exception{
-        autoCloseable.close();
     }
 
     @Test
@@ -61,11 +56,31 @@ class UserServiceTest {
     }
 
     @Test
-    void doesEmailExist() {
+    void testDoesEmailExist_EmailExists() {
+        //Arrange
+        String existingEmail = "existingEmail@gmail.com";
+        when(userRepository.findUserByEmail(existingEmail)).thenReturn(Optional.of(new User()));
+
+        //Act
+        boolean result = userServiceTest.doesEmailExist(existingEmail);
+
+        //Assert
+        assertTrue(result);
+        verify(userRepository, times(1)).findUserByEmail(existingEmail);
     }
 
     @Test
-    void doesUserIdExist() {
+    void testDoesEmailExist_EmailDoesNotExists() {
+        //Arrange
+        String nonExistingEmail = "nonExistingEmail@gmail.com";
+        when(userRepository.findUserByEmail(nonExistingEmail)).thenReturn(Optional.empty());
+
+        //Act
+        boolean result = userServiceTest.doesEmailExist(nonExistingEmail);
+
+        //Assert
+        assertFalse(result);
+        verify(userRepository, times(1)).findUserByEmail(nonExistingEmail);
     }
 
     @Test

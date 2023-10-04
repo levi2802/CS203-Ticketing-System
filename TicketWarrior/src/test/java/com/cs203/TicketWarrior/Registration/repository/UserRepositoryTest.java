@@ -1,11 +1,12 @@
 package com.cs203.TicketWarrior.Registration.repository;
 
+import com.cs203.TicketWarrior.Registration.TestConfig.TestConfig;
 import com.cs203.TicketWarrior.Registration.models.User;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.context.annotation.Import;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
@@ -13,6 +14,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataMongoTest
+@Import(TestConfig.class)
 class UserRepositoryTest {
 
     @Autowired
@@ -32,7 +34,7 @@ class UserRepositoryTest {
         User newUser = new User(
                 "calvin@gmail.com",
                 "calvin",
-                passwordEncoder.encode("goodpassword");
+                passwordEncoder.encode("goodpassword"));
         userRepositoryTest.save(newUser);
 
         //Act
@@ -48,7 +50,7 @@ class UserRepositoryTest {
         User newUser = new User(
                 "calvin@gmail.com",
                 "calvin",
-                passwordEncoder.encode("goodpassword");
+                passwordEncoder.encode("goodpassword"));
         userRepositoryTest.save(newUser);
 
         //Act
