@@ -39,6 +39,7 @@ function NavBarLoggedIn() {
             <Link to="/"><img className="nav_logo" src={logo} alt="Wicket Logo" /></Link>
             <div className="button-container-logout">
                 <Button variant="text" style={{ color: 'gold' }} onClick={handleLogout}>Logout</Button>
+                <Button variant="text" style={{ color: 'gold' }} href="/OrderHistoryPage">Order History</Button>
                 <img
                     className="nav_avatar"
                     src={userProfile}

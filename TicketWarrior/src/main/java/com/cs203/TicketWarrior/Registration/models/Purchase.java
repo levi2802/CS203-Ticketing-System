@@ -11,14 +11,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Document(collection = "purchases")
 public class Purchase {
-    @Id
+	@Id
 	private String id;
 	private String userId;
 	private String movieId;
@@ -33,7 +32,7 @@ public class Purchase {
 		this.seatIDs = seatIDs;
 	}
 
-	public void setTimeStamp(LocalDateTime timestamp){
+	public void setTimeStamp(LocalDateTime timestamp) {
 		this.timestamp = timestamp;
 	}
 }
