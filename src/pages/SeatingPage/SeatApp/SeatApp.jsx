@@ -227,7 +227,6 @@ class SeatApp extends Component {
       const headers = {
         'Authorization': `Bearer ${accessToken}`
       };
-  
       axios.post("http://localhost:8080/api/purchases/postPurchase", {
         userId: username,
         movieId: movieName,
@@ -235,11 +234,11 @@ class SeatApp extends Component {
       }, { headers: headers })
         .then();
     } catch {
-      alert("How did you get here? Please report the steps done to the team.");
+      alert("how did you get here? please report steps done to team");
     }
-    
-    console.log("Purchase add (without seat ID list) success");
-  }  
+    console.log("purchase add (without seat id list) success")
+  }
+
 
   render() {
     const { seats, showSummary } = this.state;

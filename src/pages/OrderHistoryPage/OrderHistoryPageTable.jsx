@@ -1,22 +1,48 @@
 import React from "react";
+import { useState } from "react";
 
 import './tableStyles.css'
 
 import axios, { formToJSON } from 'axios';
 
+import { json } from "react-router-dom";
+
 function OrderHistoryPageTable() {
 
-    // const username = localStorage.getItem('username');
+    const username = localStorage.getItem('username');
 
-    // getUserID = (username) => {
-    //     try {
-             
-             
+    const [userID, setUserID] = useState();
+
+    // setUserID("userID not successfully changed");
+
+    getUserIDByUsername(username);
+    // userID = this.getUserIDByUsername(username);
+
+    console.log(userID);
+
+    function getUserIDByUsername(username) {
+        try {
+
+            // Ensure User is logged in before being able to get UserID
+            const accessToken = localStorage.getItem('accessToken');
+            const headers = {
+                'Authorization': `Bearer ${accessToken}`
+            };
+
+            // Attempt to get User by Username
+            axios.get("http://localhost:8080/api/v1/users/getUserByUsername/" + username, {
+                headers: headers,
+                validateStatus: function (status) {
+                    return true; // Resolve only if the status code is less than 500
+                }
+            }).then(json => setUserID(json.data.id));
             
-    //     } catch {
-    //         alert("Issue with getting UserID from using username");
-    //     }
-    // }
+        } catch(exception) {
+            // alert("Issue with getting UserID from using username");
+            console.log(exception.name);
+            console.log(exception.message);
+        }
+    }
 
     // getOrdersFromDB = (username) => {
     //     try {

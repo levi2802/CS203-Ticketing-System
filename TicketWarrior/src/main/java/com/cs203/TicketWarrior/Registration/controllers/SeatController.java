@@ -31,8 +31,9 @@ public class SeatController {
 
     @GetMapping("/OccupiedSeats/{movieName}")
     public ResponseEntity<List<Seat>> findAllOccupiedSeats(@PathVariable String movieName) {
-        return new ResponseEntity<List<Seat>>(seatService.findAllOccupiedSeats(movieName), HttpStatus.OK);// Sends Http status
-                                                                                                 // code 200.
+        return new ResponseEntity<List<Seat>>(seatService.findAllOccupiedSeats(movieName), HttpStatus.OK);// Sends Http
+                                                                                                          // status
+        // code 200.
     }
 
     @PostMapping("/PostSeats")
@@ -40,10 +41,12 @@ public class SeatController {
         return new ResponseEntity<Seat>(seatService.insert(seat), HttpStatus.OK);// Sends Http status code
                                                                                  // 200.
     }
+
     @GetMapping("/findSeats/{username}")
-    public ResponseEntity<List<Seat>> findSeats(@PathVariable String username){
+    public ResponseEntity<List<Seat>> findSeats(@PathVariable String username) {
         System.out.println(username);
-        return new ResponseEntity<List<Seat>>(seatService.findbyID(username), HttpStatus.OK);// Sends Http status code 200.
+        return new ResponseEntity<List<Seat>>(seatService.findbyID(username), HttpStatus.OK);// Sends Http status code
+                                                                                             // 200.
     }
 
     // Links order and seat together
