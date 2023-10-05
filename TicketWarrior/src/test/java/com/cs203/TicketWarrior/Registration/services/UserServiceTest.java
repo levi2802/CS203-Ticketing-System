@@ -1,14 +1,20 @@
 package com.cs203.TicketWarrior.Registration.services;
 
+import com.cs203.TicketWarrior.Registration.TestConfig.TestConfig;
 import com.cs203.TicketWarrior.Registration.models.User;
 import com.cs203.TicketWarrior.Registration.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Import;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
@@ -84,10 +90,68 @@ class UserServiceTest {
     }
 
     @Test
-    void save() {
+    void testDoesUserIdExist_IdExists() {
+        //Arrange
+        String existingId = "1";
+        when(userRepository.findById(existingId)).thenReturn(Optional.of(new User()));
+
+        //Act
+        boolean result = userServiceTest.doesUserIdExist(existingId);
+
+        //Assert
+        assertTrue(result);
+        verify(userRepository, times(1)).findById(existingId);
     }
 
     @Test
-    void findUserByUsername() {
+    void testDoesUserIdExist_IdDoesNotExists() {
+        //Arrange
+        String nonExistingId = "1";
+        when(userRepository.findById(nonExistingId)).thenReturn(Optional.empty());
+
+        //Act
+        boolean result = userServiceTest.doesUserIdExist(nonExistingId);
+
+        //Assert
+        assertFalse(result);
+        verify(userRepository, times(1)).findById(nonExistingId);
+    }
+
+    @Test
+    void testSave() {
+        //Arrange
+        User user = new User(
+                "calvin@gmail.com",
+                "calvin",
+                "password"
+        );
+
+        //Act
+        userServiceTest.save(user);
+
+        //Assert
+        ArgumentCaptor<User> userArgumentCaptor = ArgumentCaptor.forClass(User.class);
+
+        verify(userRepository).save(userArgumentCaptor.capture());
+
+        User capturedUser = userArgumentCaptor.getValue();
+        assertEquals(user, capturedUser);
+    }
+
+    @Test
+    void testFindUserByUsername_UserExists_ReturnUser() {
+        //Arrange
+        String usernameToFind = "testUsername";
+        User userToReturn = new User();
+        when(userRepository.findUserByUsername(usernameToFind)).thenReturn(Optional.of(userToReturn));
+
+        //Act
+        Optional<User> result = userServiceTest.findUserByUsername(usernameToFind);
+
+        //Assert
+        assertTrue(result.isPresent());
+        assertEquals(userToReturn, result.get());
+        verify(userRepository).findUserByUsername(usernameToFind);
+
     }
 }
