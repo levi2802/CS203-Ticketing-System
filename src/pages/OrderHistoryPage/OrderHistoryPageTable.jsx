@@ -11,16 +11,32 @@ function OrderHistoryPageTable() {
 
     const username = localStorage.getItem('username');
 
-    const [userID, setUserID] = useState();
+    const [userID, setUserID] = useState(0);
+
+    const [userPurchases, setUserPurchases] = useState(0);
+
+    // let testArray = ["movieId", "List", "timestamp"];
+    // console.log(testArray.toString());
 
     // setUserID("userID not successfully changed");
 
     getUserIDByUsername(username);
     // userID = this.getUserIDByUsername(username);
 
-    console.log(userID);
+    // console.log("userID = " + userID);
 
-    function getUserIDByUsername(username) {
+    if (userID) {
+        getPurchasesByUserID(userID);
+
+        // console.log("userPurchases = " + userPurchases.toString());
+
+        // for (let index = 0; index < userPurchases.length; index++) {
+        //     const element = userPurchases[index];
+        //     console.log(element);
+        // }
+    }
+
+    async function getUserIDByUsername(username) {
         try {
 
             // Ensure User is logged in before being able to get UserID
@@ -30,15 +46,58 @@ function OrderHistoryPageTable() {
             };
 
             // Attempt to get User by Username
-            axios.get("http://localhost:8080/api/v1/users/getUserByUsername/" + username, {
-                headers: headers,
-                validateStatus: function (status) {
-                    return true; // Resolve only if the status code is less than 500
-                }
-            }).then(json => setUserID(json.data.id));
+            let response = await axios.get("http://localhost:8080/api/v1/users/getUserByUsername/" + username, {
+                        headers: headers,
+                        validateStatus: function (status) {
+                            return true; // Resolve only if the status code is less than 500
+                        }
+                    }
+                );
+
+            setUserID(response.data.id);
+            console.log("Successfully set userID to " + response.data.id);
             
         } catch(exception) {
             // alert("Issue with getting UserID from using username");
+            console.log(exception.name);
+            console.log(exception.message);
+        }
+    }
+
+    async function getPurchasesByUserID(userID) {
+        try {
+
+            // Ensure User is logged in before being able to get Purchases
+            const accessToken = localStorage.getItem('accessToken');
+            const headers = {
+                'Authorization': `Bearer ${accessToken}`
+            };
+
+            // console.log("Called function");
+            const purchaseArray = [];
+
+            // Attempt to get Purchases by UserID
+            let response = await axios.get("http://localhost:8080/api/v1/purchases/" + userID, {
+                        headers: headers,
+                        validateStatus: function (status) {
+                            // console.log("status validated");
+                            return true; // Resolve only if the status code is less than 500
+                        }
+                    }
+                ).then(res => console.log(res));
+
+            // console.log("get request success");
+
+            
+
+            // response.data.forEach(data => {
+            //             console.log("Performing push");
+            //             purchaseArray.Push(data);
+            //             console.log("successfully pushed purchase: " + data.id);
+            //         }
+            //     );
+            
+        } catch(exception) {
             console.log(exception.name);
             console.log(exception.message);
         }

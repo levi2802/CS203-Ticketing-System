@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
-public class PurchaseRepositoryImpl implements PurchaseRepositorycustom{
+public class PurchaseRepositoryImpl implements PurchaseRepositorycustom {
     private final MongoTemplate mongoTemplate;
 
     public PurchaseRepositoryImpl(MongoTemplate mongoTemplate) {
