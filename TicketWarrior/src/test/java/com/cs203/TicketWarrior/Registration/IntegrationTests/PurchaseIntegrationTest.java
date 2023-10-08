@@ -70,15 +70,11 @@ public class PurchaseIntegrationTest {
 
 
     @Test
-    public void getPurchases_Success() throws Exception {
+    public void testGetPurchasesByUser_Success() throws Exception {
         //Arrange
-        //Save user in DB
-//        User user = new User("calvin@gmail.com", "testCalvin", passwordEncoder.encode("goodpassword"));
+        //Register user
         AuthenticationRequest request = new AuthenticationRequest("testCalvin@gmail.com", "testCalvin", "goodpassword");
         AuthenticationResponse response = authenticationService.register(request);
-//        userRepository.save(user);
-
-
 
         //Set URI
         String id = "testCalvin";
@@ -88,10 +84,36 @@ public class PurchaseIntegrationTest {
         Purchase purchase = new Purchase("testCalvin", "barbier1", seatIDs);
         purchaseRepository.save(purchase);
 
+        //Set token in http header
+        String token = response.getToken();
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + token);
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+
         //Act
-        //Authenticate user
-//        AuthenticationRequest request = new AuthenticationRequest("testCalvin", "goodpassword");
-//        AuthenticationResponse response = authenticationService.authenticate(request);
+        //Call API
+        ResponseEntity<Purchase[]> result = testRestTemplate.exchange(uri, HttpMethod.GET, entity, Purchase[].class);
+        Purchase[] purchases = result.getBody();
+
+        //Assert
+        assertEquals(200, result.getStatusCode().value());
+        assertEquals(1, purchases.length);
+    }
+
+    @Test
+    public void testGetPurchasesByUser_Fail() throws Exception {
+        //Arrange
+        //Register user
+        AuthenticationRequest request = new AuthenticationRequest("testCalvin@gmail.com", "testCalvin", "goodpassword");
+        AuthenticationResponse response = authenticationService.register(request);
+
+        //Set URI
+        String id = "invalidUserName";
+        URI uri = new URI(baseUrl + port + "/api/purchases/" + id);
+        List<String> seatIDs = new ArrayList<>();
+        seatIDs.add("A1");
+        Purchase purchase = new Purchase("testCalvin", "barbier1", seatIDs);
+        purchaseRepository.save(purchase);
 
         //Set token in http header
         String token = response.getToken();
@@ -99,13 +121,68 @@ public class PurchaseIntegrationTest {
         headers.set("Authorization", "Bearer " + token);
         HttpEntity<?> entity = new HttpEntity<>(headers);
 
+        //Act
         //Call API
         ResponseEntity<Purchase[]> result = testRestTemplate.exchange(uri, HttpMethod.GET, entity, Purchase[].class);
-//        ResponseEntity<Purchase[]> result = testRestTemplate.getForEntity(uri, Purchase[].class);
         Purchase[] purchases = result.getBody();
 
         //Assert
         assertEquals(200, result.getStatusCode().value());
-        assertEquals(1, purchases.length);
+        assertEquals(0, purchases.length);
+    }
+
+    @Test
+    public void testCreatePurchase_Success() throws Exception {
+        //Arrange
+        //Register user
+        AuthenticationRequest request = new AuthenticationRequest("testCalvin@gmail.com", "testCalvin", "goodpassword");
+        AuthenticationResponse response = authenticationService.register(request);
+
+        //Set URI
+        String id = "testCalvin";
+        URI uri = new URI(baseUrl + port + "/api/purchases/postPurchase");
+        List<String> seatIDs = new ArrayList<>();
+        seatIDs.add("A1");
+        Purchase purchase = new Purchase("testCalvin", "barbier1", seatIDs);
+
+        //Set token in http header
+        String token = response.getToken();
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + token);
+        HttpEntity<?> entity = new HttpEntity<>(purchase, headers);
+
+        //Act
+        //Call API
+        ResponseEntity<Purchase> result = testRestTemplate.exchange(uri, HttpMethod.POST, entity, Purchase.class);
+        Purchase purchases = result.getBody();
+
+        //Assert
+        assertEquals(200, result.getStatusCode().value());
+        assertEquals(purchases.getUserId(), id);
+    }
+
+    @Test
+    public void testCreatePurchase_Fail() throws Exception {
+        //Arrange
+        //Set URI
+        String invalidUserName = "invalidUser";
+        URI uri = new URI(baseUrl + port + "/api/purchases/postPurchase");
+        List<String> seatIDs = new ArrayList<>();
+        seatIDs.add("A1");
+        Purchase purchase = new Purchase(invalidUserName, "barbier1", seatIDs);
+
+        //Set token in http header
+        String token = "invalidToken";
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + token);
+        HttpEntity<?> entity = new HttpEntity<>(purchase, headers);
+
+        //Act
+        //Call API
+        ResponseEntity<Purchase> result = testRestTemplate.exchange(uri, HttpMethod.POST, entity, Purchase.class);
+        Purchase purchases = result.getBody();
+
+        //Assert
+        assertEquals(403, result.getStatusCode().value());
     }
 }
