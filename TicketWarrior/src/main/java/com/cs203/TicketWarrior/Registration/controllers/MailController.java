@@ -1,5 +1,6 @@
 package com.cs203.TicketWarrior.Registration.controllers;
 
+import com.cs203.TicketWarrior.Registration.models.TestUser;
 import com.cs203.TicketWarrior.Registration.models.User;
 import com.cs203.TicketWarrior.Registration.repository.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,9 @@ public class MailController {
 
     @GetMapping("/send")
     public String sendMail() {
-        User user = new User();
+        TestUser user = new TestUser();
         user.setEmail("www.levijr@gmail.com");
         user.setUsername("test");
-        user.setId("65229d9d17099511ec2ed4e6");
 
         // Send a notification
         try {

@@ -1,7 +1,7 @@
 package com.cs203.TicketWarrior.Registration.services;
 
 import com.cs203.TicketWarrior.Registration.models.Order;
-import com.cs203.TicketWarrior.Registration.models.User;
+import com.cs203.TicketWarrior.Registration.models.TestUser;
 import com.cs203.TicketWarrior.Registration.repository.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
@@ -22,7 +22,7 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public void sendNotification(User user) throws MailException {
+    public void sendNotification(TestUser user) throws MailException {
 //        List<Order> orders = orderService.getOrdersByUser(user.getId());
 
         // Send email
