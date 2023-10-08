@@ -5,7 +5,7 @@ import axios from 'axios';
 
 function UsernamePassword() {
 
-    const API_URL = "http://13.212.113.161:8080/api/auth/";
+    const API_URL = "http://localhost:8080/api/auth/";
 
     const initialFormData = {
         email: 'null',
@@ -27,7 +27,7 @@ function UsernamePassword() {
 
     const handleSubmit = event => {
         event.preventDefault();
-        axios.post('http://13.212.113.161:8080/api/auth/authenticate', formData).then(response => {
+        axios.post('http://localhost:8080/api/auth/authenticate', formData).then(response => {
             console.log(response.data);
             if (response.data.isSuccessful) {
                 localStorage.setItem('accessToken', response.data.token);

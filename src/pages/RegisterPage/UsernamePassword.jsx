@@ -5,7 +5,7 @@ import axios from 'axios';
 
 function UsernamePassword() {
 
-    const API_URL = "http://13.212.113.161:8080/api/auth/";
+    const API_URL = "http://localhost:8080/api/auth/";
 
     const initialFormData = {
         email: '',
