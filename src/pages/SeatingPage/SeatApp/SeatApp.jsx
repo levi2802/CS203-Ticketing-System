@@ -12,8 +12,8 @@ import { recomposeColor } from '@mui/material';
 class SeatApp extends Component {
   template = function (row, coloumn, type, availability) { }
   //switch them based on which database you are testing on
-  //backendURL= "http://localhost:8080"
-  backendURL= "http://13.212.113.161:8080"
+  backendURL = "http://localhost:8080"
+  // backendURL= "http://13.212.113.161:8080"
   Unavailable = [];
   d = new Date();
   constructor(props) {
@@ -150,7 +150,14 @@ class SeatApp extends Component {
       return;
     }
 
-
+    async function sendEmail() {
+      try {
+        const response = await axios.get(`http://localhost:8080/api/mail/send/${username}`);
+        console.log("Email sent successfully!", response.data);
+      } catch (error) {
+        console.error("There is an error", error);
+      }
+    }
 
     const headers = {
       'Authorization': `Bearer ${accessToken}`
@@ -196,6 +203,8 @@ class SeatApp extends Component {
     alert(alertMessage);
     console.log(seatIDs);
     await this.addPurchaseOrder(username, seatIDs, movieName);
+
+    await emailPromise
   }
 
   addSeatToDB = (seat, username, movieName) => {

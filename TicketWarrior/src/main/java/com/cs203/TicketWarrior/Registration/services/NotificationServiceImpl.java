@@ -1,29 +1,47 @@
 package com.cs203.TicketWarrior.Registration.services;
 
-import com.cs203.TicketWarrior.Registration.models.Order;
-import com.cs203.TicketWarrior.Registration.models.TestUser;
+import com.cs203.TicketWarrior.Registration.models.Purchase;
+import com.cs203.TicketWarrior.Registration.models.User;
 import com.cs203.TicketWarrior.Registration.repository.NotificationService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+
 import java.util.*;
 
+@RequiredArgsConstructor
 @Service
 public class NotificationServiceImpl implements NotificationService {
     private final JavaMailSender javaMailSender;
-    private final OrderService orderService;
-
-    @Autowired
-    public NotificationServiceImpl (JavaMailSender javaMailSender, OrderService orderService) {
-        this.javaMailSender = javaMailSender;
-        this.orderService = orderService;
-    }
+    private final PurchaseService purchaseService;
 
     @Override
-    public void sendNotification(TestUser user) throws MailException {
-//        List<Order> orders = orderService.getOrdersByUser(user.getId());
+    public void sendNotification(User user) throws MailException {
+        String userId = user.getUsername();
+        List<Purchase> purchases = purchaseService.findByUserId(userId);
+
+        StringBuilder sb = new StringBuilder();
+        for (Purchase p : purchases) {
+            // Get seat data
+            StringBuilder tmp = new StringBuilder();
+            for (String seat : p.getSeatIDs()) {
+                tmp.append(seat).append(",");
+            }
+            String seats = tmp.toString();
+
+            // Get movie data
+            String movie = p.getMovieId();
+
+            // Create orders
+            String orders = "(" + movie + ": " + "[" + seats + "]" + ")";
+            sb.append(orders).append(",");
+        }
+
+        String res = sb.toString();
+
+        System.out.println(res);
 
         // Send email
         SimpleMailMessage mail = new SimpleMailMessage();
