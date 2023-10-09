@@ -51,6 +51,7 @@ public class AuthenticationService {
                 .token(jwtToken)
                 .message("Success! Account Registered!")
                 .isSuccessful(true)
+                .email(user.getEmail())
                 .build();
     }
 
@@ -73,12 +74,14 @@ public class AuthenticationService {
                     .token(jwtToken)
                     .message("Success!")
                     .isSuccessful(true)
+                    .email(user.getEmail())
                     .build();
         } catch(BadCredentialsException error) {
             return AuthenticationResponse.builder()
                     .token(null)
                     .message("Fail!")
                     .isSuccessful(false)
+                    .email(null)
                     .build();
         }
     }

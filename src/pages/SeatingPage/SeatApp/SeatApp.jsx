@@ -11,6 +11,9 @@ import { recomposeColor } from '@mui/material';
 
 class SeatApp extends Component {
   template = function (row, coloumn, type, availability) { }
+  //switch them based on which database you are testing on
+  //backendURL= "http://localhost:8080"
+  backendURL= "http://13.212.113.161:8080"
   Unavailable = [];
   d = new Date();
   constructor(props) {
@@ -32,7 +35,7 @@ class SeatApp extends Component {
 
     const moviename = localStorage.getItem("movieTitle");
     console.log(moviename);
-    await axios.get("http://localhost:8080/api/v1/seats/OccupiedSeats/" + moviename)
+    await axios.get(this.backendURL + "/api/v1/seats/OccupiedSeats/" + moviename)
       .then(json => json.data.forEach(data => this.Unavailable.push([data.row, data.coloumn])))
       .catch(console.error);
 
@@ -201,7 +204,7 @@ class SeatApp extends Component {
       const headers = {
         'Authorization': `Bearer ${accessToken}`
       };
-      axios.post("http://localhost:8080/api/v1/seats/PostSeats", {
+      axios.post(this.backendURL + "/api/v1/seats/PostSeats", {
         row: seat.row,
         coloumn: seat.num,
         type: "standard",
@@ -230,7 +233,7 @@ class SeatApp extends Component {
       const headers = {
         'Authorization': `Bearer ${accessToken}`
       };
-      axios.post("http://localhost:8080/api/purchases/postPurchase", {
+      axios.post(this.backendURL + "/api/purchases/postPurchase", {
         userId: username,
         movieId: movieName,
         seatIDs: seatIDs,
