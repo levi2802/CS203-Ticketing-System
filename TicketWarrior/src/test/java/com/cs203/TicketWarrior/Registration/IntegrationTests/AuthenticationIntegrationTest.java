@@ -1,8 +1,10 @@
 package com.cs203.TicketWarrior.Registration.IntegrationTests;
 
+import com.cs203.TicketWarrior.Registration.models.User;
 import com.cs203.TicketWarrior.Registration.payload.AuthenticationRequest;
 import com.cs203.TicketWarrior.Registration.payload.AuthenticationResponse;
 import com.cs203.TicketWarrior.Registration.repository.UserRepository;
+import com.cs203.TicketWarrior.Registration.services.AuthenticationService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,8 +18,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.net.URI;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, properties = {
         "spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration"
@@ -34,6 +35,9 @@ public class AuthenticationIntegrationTest {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private AuthenticationService authenticationService;
 
     @BeforeEach
     void setUp() {
@@ -66,5 +70,74 @@ public class AuthenticationIntegrationTest {
         //Assert
         assertEquals(200, result.getStatusCode().value());
         assertTrue(response.getIsSuccessful());
+    }
+    @Test
+    public void testRegisterUser_Fail() throws Exception {
+        //Arrange
+        User registeredUser = new User("validUser@gmail.com", "validUser", "goodpassword");
+        userRepository.save(registeredUser);
+        //Register user
+        AuthenticationRequest request = new AuthenticationRequest("validUser@gmail.com", "validUser", "goodpassword");
+
+        //Set URI
+        URI uri = new URI(baseUrl + port + "/api/auth/register");
+
+        //Set token in http header
+        HttpEntity<?> entity = new HttpEntity<>(request);
+
+        //Act
+        //Call API
+        ResponseEntity<AuthenticationResponse> result = testRestTemplate.exchange(uri, HttpMethod.POST, entity, AuthenticationResponse.class);
+        AuthenticationResponse response = result.getBody();
+
+        //Assert
+        assertEquals(200, result.getStatusCode().value());
+        assertFalse(response.getIsSuccessful());
+    }
+
+    @Test
+    public void testAuthenticateUser_Success() throws Exception {
+        //Arrange
+        AuthenticationRequest registerRequest = new AuthenticationRequest("validUser@gmail.com", "validUser", "goodpassword");
+        AuthenticationResponse registerResponse = authenticationService.register(registerRequest);
+        AuthenticationRequest request = new AuthenticationRequest("null","validUser", "goodpassword");
+
+        //Set URI
+        URI uri = new URI(baseUrl + port + "/api/auth/authenticate");
+
+        //Set token in http header
+        HttpEntity<?> entity = new HttpEntity<>(request);
+
+        //Act
+        //Call API
+        ResponseEntity<AuthenticationResponse> result = testRestTemplate.exchange(uri, HttpMethod.POST, entity, AuthenticationResponse.class);
+        AuthenticationResponse response = result.getBody();
+
+        //Assert
+        assertEquals(200, result.getStatusCode().value());
+        assertTrue(response.getIsSuccessful());
+    }
+
+    @Test
+    public void testAuthenticateUser_Fail() throws Exception {
+        //Arrange
+        AuthenticationRequest registerRequest = new AuthenticationRequest("validUser@gmail.com", "validUser", "goodpassword");
+        AuthenticationResponse registerResponse = authenticationService.register(registerRequest);
+        AuthenticationRequest request = new AuthenticationRequest("null","validUser", "badpassword");
+
+        //Set URI
+        URI uri = new URI(baseUrl + port + "/api/auth/authenticate");
+
+        //Set token in http header
+        HttpEntity<?> entity = new HttpEntity<>(request);
+
+        //Act
+        //Call API
+        ResponseEntity<AuthenticationResponse> result = testRestTemplate.exchange(uri, HttpMethod.POST, entity, AuthenticationResponse.class);
+        AuthenticationResponse response = result.getBody();
+
+        //Assert
+        assertEquals(200, result.getStatusCode().value());
+        assertFalse(response.getIsSuccessful());
     }
 }
