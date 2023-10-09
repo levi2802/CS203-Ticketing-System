@@ -150,15 +150,6 @@ class SeatApp extends Component {
       return;
     }
 
-    async function sendEmail() {
-      try {
-        const response = await axios.get(`http://localhost:8080/api/mail/send/${username}`);
-        console.log("Email sent successfully!", response.data);
-      } catch (error) {
-        console.error("There is an error", error);
-      }
-    }
-
     const headers = {
       'Authorization': `Bearer ${accessToken}`
     };
@@ -202,9 +193,22 @@ class SeatApp extends Component {
     const alertMessage = "Your seats: " + selectedSeatsString + "for the movie: " + movieName + " are booked!";
     alert(alertMessage);
     console.log(seatIDs);
-    await this.addPurchaseOrder(username, seatIDs, movieName);
 
-    await emailPromise
+    // Create confirmation email.
+    const sendEmail = async() => {
+      try {
+        const response = await axios.get(`${this.backendURL}/api/mail/send/${username}/${movieName}/${selectedSeatsString}`);
+        console.log("Email sent successfully!", response.data);
+      } catch (error) {
+        console.error("There is an error", error);
+      }
+    }
+
+    // Send confirmation email.
+    await sendEmail()
+
+    // Save purchase order to the database.
+    await this.addPurchaseOrder(username, seatIDs, movieName);
   }
 
   addSeatToDB = (seat, username, movieName) => {
