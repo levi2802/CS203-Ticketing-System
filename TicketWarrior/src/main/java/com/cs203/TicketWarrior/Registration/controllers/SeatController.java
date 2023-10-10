@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.Console;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,9 +34,9 @@ public class SeatController {
         return new ResponseEntity<List<Seat>>(seatService.allSeats(), HttpStatus.OK); // Sends Http status code 200.
     }
 
-    @GetMapping("/OccupiedSeats/{movieName}")
-    public ResponseEntity<List<Seat>> findAllOccupiedSeats(@PathVariable String movieName) {
-        return new ResponseEntity<List<Seat>>(seatService.findAllOccupiedSeats(movieName), HttpStatus.OK);// Sends Http status
+    @GetMapping("/OccupiedSeats/{movieName}/{location}/{timing}")
+    public ResponseEntity<List<Seat>> findAllOccupiedSeats(@PathVariable String movieName, @PathVariable String location, @PathVariable String timing) {
+        return new ResponseEntity<List<Seat>>(seatService.findAllOccupiedSeats(movieName, location, timing), HttpStatus.OK);// Sends Http status
                                                                                                  // code 200.
     }
 

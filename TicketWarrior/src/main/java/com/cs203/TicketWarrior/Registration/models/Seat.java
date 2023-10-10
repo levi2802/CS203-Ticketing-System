@@ -36,6 +36,8 @@ public class Seat {
     private Boolean availability;
     private String username;
     private String movieName;
+    private String location;
+    private String timing;
     // private float price;
     // private SeatType seatType;
 

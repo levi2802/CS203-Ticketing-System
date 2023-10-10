@@ -24,11 +24,13 @@ public class SeatRepositoryImpl implements SeatRepositoryCustom {
         this.mongoTemplate = mongoTemplate;
     }
 
-    public List<Seat> findAllOccupiedSeats(String movieName) {
+    public List<Seat> findAllOccupiedSeats(String movieName, String location, String timing) {
         // TODO Auto-generated method stub
         final Query query = new Query();
-        query.addCriteria(Criteria.where("availability").is(false));
+        //query.addCriteria(Criteria.where("availability").is(false));
         query.addCriteria(Criteria.where("movieName").is(movieName));
+        query.addCriteria(Criteria.where("location").is(location));
+        query.addCriteria(Criteria.where("timing").is(timing));
         return mongoTemplate.find(query, Seat.class);
         // throw new UnsupportedOperationException("Unimplemented method
         // 'findAllOccupiedSeats'");
@@ -39,6 +41,8 @@ public class SeatRepositoryImpl implements SeatRepositoryCustom {
         query.addCriteria(Criteria.where("row").is(seat.getRow()));
         query.addCriteria(Criteria.where("coloumn").is(seat.getColoumn()));
         query.addCriteria(Criteria.where("movieName").is(seat.getMovieName()));
+        query.addCriteria(Criteria.where("location").is(seat.getLocation()));
+        query.addCriteria(Criteria.where("timing").is(seat.getMovieName()));
         return mongoTemplate.findOne(query, Seat.class);
     }
 
