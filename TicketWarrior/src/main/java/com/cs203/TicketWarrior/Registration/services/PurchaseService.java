@@ -19,8 +19,8 @@ public class PurchaseService {
         return purchaseRepository.findAll();
     }
 
-    public List<Purchase> findByUserId(String userId) {
-        return purchaseRepository.findByUserId(userId);
+    public List<Purchase> findByUsername(String username) {
+        return purchaseRepository.findByUsername(username);
     }
 
     public Purchase createPurchase(Purchase purchase) {

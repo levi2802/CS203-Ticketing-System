@@ -6,6 +6,7 @@ import './tableStyles.css'
 import axios, { formToJSON } from 'axios';
 
 import { json } from "react-router-dom";
+import { responsiveFontSizes } from "@mui/material";
 
 function OrderHistoryPageTable() {
 
@@ -20,20 +21,15 @@ function OrderHistoryPageTable() {
 
     // setUserID("userID not successfully changed");
 
-    getUserIDByUsername(username);
+    // getUserIDByUsername(username);
     // userID = this.getUserIDByUsername(username);
 
     // console.log("userID = " + userID);
 
-    if (userID) {
-        getPurchasesByUserID(userID);
+    getPurchasesByUsername(username);
 
-        // console.log("userPurchases = " + userPurchases.toString());
-
-        // for (let index = 0; index < userPurchases.length; index++) {
-        //     const element = userPurchases[index];
-        //     console.log(element);
-        // }
+    if (userPurchases) {
+        console.log(userPurchases);
     }
 
     async function getUserIDByUsername(username) {
@@ -64,7 +60,7 @@ function OrderHistoryPageTable() {
         }
     }
 
-    async function getPurchasesByUserID(userID) {
+    async function getPurchasesByUsername(username) {
         try {
 
             // Ensure User is logged in before being able to get Purchases
@@ -73,29 +69,22 @@ function OrderHistoryPageTable() {
                 'Authorization': `Bearer ${accessToken}`
             };
 
-            // console.log("Called function");
             const purchaseArray = [];
 
             // Attempt to get Purchases by UserID
-            let response = await axios.get("http://localhost:8080/api/v1/purchases/" + userID, {
+            let response = await axios.get("http://localhost:8080/api/v1/purchases/" + username, {
                         headers: headers,
                         validateStatus: function (status) {
                             // console.log("status validated");
                             return true; // Resolve only if the status code is less than 500
                         }
                     }
-                ).then(res => console.log(res));
+                );
+            response.data.forEach(purchase => purchaseArray.push([purchase.timestamp, purchase.movieId, purchase.seatIDs]));
 
-            // console.log("get request success");
+            console.log(response);
 
-            
-
-            // response.data.forEach(data => {
-            //             console.log("Performing push");
-            //             purchaseArray.Push(data);
-            //             console.log("successfully pushed purchase: " + data.id);
-            //         }
-            //     );
+            setUserPurchases(purchaseArray);
             
         } catch(exception) {
             console.log(exception.name);

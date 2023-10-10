@@ -189,7 +189,7 @@ class SeatApp extends Component {
     const alertMessage = "Your seats: " + selectedSeatsString + "for the movie: " + movieName + " are booked!";
     alert(alertMessage);
     console.log(seatIDs);
-    await this.addPurchaseOrder(username, seatIDs, movieName);
+    await this.addPurchaseOrder(username, selectedSeatsString, movieName);
   }
 
   addSeatToDB = (seat, username, movieName) => {
@@ -230,7 +230,7 @@ class SeatApp extends Component {
       axios.post("http://localhost:8080/api/v1/purchases/postPurchase", {
         userId: username,
         movieId: movieName,
-        seatIDs: seatIDs,
+        seatIDs: seatIDs
       }, { headers: headers })
         .then();
     } catch {

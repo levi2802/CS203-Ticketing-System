@@ -15,9 +15,9 @@ public class PurchaseRepositoryImpl implements PurchaseRepositorycustom {
         this.mongoTemplate = mongoTemplate;
     }
 
-    public List<Purchase> findByUserId(String userId) {
+    public List<Purchase> findByUsername(String username) {
         final Query query = new Query();
-        query.addCriteria(Criteria.where("userId").is(userId));
+        query.addCriteria(Criteria.where("userId").is(username));
         return this.mongoTemplate.find(query, Purchase.class);
     }
 }

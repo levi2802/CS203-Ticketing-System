@@ -23,9 +23,9 @@ public class PurchaseController {
         return purchaseService.findAll();
     }
 
-    @GetMapping("/{userId}")
-    public List<Purchase> getPurchasesByUser(@PathVariable(value = "userId") String userId) {
-        return purchaseService.findByUserId(userId);
+    @GetMapping("/{username}")
+    public ResponseEntity<List<Purchase>> getPurchasesByUsername(@PathVariable String username) {
+        return new ResponseEntity<List<Purchase>>(purchaseService.findByUsername(username), HttpStatus.OK);
     }
 
     @PostMapping("/postPurchase")

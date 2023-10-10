@@ -21,13 +21,13 @@ public class Purchase {
 	private String id;
 	private String userId;
 	private String movieId;
-	private List<String> seatIDs;
+	private String seatIDs;
 	private LocalDateTime timestamp;
 	// private PaymentMethod paymentMethod;
 	// private Status status;
 
-	public Purchase(String userId, String movieId, List<String> seatIDs) {
-		this.userId = userId;
+	public Purchase(String username, String movieId, String seatIDs) {
+		this.userId = username;
 		this.movieId = movieId;
 		this.seatIDs = seatIDs;
 	}
