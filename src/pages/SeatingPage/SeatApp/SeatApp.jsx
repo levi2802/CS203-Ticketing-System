@@ -168,7 +168,7 @@ class SeatApp extends Component {
     await sendEmail()
 
     // Save purchase order to the database.
-    await this.addPurchaseOrder(username, seatIDs, this.movieName);
+    await this.addPurchaseOrder(username, selectedSeatsString, this.movieName);
     window.location.href = '/';
   }
 
@@ -212,7 +212,7 @@ class SeatApp extends Component {
       axios.post(this.backendURL + "/api/v1/purchases/postPurchase", {
         userId: username,
         movieId: this.movieName,
-        seatIDs: seatIDs,
+        seatIDs: seatIDs
       }, { headers: headers })
         .then();
     } catch {
