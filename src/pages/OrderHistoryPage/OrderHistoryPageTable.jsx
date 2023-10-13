@@ -1,8 +1,36 @@
-import React from "react";
-
-import './tableStyles.css'
+import React, { useState, useEffect } from "react";
+import './tableStyles.css';
+import axios from 'axios';
 
 function OrderHistoryPageTable() {
+    const username = localStorage.getItem('username');
+    const [userPurchases, setUserPurchases] = useState([]);
+
+    useEffect(() => {
+        if (username) {
+            getPurchasesByUsername(username);
+        }
+    }, [username]);
+
+    async function getPurchasesByUsername(username) {
+        try {
+            const accessToken = localStorage.getItem('accessToken');
+            const headers = {
+                'Authorization': `Bearer ${accessToken}`
+            };
+
+            let response = await axios.get(`http://localhost:8080/api/v1/users/${username}/purchases`, {
+                headers: headers,
+                validateStatus: status => status < 500
+            });
+
+            setUserPurchases(response.data);
+        } catch (exception) {
+            console.log(exception.name);
+            console.log(exception.message);
+        }
+    }
+
     return (
         <>
             <table>
@@ -12,33 +40,17 @@ function OrderHistoryPageTable() {
                     <th>Seats Chosen</th>
                     <th>Total Price</th>
                 </thead>
-                <tr>
-                    <td>Placeholder DateTime</td>
-                    <td>Placeholder Title</td>
-                    <td>Placeholder Seats</td>
-                    <td>Placeholder Price</td>
-                </tr>
-                <tr>
-                    <td>Placeholder DateTime 2</td>
-                    <td>Placeholder Title 2</td>
-                    <td>Placeholder Seats 2</td>
-                    <td>Placeholder Price 2</td>
-                </tr>
-                <tr>
-                    <td>Placeholder DateTime 3</td>
-                    <td>Placeholder Title 3</td>
-                    <td>Placeholder Seats 3</td>
-                    <td>Placeholder Price 3</td>
-                </tr>
-                <tr>
-                    <td>Placeholder DateTime 4</td>
-                    <td>Placeholder Title 4</td>
-                    <td>Placeholder Seats 4</td>
-                    <td>Placeholder Price 4</td>
-                </tr>
+                {userPurchases.map(purchase => (
+                    <tr key={purchase.id}>
+                        <td>{purchase.timestamp}</td>
+                        <td>{purchase.movieId}</td>
+                        <td>{purchase.seatIDs}</td>
+                        <td>{purchase.price}</td>
+                    </tr>
+                ))}
             </table>
         </>
     )
 }
 
-export default OrderHistoryPageTable
+export default OrderHistoryPageTable;

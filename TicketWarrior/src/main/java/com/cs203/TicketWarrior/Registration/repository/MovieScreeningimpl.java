@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 public class MovieScreeningimpl {
     private final MongoTemplate mongoTemplate;
     
-    @Autowired
     public MovieScreeningimpl(MongoTemplate mongoTemplate){
         this.mongoTemplate = mongoTemplate;
     }

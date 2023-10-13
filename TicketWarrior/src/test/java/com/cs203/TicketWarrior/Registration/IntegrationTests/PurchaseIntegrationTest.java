@@ -79,8 +79,7 @@ public class PurchaseIntegrationTest {
         //Set URI
         String id = "testCalvin";
         URI uri = new URI(baseUrl + port + "/api/purchases/" + id);
-        List<String> seatIDs = new ArrayList<>();
-        seatIDs.add("A1");
+        String seatIDs = "A1";
         Purchase purchase = new Purchase("testCalvin", "barbier1", seatIDs);
         purchaseRepository.save(purchase);
 
@@ -110,8 +109,7 @@ public class PurchaseIntegrationTest {
         //Set URI
         String id = "invalidUserName";
         URI uri = new URI(baseUrl + port + "/api/purchases/" + id);
-        List<String> seatIDs = new ArrayList<>();
-        seatIDs.add("A1");
+        String seatIDs = "A1";
         Purchase purchase = new Purchase("testCalvin", "barbier1", seatIDs);
         purchaseRepository.save(purchase);
 
@@ -141,8 +139,7 @@ public class PurchaseIntegrationTest {
         //Set URI
         String id = "testCalvin";
         URI uri = new URI(baseUrl + port + "/api/purchases/postPurchase");
-        List<String> seatIDs = new ArrayList<>();
-        seatIDs.add("A1");
+        String seatIDs = "A1";
         Purchase purchase = new Purchase("testCalvin", "barbier1", seatIDs);
 
         //Set token in http header
@@ -167,8 +164,7 @@ public class PurchaseIntegrationTest {
         //Set URI
         String invalidUserName = "invalidUser";
         URI uri = new URI(baseUrl + port + "/api/purchases/postPurchase");
-        List<String> seatIDs = new ArrayList<>();
-        seatIDs.add("A1");
+        String seatIDs = "A1";
         Purchase purchase = new Purchase(invalidUserName, "barbier1", seatIDs);
 
         //Set token in http header

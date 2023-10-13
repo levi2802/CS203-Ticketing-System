@@ -8,8 +8,8 @@ function OrderHistoryPageStartText() {
             <div className="description">
                 
 
-            <h1>Your Order History:</h1>
-            <h3>Don't see your order history? <Link to="/login">Log into your account first!</Link></h3>
+            <h1>Order History Overview</h1>
+            <h3>Can't find your previous bookings? Please <Link to="/login">sign in</Link> to view them.</h3>
             </div>
         </>
     )

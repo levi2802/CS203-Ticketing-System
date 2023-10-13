@@ -2,6 +2,31 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
+    padding: 30px 20px; /* Increased vertical padding */
+    font-size: 1.2em;
+    color: #333;
+    background: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+    border-radius: 8px; /* Optional: Rounded corners for the background */
 }
 
+.description h1 {
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    margin-bottom: 20px; /* Add space between h1 and h3 */
+    font-weight: bold; /* Make it bold */
+    font-size: 1.5em; /* Increase font size for better hierarchy */
+}
+
+.description h3 {
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.description h3 a {
+    color: #ffd700;
+    text-decoration: underline;
+}
+
+.description h3 a:hover {
+    color: #ffcc00;
+}

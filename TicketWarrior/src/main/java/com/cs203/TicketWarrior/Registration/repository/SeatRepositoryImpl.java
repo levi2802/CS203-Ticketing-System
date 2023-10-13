@@ -13,7 +13,6 @@ public class SeatRepositoryImpl implements SeatRepositoryCustom {
 
     private final MongoTemplate mongoTemplate;
 
-    @Autowired
     public SeatRepositoryImpl(MongoTemplate mongoTemplate) {
         this.mongoTemplate = mongoTemplate;
     }
