@@ -1,37 +1,36 @@
 table {
     width: 75%;
-    border: 2px solid;
+    border: 2px solid #aaa; /* more subtle border */
+    border-radius: 8px; /* rounded corners */
     border-collapse: collapse;
     margin-left: auto;
     margin-right: auto;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* shadow for depth */
 }
 
 thead {
-    border: 2px solid;
-    background-color: royalblue;
-    border-color: black;
+    background-image: linear-gradient(to bottom, royalblue, dodgerblue); /* gradient effect */
 }
 
 th {
-    border: 2px solid;
-    border-collapse: collapse;
-    border-color: black;
-    margin-left: auto;
-    margin-right: auto;
-    height: 50px;
-
+    border: 1px solid #aaa; /* more subtle border */
+    font-size: 1.2em; /* increase font size */
     color: white;
     padding: 10px;
 }
 
 td {
-
-    border: 2px solid;
-    border-collapse: collapse;
-    margin-left: auto;
-    margin-right: auto;
+    border: 1px solid #aaa; /* more subtle border */
     text-align: center;
     padding: 10px;
+    vertical-align: middle; /* vertical centering */
+    color: #000000; /* Setting the default text color to black */
 }
 
-tr:nth-child(even) {background-color: antiquewhite;}
+tr:nth-child(even) {
+    background-color: #f7f7f7; /* more subtle color */
+}
+
+tr:hover {
+    background-color: #e7e9ed; /* hover effect for rows */
+}

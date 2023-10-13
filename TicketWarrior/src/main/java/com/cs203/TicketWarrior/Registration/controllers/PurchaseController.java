@@ -18,6 +18,12 @@ public class PurchaseController {
     private final PurchaseService purchaseService;
     private final UserService userService;
 
+    @GetMapping("/purchases")
+    public List<Purchase> getAllPurchases() {
+        return purchaseService.listPurchases();
+    }
+
+
     // Get all purchases made by user
     @GetMapping("/users/{userId}/purchases")
     public List<Purchase> getAllPurchasesByUserId(@PathVariable(value = "userId") String userId) {
@@ -32,9 +38,10 @@ public class PurchaseController {
     }
 
     // Post a new purchase
-    @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/users/{userId}/purchases")
+    @ResponseStatus(HttpStatus.CREATED) 
+    @PostMapping("/purchases/postPurchase")
     public Purchase addPurchase(@PathVariable(value = "userId") String userId, @RequestBody Purchase purchase) {
+        System.out.println("test");
         if (userService.doesUserIdExist(userId)) {
             return purchaseService.addPurchase(purchase);
         }
