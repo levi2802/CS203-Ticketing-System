@@ -1,44 +1,43 @@
 package com.cs203.TicketWarrior.Registration.services;
 
+import com.cs203.TicketWarrior.Registration.models.Purchase;
+import com.cs203.TicketWarrior.Registration.repository.PurchaseRepository;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.time.LocalDateTime;
-
-import com.cs203.TicketWarrior.Registration.models.*;
-import com.cs203.TicketWarrior.Registration.repository.*;
 
 @RequiredArgsConstructor
 @Service
 public class PurchaseService {
 
-    private final PurchaseRepository purchaseRepository;
+    private final PurchaseRepository purchases;
 
-    public List<Purchase> findAll() {
-        return purchaseRepository.findAll();
+    public List<Purchase> listPurchases() {
+        return purchases.findAll();
     }
 
-    public List<Purchase> findByUsername(String username) {
-        return purchaseRepository.findByUsername(username);
+    public Purchase getPurchase(String purchaseId, String userId) {
+        return purchases.findByIdAndUserId(purchaseId, userId).orElse(null);
     }
 
-    public Purchase createPurchase(Purchase purchase) {
-        // check if all seat ids in the purchase are available
-        // List<String> seatIds = purchase.getSeatIds();
-        // List<Seat> seats = seatRepository.findAllById(seatIds);
-        // if (seats.stream().anyMatch(seat -> !seat.isAvailable())) {
-        // throw new SeatNotAvailableException("One or more seats are not available");
-        // }
-
-        // update the seat status to not available
-        // seats.forEach(seat -> seat.setAvailability(false));
-        // seatRepository.saveAll(seats);
-
-        // save the purchase
-        purchase.setTimeStamp(LocalDateTime.now());
-        return purchaseRepository.save(purchase);
+    public List<Purchase> getPurchasesByUser(String userId) {
+        return purchases.findByUserId(userId);
     }
 
-    // other methods...
+    public Purchase addPurchase(Purchase purchase) {
+        return purchases.save(purchase);
+    }
+
+    // public Purchase updatePurchase(String id, Purchase newPurchaseInfo) {
+    //     return purchases.findById(id).map(purchase -> {
+    //         purchase.setUser(newPurchaseInfo.getUser());
+    //         return purchases.save(purchase);
+    //     }).orElse(null);
+    // }
+
+    public void deletePurchase(String id) {
+        purchases.deleteById(id);
+    }
 }

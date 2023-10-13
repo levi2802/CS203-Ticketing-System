@@ -1,6 +1,5 @@
 package com.cs203.TicketWarrior.Registration.models;
 
-import java.util.List;
 import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.Id;
