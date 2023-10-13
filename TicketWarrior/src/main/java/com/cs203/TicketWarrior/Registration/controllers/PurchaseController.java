@@ -40,12 +40,8 @@ public class PurchaseController {
     // Post a new purchase
     @ResponseStatus(HttpStatus.CREATED) 
     @PostMapping("/purchases/postPurchase")
-    public Purchase addPurchase(@PathVariable(value = "userId") String userId, @RequestBody Purchase purchase) {
-        System.out.println("test");
-        if (userService.doesUserIdExist(userId)) {
-            return purchaseService.addPurchase(purchase);
-        }
-        throw new UserNotFoundException(userId);
+    public Purchase addPurchase(@RequestBody Purchase purchase) {
+        return purchaseService.addPurchase(purchase);
     }
 
     // // Update an existing purchase
