@@ -43,7 +43,7 @@ function OrderHistoryPageTable() {
                 {userPurchases.map(purchase => (
                     <tr key={purchase.id}>
                         <td>{purchase.timestamp}</td>
-                        <td>{purchase.movieID}</td>
+                        <td>{purchase.movieId}</td>
                         <td>{purchase.seatIDs}</td>
                         <td>{purchase.price}</td>
                     </tr>
