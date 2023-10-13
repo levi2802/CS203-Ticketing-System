@@ -157,7 +157,7 @@ class SeatApp extends Component {
     // Create confirmation email.
     const sendEmail = async() => {
       try {
-        const response = await axios.get(`${this.backendURL}/api/mail/send/${username}/${alertMessage}`);
+        const response = await axios.get(`${this.backendURL}/api/v1/mail/send/${username}/${alertMessage}`);
         console.log("Email sent successfully!", response.data);
       } catch (error) {
         console.error("There is an error", error);

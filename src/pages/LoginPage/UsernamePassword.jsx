@@ -28,7 +28,7 @@ function UsernamePassword() {
 
     const handleSubmit = event => {
         event.preventDefault();
-        axios.post(API_URL + '/api/auth/authenticate', formData).then(response => {
+        axios.post(API_URL + '/api/v1/auth/authenticate', formData).then(response => {
             console.log(response.data);
             if (response.data.isSuccessful) {
                 localStorage.setItem('accessToken', response.data.token);
