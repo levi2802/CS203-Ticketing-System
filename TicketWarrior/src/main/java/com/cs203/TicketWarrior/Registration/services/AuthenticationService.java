@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -51,6 +50,7 @@ public class AuthenticationService {
                 .token(jwtToken)
                 .message("Success! Account Registered!")
                 .isSuccessful(true)
+                .email(user.getEmail())
                 .build();
     }
 
@@ -73,12 +73,14 @@ public class AuthenticationService {
                     .token(jwtToken)
                     .message("Success!")
                     .isSuccessful(true)
+                    .email(user.getEmail())
                     .build();
         } catch(BadCredentialsException error) {
             return AuthenticationResponse.builder()
                     .token(null)
                     .message("Fail!")
                     .isSuccessful(false)
+                    .email(null)
                     .build();
         }
     }

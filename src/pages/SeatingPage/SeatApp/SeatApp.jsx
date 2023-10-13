@@ -17,8 +17,16 @@ import MovieInfo from './Components/MovieInfo';
 
 class SeatApp extends Component {
   template = function (row, coloumn, type, availability) { }
+  //switch them based on which database you are testing on
+  backendURL = "http://localhost:8080"
+  // backendURL= "http://13.212.113.161:8080"
   Unavailable = [];
   d = new Date();
+
+  movieName = localStorage.getItem("movieTitle");
+  location = localStorage.getItem("selectedLoc");
+  timing = localStorage.getItem("selectedTime");
+
   constructor(props) {
     super(props);
     this.state = { seats: [], chosenSeats: [], showSummary: false };
@@ -26,13 +34,17 @@ class SeatApp extends Component {
 
 
   async componentDidMount() {
-    let Row = 4;
-    let Col = 14;
-    let seats = util.generateSeats(Row, Col);
 
-    const moviename = localStorage.getItem("movieTitle");
-    console.log(moviename);
-    await axios.get("http://localhost:8080/api/v1/seats/OccupiedSeats/" + moviename)
+    let seats = [];
+
+    //How many seats to create r=row i=col
+    for (let r = 0; r < 4; r++) {
+      for (let i = 0; i < 14; i++) {
+        seats.push({ row: r, num: i, avail: true });
+      }
+    }
+    
+    await axios.get(this.backendURL + "/api/v1/seats/OccupiedSeats/" + this.movieName + "/" + this.location + "/" + this.timing)
       .then(json => json.data.forEach(data => this.Unavailable.push([data.row, data.coloumn])))
       .catch(console.error);
 
@@ -98,22 +110,22 @@ class SeatApp extends Component {
       window.location.href = '/register'
       return;
     }
+
     const headers = {
       'Authorization': `Bearer ${accessToken}`
     };
 
     const { seats } = this.state;
     // grabbing username
+    const movieName = localStorage.getItem("movieTitle");
     const selectedSeats = seats.filter(seat => seat.selected)
       .map(seat => {
         const { row, num } = seat;
         return { row, num };
       })
 
-    const movieName = localStorage.getItem("movieTitle");
-    console.log(movieName);
     //adding purchased seats to backend
-    await selectedSeats.forEach(seat => this.addSeatToDB(seat, username, movieName));
+    await selectedSeats.forEach(seat => this.addSeatToDB(seat, username));
     //TO DO: find better way to find seat object, username does not work
     //grabing the seat ids created
     //let seatIDs = [];
@@ -123,7 +135,7 @@ class SeatApp extends Component {
     //   .catch(console.error);
     // console.log(seatIDs);
     // creating purchase object
-    //await this.addPurchaseOrder(username, seatIDs, movieName);
+    //await this.addPurchaseOrder(username, seatIDs);
     let seatIDs = [];
     const rowName = [];
     for (let i = 0; i < seats.length; i++) {
@@ -138,25 +150,42 @@ class SeatApp extends Component {
       selectedSeatsString = selectedSeatsString + seatID + ', ';
       seatIDs.push(seatID);
     })
-    const alertMessage = "Your seats: " + selectedSeatsString + "for the movie: " + movieName + " are booked!";
+    const alertMessage = "Your seats: " + selectedSeatsString + "for the movie: " + this.movieName + " at " + this.location + " " + this.timing +" are booked!";
     alert(alertMessage);
     console.log(seatIDs);
-    await this.addPurchaseOrder(username, seatIDs, movieName);
+
+    // Create confirmation email.
+    const sendEmail = async() => {
+      try {
+        const response = await axios.get(`${this.backendURL}/api/mail/send/${username}/${alertMessage}`);
+        console.log("Email sent successfully!", response.data);
+      } catch (error) {
+        console.error("There is an error", error);
+      }
+    }
+
+    // Send confirmation email.
+    await sendEmail()
+
+    // Save purchase order to the database.
+    //await this.addPurchaseOrder(username, seatIDs, this.movieName);
   }
 
-  addSeatToDB = (seat, username, movieName) => {
+  addSeatToDB = (seat, username) => {
     try {
       const accessToken = localStorage.getItem('accessToken');
       const headers = {
         'Authorization': `Bearer ${accessToken}`
       };
-      axios.post("http://localhost:8080/api/v1/seats/PostSeats", {
+      axios.post(this.backendURL + "/api/v1/seats/PostSeats", {
         row: seat.row,
         coloumn: seat.num,
         type: "standard",
         availability: false,
         username: username,
-        movieName: movieName
+        movieName: this.movieName,
+        location: this.location,
+        timing: this.timing
       }, {
         headers: headers,
         validateStatus: function (status) {
@@ -172,16 +201,16 @@ class SeatApp extends Component {
     console.log(this.Unavailable);
   }
 
-  addPurchaseOrder = (username, seatIDs, movieName) => {
+  addPurchaseOrder = (username, seatIDs) => {
     console.log(seatIDs);
     try {
       const accessToken = localStorage.getItem('accessToken');
       const headers = {
         'Authorization': `Bearer ${accessToken}`
       };
-      axios.post("http://localhost:8080/api/purchases/postPurchase", {
+      axios.post(this.backendURL + "/api/purchases/postPurchase", {
         userId: username,
-        movieId: movieName,
+        movieId: this.movieName,
         seatIDs: seatIDs,
       }, { headers: headers })
         .then();

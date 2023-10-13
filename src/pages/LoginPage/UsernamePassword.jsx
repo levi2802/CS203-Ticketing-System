@@ -4,8 +4,9 @@ import './styles.css';
 import axios from 'axios';
 
 function UsernamePassword() {
-
-    const API_URL = "http://localhost:8080/api/auth/";
+    //switch them based on which database you are testing on
+    const API_URL = "http://localhost:8080";
+    //const API_URL = "http://13.212.113.161:8080";
 
     const initialFormData = {
         email: 'null',
@@ -27,10 +28,11 @@ function UsernamePassword() {
 
     const handleSubmit = event => {
         event.preventDefault();
-        axios.post('http://localhost:8080/api/auth/authenticate', formData).then(response => {
+        axios.post(API_URL + '/api/auth/authenticate', formData).then(response => {
             console.log(response.data);
             if (response.data.isSuccessful) {
                 localStorage.setItem('accessToken', response.data.token);
+                localStorage.setItem('email', response.data.email);
                 localStorage.setItem('username', formData.username);
                 setData(initialFormData);
                 alert("Login successful!");

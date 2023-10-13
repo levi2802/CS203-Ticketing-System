@@ -16,4 +16,6 @@ public class AuthenticationResponse {
     private String message;
 
     private Boolean isSuccessful;
+
+    private String email;
 }

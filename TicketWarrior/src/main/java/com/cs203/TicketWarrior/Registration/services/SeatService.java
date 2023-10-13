@@ -1,16 +1,10 @@
 package com.cs203.TicketWarrior.Registration.services;
 
-import com.cs203.TicketWarrior.Registration.models.Movie;
 import com.cs203.TicketWarrior.Registration.models.Seat;
-import com.cs203.TicketWarrior.Registration.models.Order;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 import com.cs203.TicketWarrior.Registration.repository.SeatRepository;
-import com.cs203.TicketWarrior.Registration.repository.SeatRepositoryImpl;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,8 +30,8 @@ public class SeatService {
         return insertedSeat;
     }
 
-    public List<Seat> findAllOccupiedSeats(String movieName) {
-        return SeatRepository.findAllOccupiedSeats(movieName);
+    public List<Seat> findAllOccupiedSeats(String movieName, String location, String timing) {
+        return SeatRepository.findAllOccupiedSeats(movieName, location, timing);
     }
 
     public Optional<Seat> findSeatById(String seatId) {

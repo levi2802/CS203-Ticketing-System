@@ -1,16 +1,11 @@
 package com.cs203.TicketWarrior.Registration.services;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import java.time.LocalDateTime;
 
-import com.cs203.TicketWarrior.Registration.Exceptions.SeatNotAvailableException;
 import com.cs203.TicketWarrior.Registration.models.*;
 import com.cs203.TicketWarrior.Registration.repository.*;
 
@@ -19,8 +14,6 @@ import com.cs203.TicketWarrior.Registration.repository.*;
 public class PurchaseService {
 
     private final PurchaseRepository purchaseRepository;
-
-    private final SeatRepository seatRepository;
 
     public List<Purchase> findAll() {
         return purchaseRepository.findAll();

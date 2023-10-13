@@ -4,8 +4,9 @@ import './styles.css';
 import axios from 'axios';
 
 function UsernamePassword() {
-
+    //switch them based on which database you are testing on
     const API_URL = "http://localhost:8080/api/auth/";
+    //const API_URL = "http://13.212.113.161:8080/api/auth/";
 
     const initialFormData = {
         email: '',
@@ -31,6 +32,7 @@ function UsernamePassword() {
             console.log(response.data);
             if (response.data.isSuccessful) {
                 localStorage.setItem('accessToken', response.data.token);
+                localStorage.setItem('email', response.data.email);
                 localStorage.setItem('username', formData.username);
                 setData(initialFormData);
                 alert("Registration successful!");
