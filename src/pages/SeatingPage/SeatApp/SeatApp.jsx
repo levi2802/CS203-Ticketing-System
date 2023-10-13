@@ -142,7 +142,7 @@ class SeatApp extends Component {
       let temp = 'A'.charCodeAt(0) + i;
       rowName.push(String.fromCharCode(temp));
     }
-    window.location.href = '/';
+
     let selectedSeatsString = "";
     selectedSeats.forEach(seat => {
       seat.num += 1;  // Increment seat.num by 1
@@ -168,7 +168,8 @@ class SeatApp extends Component {
     await sendEmail()
 
     // Save purchase order to the database.
-    //await this.addPurchaseOrder(username, seatIDs, this.movieName);
+    await this.addPurchaseOrder(username, seatIDs, this.movieName);
+    window.location.href = '/';
   }
 
   addSeatToDB = (seat, username) => {
