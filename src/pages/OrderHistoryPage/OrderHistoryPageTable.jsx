@@ -19,7 +19,7 @@ function OrderHistoryPageTable() {
                 'Authorization': `Bearer ${accessToken}`
             };
 
-            let response = await axios.get(`http://localhost:8080/api/v1/users/${username}/purchases`, {
+            let response = await axios.get(`http://localhost:8080/api/v1/purchase/users/${username}/purchases`, {
                 headers: headers,
                 validateStatus: status => status < 500
             });

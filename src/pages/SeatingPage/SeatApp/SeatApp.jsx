@@ -209,7 +209,7 @@ class SeatApp extends Component {
       const headers = {
         'Authorization': `Bearer ${accessToken}`
       };
-      axios.post(this.backendURL + "/api/v1/purchases/postPurchase", {
+      axios.post(this.backendURL + "/api/v1/purchase/purchases/postPurchase", {
         userId: username,
         movieId: this.movieName,
         seatIDs: seatIDs
