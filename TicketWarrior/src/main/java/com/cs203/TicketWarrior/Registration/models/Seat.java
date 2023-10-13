@@ -18,16 +18,16 @@ public class Seat {
     @Id
     private String id;
 
-    @ManyToOne
-    // the column "order_id" will be in the auto-generated table "seats"
-    // nullable = false: add not-null constraint to the database column "user_id"
-    @JoinColumn(name = "order_id", nullable = false)
-    private Order order; // Multiple seats can belong to the same order.
+//    @ManyToOne
+//    // the column "order_id" will be in the auto-generated table "seats"
+//    // nullable = false: add not-null constraint to the database column "user_id"
+//    @JoinColumn(name = "order_id", nullable = false)
+//    private Order order; // Multiple seats can belong to the same order.
 
     private int row;
-    private int coloumn;
+    private int column;
     private String type;
-    private Boolean availability;
+    private boolean availability;
     private String username;
     private String movieName;
     private String location;
@@ -35,25 +35,33 @@ public class Seat {
     // private float price;
     // private SeatType seatType;
 
-    public void Updateall(Order order, int row, int coloumn, String type, Boolean availability) {
-        this.order = order;
+    public Seat(int row, int column, String type, boolean availability, String username, String movieName) {
         this.row = row;
-        this.coloumn = coloumn;
+        this.column = column;
+        this.type = type;
+        this.availability = availability;
+        this.username = username;
+        this.movieName = movieName;
+    }
+
+    public void Updateall(int row, int coloumn, String type, boolean availability) {
+        this.row = row;
+        this.column = coloumn;
         this.type = type;
         this.availability = availability;
         //this.username = username;
     }
 
     // Method to update the order this seat is assigned to.
-    public void UpdateOrder(Order order) {
-        this.order = order;
-    }
-
-    // Link seat to input order
-    public Seat UpdateOrderOfSeat(Order order) {
-        this.order = order;
-        return this;
-    }
+//    public void UpdateOrder(Order order) {
+//        this.order = order;
+//    }
+//
+//    // Link seat to input order
+//    public Seat UpdateOrderOfSeat(Order order) {
+//        this.order = order;
+//        return this;
+//    }
 
 
     public boolean isAvailable() {

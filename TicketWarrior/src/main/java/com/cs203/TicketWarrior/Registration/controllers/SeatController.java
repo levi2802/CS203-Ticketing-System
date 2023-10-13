@@ -9,6 +9,9 @@ import com.cs203.TicketWarrior.Registration.Exceptions.OrderNotFoundException;
 import com.cs203.TicketWarrior.Registration.Exceptions.SeatNotFoundException;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
+import org.hibernate.mapping.Table;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -47,30 +50,30 @@ public class SeatController {
     }
 
     // Links order and seat together
-    @PutMapping("/users/{userId}/LinkOrderAndSeat/{seatId}")
-    public Seat linkOrderAndSeat(@PathVariable(value = "userId") String userId,
-            @PathVariable(value = "seatId") String seatId, @RequestBody Order order) {
-
-        // Exceptions if the order and the seat do not exist
-        if (orderService.getOrder(order.getId(), userId) == null) {
-            throw new OrderNotFoundException(userId, order.getId());
-        }
-        if (!seatService.findSeatById(seatId).isPresent()) {
-            throw new SeatNotFoundException(seatId);
-        }
-
-        // Set order of the seat
-        Seat existingSeat = seatService.findSeatById(seatId).get();
-
-        existingSeat.UpdateOrderOfSeat(order);
-        seatService.updateSeat(existingSeat);
-
-        // Add seat to the order
-        Order existingOrder = orderService.getOrder(order.getId(), userId);
-
-        existingOrder.addSeat(existingSeat);
-        orderService.updateOrder(existingOrder.getId(), existingOrder);
-
-        return existingSeat;
-    }
+//    @PutMapping("/users/{userId}/LinkOrderAndSeat/{seatId}")
+//    public Seat linkOrderAndSeat(@PathVariable(value = "userId") String userId,
+//            @PathVariable(value = "seatId") String seatId, @RequestBody Order order) {
+//
+//        // Exceptions if the order and the seat do not exist
+//        if (orderService.getOrder(order.getId(), userId) == null) {
+//            throw new OrderNotFoundException(userId, order.getId());
+//        }
+//        if (!seatService.findSeatById(seatId).isPresent()) {
+//            throw new SeatNotFoundException(seatId);
+//        }
+//
+//        // Set order of the seat
+//        Seat existingSeat = seatService.findSeatById(seatId).get();
+//
+//        existingSeat.UpdateOrderOfSeat(order);
+//        seatService.updateSeat(existingSeat);
+//
+//        // Add seat to the order
+//        Order existingOrder = orderService.getOrder(order.getId(), userId);
+//
+//        existingOrder.addSeat(existingSeat);
+//        orderService.updateOrder(existingOrder.getId(), existingOrder);
+//
+//        return existingSeat;
+//    }
 }
