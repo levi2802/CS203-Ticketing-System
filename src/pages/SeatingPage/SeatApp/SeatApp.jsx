@@ -16,7 +16,7 @@ import MovieInfo from './Components/MovieInfo';
 
 
 class SeatApp extends Component {
-  template = function (row, coloumn, type, availability) { }
+  template = function (row, column, type, availability) { }
   //switch them based on which database you are testing on
   backendURL = "http://localhost:8080"
   // backendURL= "http://13.212.113.161:8080"
@@ -44,11 +44,11 @@ class SeatApp extends Component {
       }
     }
     
-    await axios.get(this.backendURL + "/api/v1/seats/OccupiedSeats/" + this.movieName + "/" + this.location + "/" + this.timing)
-      .then(json => json.data.forEach(data => this.Unavailable.push([data.row, data.coloumn])))
+    await axios.get(this.backendURL + "/api/v1/seats/Occupied/" + this.movieName + "/" + this.location + "/" + this.timing)
+      .then(json => json.data.forEach(data => this.Unavailable.push([data.row, data.column])))
       .catch(console.error);
 
-    //console.log(this.Unavailable);
+    console.log(this.Unavailable);
 
     //code to make seat unavail
     util.makeUnavail(seats, this.Unavailable);
@@ -116,8 +116,6 @@ class SeatApp extends Component {
     };
 
     const { seats } = this.state;
-    // grabbing username
-    const movieName = localStorage.getItem("movieTitle");
     const selectedSeats = seats.filter(seat => seat.selected)
       .map(seat => {
         const { row, num } = seat;
@@ -126,16 +124,6 @@ class SeatApp extends Component {
 
     //adding purchased seats to backend
     await selectedSeats.forEach(seat => this.addSeatToDB(seat, username));
-    //TO DO: find better way to find seat object, username does not work
-    //grabing the seat ids created
-    //let seatIDs = [];
-    // const findseatstring = "http://localhost:8080/api/v1/seats/findSeats/" + username
-    // await axios.get(findseatstring, { headers })
-    //   .then(json => json.data.forEach(data => seatIDs.push(data._id)))
-    //   .catch(console.error);
-    // console.log(seatIDs);
-    // creating purchase object
-    //await this.addPurchaseOrder(username, seatIDs);
     let seatIDs = [];
     const rowName = [];
     for (let i = 0; i < seats.length; i++) {
@@ -168,7 +156,7 @@ class SeatApp extends Component {
     await sendEmail()
 
     // Save purchase order to the database.
-    await this.addPurchaseOrder(username, selectedSeatsString, this.movieName);
+    await this.addPurchaseOrder(username, selectedSeatsString, selectedSeats);
     window.location.href = '/';
   }
 
@@ -178,9 +166,9 @@ class SeatApp extends Component {
       const headers = {
         'Authorization': `Bearer ${accessToken}`
       };
-      axios.post(this.backendURL + "/api/v1/seats/PostSeats", {
+      axios.post(this.backendURL + "/api/v1/seats", {
         row: seat.row,
-        coloumn: seat.num,
+        column: seat.num,
         type: "standard",
         availability: false,
         username: username,
@@ -188,21 +176,17 @@ class SeatApp extends Component {
         location: this.location,
         timing: this.timing
       }, {
-        headers: headers,
-        validateStatus: function (status) {
-
-          return true; // Resolve only if the status code is less than 500
-        }
+        headers: headers
       }).then(this.Unavailable.push([seat.row, seat.num]));
     } catch {
-      alert("how did you get here? please report steps done to team");
+      alert("how did you get here? please report steps done to team(addseat threw exception)");
     }
 
 
     console.log(this.Unavailable);
   }
 
-  addPurchaseOrder = (username, seatIDs) => {
+  addPurchaseOrder = (username, seatIDs, selectedSeats) => {
     console.log(seatIDs);
     try {
       const accessToken = localStorage.getItem('accessToken');
@@ -212,11 +196,14 @@ class SeatApp extends Component {
       axios.post(this.backendURL + "/api/v1/purchase/purchases/postPurchase", {
         userId: username,
         movieId: this.movieName,
-        seatIDs: seatIDs
+        seatIDs: seatIDs,
+        location: this.location,
+        timing: this.timing,
+        price: selectedSeats.length*8
       }, { headers: headers })
         .then();
     } catch {
-      alert("how did you get here? please report steps done to team");
+      alert("how did you get here? please report steps done to team (postpurchase threw exception)");
     }
     console.log("purchase add (without seat id list) success")
   }

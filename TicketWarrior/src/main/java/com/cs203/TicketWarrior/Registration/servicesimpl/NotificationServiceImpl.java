@@ -1,7 +1,8 @@
-package com.cs203.TicketWarrior.Registration.services;
+package com.cs203.TicketWarrior.Registration.servicesimpl;
 
 import com.cs203.TicketWarrior.Registration.models.User;
-import com.cs203.TicketWarrior.Registration.repository.NotificationService;
+import com.cs203.TicketWarrior.Registration.services.NotificationService;
+
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.context.annotation.Bean;

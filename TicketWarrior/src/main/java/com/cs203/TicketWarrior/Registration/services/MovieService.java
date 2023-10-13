@@ -1,22 +1,11 @@
 package com.cs203.TicketWarrior.Registration.services;
 
+import java.util.List;
+import java.util.Optional;
+
 import com.cs203.TicketWarrior.Registration.models.Movie;
-import com.cs203.TicketWarrior.Registration.repository.MovieRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import java.util.*;
 
-@RequiredArgsConstructor
-@Service
-public class MovieService {
-
-    private final MovieRepository movieRepository;
-    public List<Movie> allMovies() {
-        return movieRepository.findAll();
-    }
-
-    // Optional<Concert> to allow java to return null if concert does not exist.
-    public Optional<Movie> singleMovie(String imdbId) {
-        return movieRepository.findConcertByImdbId(imdbId);
-    }
+public interface MovieService {
+    public List<Movie> allMovies();
+    public Optional<Movie> singleMovie(String imdbId);
 }

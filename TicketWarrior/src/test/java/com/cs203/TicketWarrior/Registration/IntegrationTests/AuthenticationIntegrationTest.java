@@ -4,7 +4,8 @@ import com.cs203.TicketWarrior.Registration.models.User;
 import com.cs203.TicketWarrior.Registration.payload.AuthenticationRequest;
 import com.cs203.TicketWarrior.Registration.payload.AuthenticationResponse;
 import com.cs203.TicketWarrior.Registration.repository.UserRepository;
-import com.cs203.TicketWarrior.Registration.services.AuthenticationService;
+import com.cs203.TicketWarrior.Registration.servicesimpl.AuthenticationServiceimpl;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -37,7 +38,7 @@ public class AuthenticationIntegrationTest {
     private UserRepository userRepository;
 
     @Autowired
-    private AuthenticationService authenticationService;
+    private AuthenticationServiceimpl authenticationService;
 
     @BeforeEach
     void setUp() {

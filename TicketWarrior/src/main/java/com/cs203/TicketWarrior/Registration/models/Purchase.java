@@ -21,7 +21,10 @@ public class Purchase {
 	private String userId;
 	private String movieId;
 	private String seatIDs;
-	private LocalDateTime timestamp;
+	private String timestamp;
+    private String location;
+    private String timing;
+	private int price;
 	// private PaymentMethod paymentMethod;
 	// private Status status;
 
@@ -31,7 +34,7 @@ public class Purchase {
 		this.seatIDs = seatIDs;
 	}
 
-	public void setTimeStamp(LocalDateTime timestamp) {
+	public void setTimeStamp(String timestamp) {
 		this.timestamp = timestamp;
 	}
 }

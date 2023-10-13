@@ -1,33 +1,12 @@
 package com.cs203.TicketWarrior.Registration.services;
-import com.cs203.TicketWarrior.Registration.models.MovieScreening;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import com.cs203.TicketWarrior.Registration.repository.MovieScreeningRepository;
 
 import java.util.List;
 import java.util.Optional;
 
-@RequiredArgsConstructor
-@Service
-public class MovieScreeningService {
+import com.cs203.TicketWarrior.Registration.models.MovieScreening;
 
-    private final MovieScreeningRepository MovieScreeningRepository;
-
-    public List<MovieScreening> allMovieScreening() {
-        return MovieScreeningRepository.findAll();
-    }
-
-    public MovieScreening insert(MovieScreening moviescreening) throws Exception {
-        // MovieScreening foundMovieScreening = MovieScreeningRepository.findMovieScreening(moviescreening);
-        // if(foundMovieScreening != null){
-        //     throw new Exception("entity already exist");
-        // }
-        MovieScreeningRepository.insert(moviescreening);
-        return moviescreening;
-    }
-
-    public Optional<MovieScreening> singleMovieScreening(String imdbId) {
-        //unimplemented atm
-        return null;
-    }
+public interface MovieScreeningService {
+    public List<MovieScreening> allMovieScreening();
+    public MovieScreening insert(MovieScreening moviescreening) throws Exception;
+    public Optional<MovieScreening> singleMovieScreening(String imdbId);
 }

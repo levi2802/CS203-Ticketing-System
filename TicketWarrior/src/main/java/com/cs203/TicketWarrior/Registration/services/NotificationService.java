@@ -1,4 +1,4 @@
-package com.cs203.TicketWarrior.Registration.repository;
+package com.cs203.TicketWarrior.Registration.services;
 import com.cs203.TicketWarrior.Registration.models.User;
 import org.springframework.mail.MailException;
 

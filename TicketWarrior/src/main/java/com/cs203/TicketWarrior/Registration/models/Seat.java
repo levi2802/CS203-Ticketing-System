@@ -18,12 +18,6 @@ public class Seat {
     @Id
     private String id;
 
-//    @ManyToOne
-//    // the column "order_id" will be in the auto-generated table "seats"
-//    // nullable = false: add not-null constraint to the database column "user_id"
-//    @JoinColumn(name = "order_id", nullable = false)
-//    private Order order; // Multiple seats can belong to the same order.
-
     private int row;
     private int column;
     private String type;
@@ -44,9 +38,9 @@ public class Seat {
         this.movieName = movieName;
     }
 
-    public void Updateall(int row, int coloumn, String type, boolean availability) {
+    public void Updateall(int row, int column, String type, boolean availability) {
         this.row = row;
-        this.column = coloumn;
+        this.column = column;
         this.type = type;
         this.availability = availability;
         //this.username = username;

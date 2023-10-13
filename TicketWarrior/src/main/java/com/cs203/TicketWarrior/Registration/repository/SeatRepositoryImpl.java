@@ -32,7 +32,7 @@ public class SeatRepositoryImpl implements SeatRepositoryCustom {
     public Seat findbySeat(Seat seat) {
         final Query query = new Query();
         query.addCriteria(Criteria.where("row").is(seat.getRow()));
-        query.addCriteria(Criteria.where("coloumn").is(seat.getColumn()));
+        query.addCriteria(Criteria.where("column").is(seat.getColumn()));
         query.addCriteria(Criteria.where("movieName").is(seat.getMovieName()));
         query.addCriteria(Criteria.where("location").is(seat.getLocation()));
         query.addCriteria(Criteria.where("timing").is(seat.getMovieName()));

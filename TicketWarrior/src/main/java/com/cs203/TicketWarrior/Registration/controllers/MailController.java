@@ -1,8 +1,9 @@
 package com.cs203.TicketWarrior.Registration.controllers;
 
 import com.cs203.TicketWarrior.Registration.models.User;
-import com.cs203.TicketWarrior.Registration.repository.NotificationService;
+import com.cs203.TicketWarrior.Registration.services.NotificationService;
 import com.cs203.TicketWarrior.Registration.services.UserService;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.MailException;
 import org.springframework.web.bind.annotation.*;

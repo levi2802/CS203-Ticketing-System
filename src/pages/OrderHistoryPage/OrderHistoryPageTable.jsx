@@ -37,6 +37,8 @@ function OrderHistoryPageTable() {
                 <thead>
                     <th>Purchase Date and Time</th>
                     <th>Movie Title</th>
+                    <th>Movie Location</th>
+                    <th>Movie Timing</th>
                     <th>Seats Chosen</th>
                     <th>Total Price</th>
                 </thead>
@@ -44,8 +46,10 @@ function OrderHistoryPageTable() {
                     <tr key={purchase.id}>
                         <td>{purchase.timestamp}</td>
                         <td>{purchase.movieId}</td>
+                        <td>{purchase.location}</td>
+                        <td>{purchase.timing}</td>
                         <td>{purchase.seatIDs}</td>
-                        <td>{purchase.price}</td>
+                        <td>{"$" + purchase.price}</td>
                     </tr>
                 ))}
             </table>

@@ -2,8 +2,8 @@ package com.cs203.TicketWarrior.Registration.controllers;
 
 import java.util.List;
 
-import com.cs203.TicketWarrior.Registration.services.PurchaseService;
 import com.cs203.TicketWarrior.Registration.models.Purchase; // Make sure to update this
+import com.cs203.TicketWarrior.Registration.services.PurchaseService;
 import com.cs203.TicketWarrior.Registration.Exceptions.*;
 
 import lombok.RequiredArgsConstructor;

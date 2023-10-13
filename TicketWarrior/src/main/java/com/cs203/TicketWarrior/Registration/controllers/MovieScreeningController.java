@@ -3,7 +3,6 @@ package com.cs203.TicketWarrior.Registration.controllers;
 import com.cs203.TicketWarrior.Registration.models.MovieScreening;
 import com.cs203.TicketWarrior.Registration.services.MovieScreeningService;
 
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -2,9 +2,8 @@ package com.cs203.TicketWarrior.Registration.controllers;
 
 import java.util.Optional;
 
-import com.cs203.TicketWarrior.Registration.services.UserService;
-
 import com.cs203.TicketWarrior.Registration.models.User;
+import com.cs203.TicketWarrior.Registration.services.UserService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -3,6 +3,8 @@ package com.cs203.TicketWarrior.Registration.services;
 import com.cs203.TicketWarrior.Registration.TestConfig.TestConfig;
 import com.cs203.TicketWarrior.Registration.models.User;
 import com.cs203.TicketWarrior.Registration.repository.UserRepository;
+import com.cs203.TicketWarrior.Registration.servicesimpl.UserServiceimpl;
+
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,11 +28,11 @@ class UserServiceTest {
 
     @Mock
     private UserRepository userRepository;
-    private UserService userServiceTest;
+    private UserServiceimpl userServiceTest;
 
     @BeforeEach
     void setUp() {
-        userServiceTest = new UserService(userRepository);
+        userServiceTest = new UserServiceimpl(userRepository);
     }
 
     @Test

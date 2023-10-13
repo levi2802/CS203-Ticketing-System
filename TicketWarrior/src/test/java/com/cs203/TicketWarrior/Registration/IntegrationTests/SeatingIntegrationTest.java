@@ -1,6 +1,5 @@
 package com.cs203.TicketWarrior.Registration.IntegrationTests;
 
-import com.cs203.TicketWarrior.Registration.models.Order;
 import com.cs203.TicketWarrior.Registration.models.Purchase;
 import com.cs203.TicketWarrior.Registration.models.Seat;
 import com.cs203.TicketWarrior.Registration.models.User;
@@ -8,7 +7,8 @@ import com.cs203.TicketWarrior.Registration.payload.AuthenticationRequest;
 import com.cs203.TicketWarrior.Registration.payload.AuthenticationResponse;
 import com.cs203.TicketWarrior.Registration.repository.SeatRepository;
 import com.cs203.TicketWarrior.Registration.repository.UserRepository;
-import com.cs203.TicketWarrior.Registration.services.AuthenticationService;
+import com.cs203.TicketWarrior.Registration.servicesimpl.AuthenticationServiceimpl;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -46,7 +46,7 @@ public class SeatingIntegrationTest {
     private SeatRepository seatRepository;
 
     @Autowired
-    private AuthenticationService authenticationService;
+    private AuthenticationServiceimpl authenticationService;
 
     @Autowired
     private UserRepository userRepository;
@@ -75,7 +75,6 @@ public class SeatingIntegrationTest {
         URI uri = new URI(baseUrl + port + "/api/v1/seats/");
 
         //Save seats
-        Order order = new Order();
         Seat seat = new Seat(1, 1, "standard", false, request.getUsername(), "Barbie");
         seatRepository.save(seat);
 
