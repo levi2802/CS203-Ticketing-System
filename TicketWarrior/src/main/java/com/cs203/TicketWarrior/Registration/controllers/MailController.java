@@ -16,10 +16,11 @@ import java.util.Optional;
 @CrossOrigin(origins = "*")
 public class MailController {
     private final NotificationService notificationService;
-    private  final UserService userService;
+    private final UserService userService;
 
-    @GetMapping("/send/{username}/{movieName}/{selectedSeats}")
-    public String sendMail(@PathVariable String username, @PathVariable String movieName, @PathVariable String selectedSeats) {
+    @GetMapping("/{username}/{movieName}/{selectedSeats}")
+    public String sendMail(@PathVariable String username, @PathVariable String movieName,
+            @PathVariable String selectedSeats) {
         Optional<User> optionalUser = userService.findUserByUsername(username);
 
         if (optionalUser.isEmpty()) {
@@ -39,7 +40,7 @@ public class MailController {
         return "Oops, something bad happened";
     }
 
-    @GetMapping("/send/{username}/{message}")
+    @GetMapping("/{username}/{message}")
     public String sendMail(@PathVariable String username, @PathVariable String message) {
         Optional<User> optionalUser = userService.findUserByUsername(username);
 

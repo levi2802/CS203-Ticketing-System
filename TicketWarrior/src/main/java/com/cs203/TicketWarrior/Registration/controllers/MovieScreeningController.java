@@ -15,16 +15,22 @@ import java.util.Optional;
 @CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/moviescreenings")
-public class MovieScreeningController{
+public class MovieScreeningController {
 
     private final MovieScreeningService movieScreeningService;
+
     @GetMapping
     public ResponseEntity<List<MovieScreening>> getAllMoviesscreenings() {
-        return new ResponseEntity<List<MovieScreening>>(movieScreeningService.allMovieScreening(), HttpStatus.OK); // Sends Http status code 200.
+        return new ResponseEntity<List<MovieScreening>>(movieScreeningService.allMovieScreening(), HttpStatus.OK); // Sends
+                                                                                                                   // Http
+                                                                                                                   // status
+                                                                                                                   // code
+                                                                                                                   // 200.
     }
 
     @GetMapping("/{MovieScreeningid}")
     public ResponseEntity<Optional<MovieScreening>> getSingleMovieScreening(@PathVariable String imdbId) {
-        return new ResponseEntity<Optional<MovieScreening>>(movieScreeningService.singleMovieScreening(imdbId), HttpStatus.OK);
+        return new ResponseEntity<Optional<MovieScreening>>(movieScreeningService.singleMovieScreening(imdbId),
+                HttpStatus.OK);
     }
 }

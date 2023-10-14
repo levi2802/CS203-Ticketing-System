@@ -18,6 +18,7 @@ import java.util.Optional;
 public class MovieController {
 
     private final MovieService movieService;
+
     @GetMapping
     public ResponseEntity<List<Movie>> getAllMovies() {
         return new ResponseEntity<List<Movie>>(movieService.allMovies(), HttpStatus.OK); // Sends Http status code 200.

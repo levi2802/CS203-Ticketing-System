@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/user")
+@RequestMapping("/api/v1/users")
 public class UserController {
     private final UserService userService;
 
     // Get User by Username
-    @GetMapping("/getUserByUsername/{username}")
+    @GetMapping("/{username}")
     public ResponseEntity<Optional<User>> getUserByUsername(@PathVariable(value = "username") String username) {
         return new ResponseEntity<Optional<User>>(userService.findUserByUsername(username), HttpStatus.OK);
     }

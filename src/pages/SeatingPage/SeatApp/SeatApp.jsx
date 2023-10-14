@@ -44,7 +44,7 @@ class SeatApp extends Component {
       }
     }
     
-    await axios.get(this.backendURL + "/api/v1/seats/Occupied/" + this.movieName + "/" + this.location + "/" + this.timing)
+    await axios.get(this.backendURL + "/api/v1/seats/" + this.movieName + "/" + this.location + "/" + this.timing)
       .then(json => json.data.forEach(data => this.Unavailable.push([data.row, data.column])))
       .catch(console.error);
 
@@ -145,7 +145,7 @@ class SeatApp extends Component {
     // Create confirmation email.
     const sendEmail = async() => {
       try {
-        const response = await axios.get(`${this.backendURL}/api/v1/mail/send/${username}/${alertMessage}`);
+        const response = await axios.get(`${this.backendURL}/api/v1/mail/${username}/${alertMessage}`);
         console.log("Email sent successfully!", response.data);
       } catch (error) {
         console.error("There is an error", error);
@@ -193,7 +193,7 @@ class SeatApp extends Component {
       const headers = {
         'Authorization': `Bearer ${accessToken}`
       };
-      axios.post(this.backendURL + "/api/v1/purchase/purchases/postPurchase", {
+      axios.post(this.backendURL + "/api/v1/purchases", {
         userId: username,
         movieId: this.movieName,
         seatIDs: seatIDs,

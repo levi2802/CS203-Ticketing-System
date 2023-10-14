@@ -12,32 +12,31 @@ import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/purchase")
+@RequestMapping("/api/v1/purchases")
 public class PurchaseController {
     private final PurchaseService purchaseService;
 
-    @GetMapping("/purchases")
+    @GetMapping
     public List<Purchase> getAllPurchases() {
         return purchaseService.listPurchases();
     }
 
-
     // Get all purchases made by user
-    @GetMapping("/users/{userId}/purchases")
+    @GetMapping("/{userId}")
     public List<Purchase> getAllPurchasesByUserId(@PathVariable(value = "userId") String userId) {
         return purchaseService.getPurchasesByUser(userId);
     }
 
     // Get specific purchase using userId and purchaseId
-    @GetMapping("/users/{userId}/purchases/{purchaseId}")
+    @GetMapping("/{userId}/{purchaseId}")
     public Purchase getPurchaseByUserIdAndPurchaseId(@PathVariable(value = "userId") String userId,
-                                                     @PathVariable(value = "purchaseId") String purchaseId) {
+            @PathVariable(value = "purchaseId") String purchaseId) {
         return purchaseService.getPurchase(purchaseId, userId);
     }
 
     // Post a new purchase
-    @ResponseStatus(HttpStatus.CREATED) 
-    @PostMapping("/purchases/postPurchase")
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping
     public Purchase addPurchase(@RequestBody Purchase purchase) {
         return purchaseService.addPurchase(purchase);
     }
@@ -45,18 +44,19 @@ public class PurchaseController {
     // // Update an existing purchase
     // @PutMapping("/users/{userId}/purchases/{purchaseId}")
     // public Purchase updatePurchase(@PathVariable(value = "userId") String userId,
-    //                                @PathVariable(value = "purchaseId") String purchaseId,
-    //                                @RequestBody Purchase newPurchaseInfo) {
-    //     if (purchaseService.getPurchase(purchaseId, userId) == null) {
-    //         throw new PurchaseNotFoundException(userId, purchaseId); // Update this exception too
-    //     }
-    //     return purchaseService.updatePurchase(purchaseId, newPurchaseInfo);
+    // @PathVariable(value = "purchaseId") String purchaseId,
+    // @RequestBody Purchase newPurchaseInfo) {
+    // if (purchaseService.getPurchase(purchaseId, userId) == null) {
+    // throw new PurchaseNotFoundException(userId, purchaseId); // Update this
+    // exception too
+    // }
+    // return purchaseService.updatePurchase(purchaseId, newPurchaseInfo);
     // }
 
     // Delete an existing purchase
-    @DeleteMapping("/users/{userId}/purchases/{purchaseId}")
+    @DeleteMapping("/{userId}/{purchaseId}")
     public void deletePurchase(@PathVariable(value = "userId") String userId,
-                               @PathVariable(value = "purchaseId") String purchaseId) {
+            @PathVariable(value = "purchaseId") String purchaseId) {
         if (purchaseService.getPurchase(purchaseId, userId) == null) {
             throw new PurchaseNotFoundException(userId, purchaseId); // Update this exception too
         }

@@ -27,10 +27,12 @@ public class SeatController {
         return new ResponseEntity<List<Seat>>(seatService.allSeats(), HttpStatus.OK); // Sends Http status code 200.
     }
 
-    @GetMapping("/Occupied/{movieName}/{location}/{timing}")
-    public ResponseEntity<List<Seat>> findAllOccupiedSeats(@PathVariable String movieName, @PathVariable String location, @PathVariable String timing) {
-        return new ResponseEntity<List<Seat>>(seatService.findAllOccupiedSeats(movieName, location, timing), HttpStatus.OK);// Sends Http status
-                                                                                                 // code 200.
+    @GetMapping("/{movieName}/{location}/{timing}")
+    public ResponseEntity<List<Seat>> findAllOccupiedSeats(@PathVariable String movieName,
+            @PathVariable String location, @PathVariable String timing) {
+        return new ResponseEntity<List<Seat>>(seatService.findAllOccupiedSeats(movieName, location, timing),
+                HttpStatus.OK);// Sends Http status
+        // code 200.
     }
 
     @PostMapping
@@ -39,7 +41,7 @@ public class SeatController {
                                                                                  // 200.
     }
 
-    @GetMapping("/find/{username}")
+    @GetMapping("/{username}")
     public ResponseEntity<List<Seat>> findSeats(@PathVariable String username) {
         System.out.println(username);
         return new ResponseEntity<List<Seat>>(seatService.findbyID(username), HttpStatus.OK);// Sends Http status code
