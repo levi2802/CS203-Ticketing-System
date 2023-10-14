@@ -46,98 +46,105 @@ public class AuthenticationIntegrationTest {
     }
 
     @AfterEach
-    void tearDown(){
+    void tearDown() {
         // clear the database after each test
         userRepository.deleteAll();
     }
 
     @Test
     public void testRegisterUser_Success() throws Exception {
-        //Arrange
-        //Register user
+        // Arrange
+        // Register user
         AuthenticationRequest request = new AuthenticationRequest("validUser@gmail.com", "validUser", "goodpassword");
 
-        //Set URI
-        URI uri = new URI(baseUrl + port + "/api/auth/register");
+        // Set URI
+        URI uri = new URI(baseUrl + port + "/api/auth/registration");
 
-        //Set token in http header
+        // Set token in http header
         HttpEntity<?> entity = new HttpEntity<>(request);
 
-        //Act
-        //Call API
-        ResponseEntity<AuthenticationResponse> result = testRestTemplate.exchange(uri, HttpMethod.POST, entity, AuthenticationResponse.class);
+        // Act
+        // Call API
+        ResponseEntity<AuthenticationResponse> result = testRestTemplate.exchange(uri, HttpMethod.POST, entity,
+                AuthenticationResponse.class);
         AuthenticationResponse response = result.getBody();
 
-        //Assert
+        // Assert
         assertEquals(200, result.getStatusCode().value());
         assertTrue(response.getIsSuccessful());
     }
+
     @Test
     public void testRegisterUser_Fail() throws Exception {
-        //Arrange
+        // Arrange
         User registeredUser = new User("validUser@gmail.com", "validUser", "goodpassword");
         userRepository.save(registeredUser);
-        //Register user
+        // Register user
         AuthenticationRequest request = new AuthenticationRequest("validUser@gmail.com", "validUser", "goodpassword");
 
-        //Set URI
-        URI uri = new URI(baseUrl + port + "/api/auth/register");
+        // Set URI
+        URI uri = new URI(baseUrl + port + "/api/auth/registration");
 
-        //Set token in http header
+        // Set token in http header
         HttpEntity<?> entity = new HttpEntity<>(request);
 
-        //Act
-        //Call API
-        ResponseEntity<AuthenticationResponse> result = testRestTemplate.exchange(uri, HttpMethod.POST, entity, AuthenticationResponse.class);
+        // Act
+        // Call API
+        ResponseEntity<AuthenticationResponse> result = testRestTemplate.exchange(uri, HttpMethod.POST, entity,
+                AuthenticationResponse.class);
         AuthenticationResponse response = result.getBody();
 
-        //Assert
+        // Assert
         assertEquals(200, result.getStatusCode().value());
         assertFalse(response.getIsSuccessful());
     }
 
     @Test
     public void testAuthenticateUser_Success() throws Exception {
-        //Arrange
-        AuthenticationRequest registerRequest = new AuthenticationRequest("validUser@gmail.com", "validUser", "goodpassword");
+        // Arrange
+        AuthenticationRequest registerRequest = new AuthenticationRequest("validUser@gmail.com", "validUser",
+                "goodpassword");
         AuthenticationResponse registerResponse = authenticationService.register(registerRequest);
-        AuthenticationRequest request = new AuthenticationRequest("null","validUser", "goodpassword");
+        AuthenticationRequest request = new AuthenticationRequest("null", "validUser", "goodpassword");
 
-        //Set URI
-        URI uri = new URI(baseUrl + port + "/api/auth/authenticate");
+        // Set URI
+        URI uri = new URI(baseUrl + port + "/api/auth/authentication");
 
-        //Set token in http header
+        // Set token in http header
         HttpEntity<?> entity = new HttpEntity<>(request);
 
-        //Act
-        //Call API
-        ResponseEntity<AuthenticationResponse> result = testRestTemplate.exchange(uri, HttpMethod.POST, entity, AuthenticationResponse.class);
+        // Act
+        // Call API
+        ResponseEntity<AuthenticationResponse> result = testRestTemplate.exchange(uri, HttpMethod.POST, entity,
+                AuthenticationResponse.class);
         AuthenticationResponse response = result.getBody();
 
-        //Assert
+        // Assert
         assertEquals(200, result.getStatusCode().value());
         assertTrue(response.getIsSuccessful());
     }
 
     @Test
     public void testAuthenticateUser_Fail() throws Exception {
-        //Arrange
-        AuthenticationRequest registerRequest = new AuthenticationRequest("validUser@gmail.com", "validUser", "goodpassword");
+        // Arrange
+        AuthenticationRequest registerRequest = new AuthenticationRequest("validUser@gmail.com", "validUser",
+                "goodpassword");
         AuthenticationResponse registerResponse = authenticationService.register(registerRequest);
-        AuthenticationRequest request = new AuthenticationRequest("null","validUser", "badpassword");
+        AuthenticationRequest request = new AuthenticationRequest("null", "validUser", "badpassword");
 
-        //Set URI
-        URI uri = new URI(baseUrl + port + "/api/auth/authenticate");
+        // Set URI
+        URI uri = new URI(baseUrl + port + "/api/auth/authentication");
 
-        //Set token in http header
+        // Set token in http header
         HttpEntity<?> entity = new HttpEntity<>(request);
 
-        //Act
-        //Call API
-        ResponseEntity<AuthenticationResponse> result = testRestTemplate.exchange(uri, HttpMethod.POST, entity, AuthenticationResponse.class);
+        // Act
+        // Call API
+        ResponseEntity<AuthenticationResponse> result = testRestTemplate.exchange(uri, HttpMethod.POST, entity,
+                AuthenticationResponse.class);
         AuthenticationResponse response = result.getBody();
 
-        //Assert
+        // Assert
         assertEquals(200, result.getStatusCode().value());
         assertFalse(response.getIsSuccessful());
     }

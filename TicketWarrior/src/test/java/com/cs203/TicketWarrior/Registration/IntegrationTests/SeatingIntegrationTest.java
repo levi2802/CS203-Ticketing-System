@@ -58,7 +58,7 @@ public class SeatingIntegrationTest {
     }
 
     @AfterEach
-    void tearDown(){
+    void tearDown() {
         // clear the database after each test
         seatRepository.deleteAll();
         userRepository.deleteAll();
@@ -66,31 +66,32 @@ public class SeatingIntegrationTest {
 
     @Test
     public void testRegisterUser_Success() throws Exception {
-        //Arrange
-        //Register user
+        // Arrange
+        // Register user
         AuthenticationRequest request = new AuthenticationRequest("testCalvin@gmail.com", "testCalvin", "goodpassword");
         AuthenticationResponse response = authenticationService.register(request);
 
-        //Set URI
+        // Set URI
         URI uri = new URI(baseUrl + port + "/api/v1/seats/");
 
-        //Save seats
+        // Save seats
         Seat seat = new Seat(1, 1, "standard", false, request.getUsername(), "Barbie");
         seatRepository.save(seat);
 
-        //Set token in http header
+        // Set token in http header
         String token = response.getToken();
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + token);
         HttpEntity<?> entity = new HttpEntity<>(headers);
 
-        //Act
-        //Call API
-        // ResponseEntity<List<Seat>> result = testRestTemplate.exchange(uri, HttpMethod.GET, entity, Seat[].class);
-//        Seat[] resultResponse = result.getBody();
+        // Act
+        // Call API
+        // ResponseEntity<List<Seat>> result = testRestTemplate.exchange(uri,
+        // HttpMethod.GET, entity, Seat[].class);
+        // Seat[] resultResponse = result.getBody();
 
-        //Assert
+        // Assert
         // assertEquals(200, result.getStatusCode().value());
-//        assertEquals(seat, resultResponse);
+        // assertEquals(seat, resultResponse);
     }
 }
