@@ -3,6 +3,8 @@ package com.cs203.TicketWarrior.Registration.models;
 import java.util.Collection;
 import java.util.List;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -22,12 +24,15 @@ public class User implements UserDetails {
     private String id;
 
     @NonNull
+    @Email(message = "Please provide a valid email")
     private String email;
 
     @NonNull
     private String username;
 
     @NonNull
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$",
+            message = "Password must be at least 8 characters long and contain at least one letter and one number")
     private String password;
 
     // A user can have 0 to many orders. We choose to cascade deletions, and delete

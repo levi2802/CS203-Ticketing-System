@@ -1,5 +1,7 @@
 package com.cs203.TicketWarrior.Registration.models;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,13 +20,30 @@ public class Seat {
     @Id
     private String id;
 
+    @NotBlank
+    @Positive
     private int row;
+
+    @NotBlank
+    @Positive
     private int column;
+
+    @NotBlank
     private String type;
+
+    @NotBlank
     private boolean availability;
+
+    @NotBlank
     private String username;
+
+    @NotBlank
     private String movieName;
+
+    @NotBlank
     private String location;
+
+    @NotBlank
     private String timing;
     // private float price;
     // private SeatType seatType;

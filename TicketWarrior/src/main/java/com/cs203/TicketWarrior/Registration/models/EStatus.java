@@ -1,6 +1,6 @@
 package com.cs203.TicketWarrior.Registration.models;
 
-public enum Status {
+public enum EStatus {
     COMPLETED,
     CANCELLED,
     PENDING,

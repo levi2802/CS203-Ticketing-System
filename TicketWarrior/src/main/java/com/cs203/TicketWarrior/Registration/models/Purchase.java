@@ -2,13 +2,12 @@ package com.cs203.TicketWarrior.Registration.models;
 
 import java.time.LocalDateTime;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @Builder
@@ -18,12 +17,26 @@ import lombok.NoArgsConstructor;
 public class Purchase {
 	@Id
 	private String id;
+
+	@NotBlank
 	private String userId;
+
+	@NotBlank
 	private String movieId;
+
+	@NotBlank
 	private String seatIDs;
+
+	@Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}")
 	private String timestamp;
+
+	@NotBlank
     private String location;
+
+	@NotBlank
     private String timing;
+
+	@Positive
 	private int price;
 	// private PaymentMethod paymentMethod;
 	// private Status status;

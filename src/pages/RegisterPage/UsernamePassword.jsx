@@ -26,6 +26,8 @@ function UsernamePassword() {
         }));
     };
 
+    const [errors, setErrors] = useState({});
+
     const handleSubmit = event => {
         event.preventDefault();
         axios.post(API_URL + "registration", formData).then(response => {
@@ -43,6 +45,10 @@ function UsernamePassword() {
             }
 
         }).catch(error => {
+            if (error.response && error.response.data) {
+                setErrors(error.response.data);
+            }
+            alert("Please ensure you enter a proper email. Password must be at least 8 characters long and contain at least one letter and one number");
             console.log('Error: ', error);
         })
 

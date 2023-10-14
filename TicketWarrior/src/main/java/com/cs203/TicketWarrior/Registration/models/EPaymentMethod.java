@@ -1,6 +1,6 @@
 package com.cs203.TicketWarrior.Registration.models;
 
-public enum PaymentMethod {
+public enum EPaymentMethod {
     CREDIT_CARD,
     DEBIT_CARD,
     PAYPAL,
