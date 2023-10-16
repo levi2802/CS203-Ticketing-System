@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthenticationServiceimpl implements AuthenticationService{
 
-    // Can be userdetailsservice instead
     private final UserServiceimpl userService;
 
     private final PasswordEncoder passwordEncoder;
@@ -35,7 +34,6 @@ public class AuthenticationServiceimpl implements AuthenticationService{
                     .isSuccessful(false)
                     .build();
         }
-
 
         var user = User.builder()
                 .username(registerRequest.getUsername())
