@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, properties = {
@@ -65,14 +66,14 @@ public class SeatingIntegrationTest {
     }
 
     @Test
-    public void testRegisterUser_Success() throws Exception {
+    public void testGetSeats_Success() throws Exception {
         // Arrange
         // Register user
         AuthenticationRequest request = new AuthenticationRequest("testCalvin@gmail.com", "testCalvin", "goodpassword");
         AuthenticationResponse response = authenticationService.register(request);
 
         // Set URI
-        URI uri = new URI(baseUrl + port + "/api/v1/seats/");
+        URI uri = new URI(baseUrl + port + "/api/v1/seats");
 
         // Save seats
         Seat seat = new Seat(1, 1, "standard", false, request.getUsername(), "Barbie");
@@ -86,12 +87,99 @@ public class SeatingIntegrationTest {
 
         // Act
         // Call API
-        // ResponseEntity<List<Seat>> result = testRestTemplate.exchange(uri,
-        // HttpMethod.GET, entity, Seat[].class);
-        // Seat[] resultResponse = result.getBody();
+        ResponseEntity<Seat[]> result = testRestTemplate.exchange(uri,
+        HttpMethod.GET, entity, Seat[].class);
+        Seat[] resultResponse = result.getBody();
 
         // Assert
-        // assertEquals(200, result.getStatusCode().value());
-        // assertEquals(seat, resultResponse);
+        assertEquals(200, result.getStatusCode().value());
+        for (Seat s : resultResponse) {
+            assertEquals(1, s.getRow());
+            assertEquals(1, s.getColumn());
+            assertEquals("standard", s.getType());
+            assertEquals(false, s.isAvailable());
+            assertEquals(request.getUsername(), s.getUsername());
+            assertEquals("Barbie", s.getMovieName());
+        }
+    }
+
+    @Test
+    public void testGetSeats_Fail() throws Exception{
+        // Arrange: unregistered user
+        
+        // Set URI
+        URI uri = new URI(baseUrl + port + "/api/v1/seats");
+
+        // Act
+        // Call API
+        ResponseEntity<Seat[]> result = testRestTemplate.exchange(uri,
+        HttpMethod.GET, null, Seat[].class);
+
+        // Assert
+        assertEquals(403, result.getStatusCode().value());
+    }
+
+    @Test
+    public void testGetSeatsByUser_Success() throws Exception {
+        // Arrange
+        // Register user
+        AuthenticationRequest request = new AuthenticationRequest("testCalvin@gmail.com", "testCalvin", "goodpassword");
+        AuthenticationResponse response = authenticationService.register(request);
+
+        // Set URI
+        String id = "testCalvin";
+        URI uri = new URI(baseUrl + port + "/api/v1/seats/" + id);
+
+        // Save seats
+        Seat seat = new Seat(1, 1, "standard", false, request.getUsername(), "Barbie");
+        seatRepository.save(seat);
+
+        // Set token in http header
+        String token = response.getToken();
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + token);
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+
+        // Act
+        // Call API
+        ResponseEntity<Seat[]> result = testRestTemplate.exchange(uri,
+        HttpMethod.GET, entity, Seat[].class);
+        Seat[] resultResponse = result.getBody();
+
+        // Assert
+        assertEquals(200, result.getStatusCode().value());
+        assertEquals(1, resultResponse.length);
+    }
+
+    @Test
+    public void testGetSeatsByUser_Fail() throws Exception {
+        // Arrange
+        // Register user
+        AuthenticationRequest request = new AuthenticationRequest("testCalvin@gmail.com", "testCalvin", "goodpassword");
+        AuthenticationResponse response = authenticationService.register(request);
+
+        // Set URI
+        String id = "invalidUserName";
+        URI uri = new URI(baseUrl + port + "/api/v1/seats/" + id);
+
+        // Save seats
+        Seat seat = new Seat(1, 1, "standard", false, request.getUsername(), "Barbie");
+        seatRepository.save(seat);
+
+        // Set token in http header
+        String token = response.getToken();
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + token);
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+
+        // Act
+        // Call API
+        ResponseEntity<Seat[]> result = testRestTemplate.exchange(uri,
+        HttpMethod.GET, entity, Seat[].class);
+        Seat[] resultResponse = result.getBody();
+
+        // Assert
+        assertEquals(200, result.getStatusCode().value());
+        assertEquals(0, resultResponse.length);
     }
 }
