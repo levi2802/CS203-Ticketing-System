@@ -196,7 +196,7 @@ class SeatApp extends Component {
       axios.post(this.backendURL + "/api/v1/purchases", {
         userId: username,
         movieId: this.movieName,
-        seatIDs: selectedSeatsString,
+        seatIDs: seatIDs,
         location: this.location,
         timing: this.timing,
         price: selectedSeats.length*8
