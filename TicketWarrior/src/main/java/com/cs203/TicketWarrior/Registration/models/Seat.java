@@ -8,9 +8,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.JoinColumn;
-
 @Document(collection = "seats") // Document containing mongodb collection.
 @Data // From the lombok framework, takes care of all the getters, setters etc.
 @AllArgsConstructor // From the lombok framework, creates a constructor that takes all the

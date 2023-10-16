@@ -9,7 +9,7 @@ function OrderHistoryPageStartText() {
                 
 
             <h1>Order History Overview</h1>
-            <h3>Can't find your previous bookings? Please <Link to="/login">sign in</Link> to view them.</h3>
+            <h3>Can't find a booking? Ensure it's linked to this account or contact support.</h3>
             </div>
         </>
     )

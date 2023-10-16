@@ -1,36 +1,44 @@
 table {
     width: 75%;
-    border: 2px solid #aaa; /* more subtle border */
-    border-radius: 8px; /* rounded corners */
+    border: 2px solid #aaa;
+    border-radius: 8px;
     border-collapse: collapse;
     margin-left: auto;
     margin-right: auto;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* shadow for depth */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
 thead {
-    background-image: linear-gradient(to bottom, royalblue, dodgerblue); /* gradient effect */
+    background-image: linear-gradient(to bottom, royalblue, dodgerblue);
 }
 
 th {
-    border: 1px solid #aaa; /* more subtle border */
-    font-size: 1.2em; /* increase font size */
+    border: 1px solid #aaa;
+    font-size: 1.2em;
     color: white;
     padding: 10px;
 }
 
 td {
-    border: 1px solid #aaa; /* more subtle border */
+    border: 1px solid #aaa;
     text-align: center;
     padding: 10px;
-    vertical-align: middle; /* vertical centering */
-    color: #000000; /* Setting the default text color to black */
+    vertical-align: middle;
+    color: #000000;
 }
 
-tr:nth-child(even) {
-    background-color: #f7f7f7; /* more subtle color */
+/* Default styles for table rows */
+tr {
+    background-color: #f7f7f7; /* Light gray for even rows */
+    transition: background-color 0.3s; /* Smooth color transition */
 }
 
+/* Styles for odd rows */
+tr:nth-child(odd) {
+    background-color: #e0e0e0; /* Slightly darker gray for odd rows */
+}
+
+/* Styles for hover effect */
 tr:hover {
-    background-color: #e7e9ed; /* hover effect for rows */
+    background-color: #d0d0d0; /* Even darker gray when hovered */
 }

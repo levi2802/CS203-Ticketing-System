@@ -8,11 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Locale;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
-import com.cs203.TicketWarrior.Registration.models.*;
-import com.cs203.TicketWarrior.Registration.repository.*;
 
 @RequiredArgsConstructor
 @Service
@@ -33,7 +31,7 @@ public class PurchaseServiceimpl implements PurchaseService{
     }
 
     public Purchase addPurchase(Purchase purchase) {
-        purchase.setTimeStamp(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss a")));
+        purchase.setTimeStamp(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy hh:mm:ss a").withLocale(Locale.ENGLISH)));
         return purchases.save(purchase);
     }
 

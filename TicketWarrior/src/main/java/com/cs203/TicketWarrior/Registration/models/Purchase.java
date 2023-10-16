@@ -1,7 +1,5 @@
 package com.cs203.TicketWarrior.Registration.models;
 
-import java.time.LocalDateTime;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
@@ -27,7 +25,7 @@ public class Purchase {
 	@NotBlank
 	private String seatIDs;
 
-	@Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}")
+	@Pattern(regexp = "\\d{2}-\\d{2}-\\d{4} \\d{2}:\\d{2}:\\d{2} [APMapm]{2}")
 	private String timestamp;
 
 	@NotBlank

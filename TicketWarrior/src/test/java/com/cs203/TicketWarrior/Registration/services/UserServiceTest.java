@@ -1,23 +1,15 @@
 package com.cs203.TicketWarrior.Registration.services;
 
-import com.cs203.TicketWarrior.Registration.TestConfig.TestConfig;
 import com.cs203.TicketWarrior.Registration.models.User;
 import com.cs203.TicketWarrior.Registration.repository.UserRepository;
 import com.cs203.TicketWarrior.Registration.servicesimpl.UserServiceimpl;
 
-import lombok.RequiredArgsConstructor;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Import;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;

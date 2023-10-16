@@ -127,20 +127,20 @@ class SeatApp extends Component {
     let seatIDs = [];
     const rowName = [];
     for (let i = 0; i < seats.length; i++) {
-      let temp = 'A'.charCodeAt(0) + i;
-      rowName.push(String.fromCharCode(temp));
+        let temp = 'A'.charCodeAt(0) + i;
+        rowName.push(String.fromCharCode(temp));
     }
 
-    let selectedSeatsString = "";
-    selectedSeats.forEach(seat => {
+    let selectedSeatsStringArray = selectedSeats.map(seat => {
       seat.num += 1;  // Increment seat.num by 1
-      let seatID = rowName[seat.row] + seat.num;
-      selectedSeatsString = selectedSeatsString + seatID + ', ';
-      seatIDs.push(seatID);
-    })
-    const alertMessage = "Your seats: " + selectedSeatsString + "for the movie: " + this.movieName + " at " + this.location + " " + this.timing +" are booked!";
+      return rowName[seat.row] + seat.num; // directly return the seatID for each iteration
+    });
+
+    const selectedSeatsString = selectedSeatsStringArray.join(", ").replace(/,\s*$/, "");  // join and then remove the trailing comma (if any)
+    const alertMessage = "Your seats: " + selectedSeatsString + " for the movie: " + this.movieName + " at " + this.location + " " + this.timing +" are booked!";
     alert(alertMessage);
-    console.log(seatIDs);
+    console.log(selectedSeatsStringArray);
+
 
     // Create confirmation email.
     const sendEmail = async() => {
@@ -196,7 +196,7 @@ class SeatApp extends Component {
       axios.post(this.backendURL + "/api/v1/purchases", {
         userId: username,
         movieId: this.movieName,
-        seatIDs: seatIDs,
+        seatIDs: selectedSeatsString,
         location: this.location,
         timing: this.timing,
         price: selectedSeats.length*8

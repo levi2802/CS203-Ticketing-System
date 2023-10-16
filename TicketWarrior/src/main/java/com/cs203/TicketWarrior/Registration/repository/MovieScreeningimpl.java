@@ -2,7 +2,6 @@ package com.cs203.TicketWarrior.Registration.repository;
 
 import com.cs203.TicketWarrior.Registration.models.MovieScreening;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;

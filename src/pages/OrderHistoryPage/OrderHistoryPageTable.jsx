@@ -35,11 +35,11 @@ function OrderHistoryPageTable() {
         <>
             <table>
                 <thead>
-                    <th>Purchase Date and Time</th>
+                    <th>Purchase Date</th>
                     <th>Movie Title</th>
-                    <th>Movie Location</th>
-                    <th>Movie Timing</th>
-                    <th>Seats Chosen</th>
+                    <th>Theater Location</th>
+                    <th>Show Time</th>
+                    <th>Selected Seats</th>
                     <th>Total Price</th>
                 </thead>
                 {userPurchases.map(purchase => (
