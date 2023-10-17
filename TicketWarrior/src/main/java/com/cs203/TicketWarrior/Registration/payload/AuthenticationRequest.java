@@ -12,10 +12,13 @@ import lombok.*;
 public class AuthenticationRequest {
 
     @NotBlank
+    @Email(message = "Please provide a valid email")
     private String email;
     @NotBlank
     private String username;
     @NotBlank
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$",
+            message = "Password must be at least 8 characters long and contain at least one letter and one number")
     private String password;
 
     public AuthenticationRequest (String username, String password) {
