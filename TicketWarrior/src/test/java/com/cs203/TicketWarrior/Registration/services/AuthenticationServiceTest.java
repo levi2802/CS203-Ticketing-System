@@ -15,12 +15,13 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -80,5 +81,37 @@ public class AuthenticationServiceTest {
 
         //Assert
         assertFalse(registerResponse.getIsSuccessful());
+    }
+
+    @Test
+    void testAuthenticate_Success() {
+        //Arrange
+        AuthenticationRequest loginRequest = new AuthenticationRequest("goodUsername", "goodPassword1");
+        User user = new User("goodEmail@gmail.com", loginRequest.getUsername(), "encodedPassword");
+        user.setRole(ERole.USER);
+        when(authenticationManager.authenticate(any())).thenReturn(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+        when(userServiceimpl.findUserByUsername(loginRequest.getUsername())).thenReturn(Optional.of(user));
+        when(jwtService.generateToken(user)).thenReturn("generatedToken");
+
+        //Act
+        AuthenticationResponse loginResponse = authenticationServiceTest.authenticate(loginRequest);
+
+        //Assert
+        assertTrue(loginResponse.getIsSuccessful());
+        assertEquals("generatedToken", loginResponse.getToken());
+    }
+
+    @Test
+    void testAuthenticate_Fail() {
+        //Arrange
+        AuthenticationRequest loginRequest = new AuthenticationRequest("badUsername", "badPassword1");
+        when(authenticationManager.authenticate(any())).thenThrow(BadCredentialsException.class);
+
+        //Act
+        AuthenticationResponse loginResponse = authenticationServiceTest.authenticate(loginRequest);
+
+        //Assert
+        assertFalse(loginResponse.getIsSuccessful());
+        assertNull(loginResponse.getToken());
     }
 }
