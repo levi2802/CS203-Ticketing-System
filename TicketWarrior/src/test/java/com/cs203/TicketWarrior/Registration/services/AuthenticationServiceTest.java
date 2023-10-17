@@ -47,6 +47,7 @@ public class AuthenticationServiceTest {
 
     @BeforeEach
     void setUp() {
+        // Initialise authentication service test to inject mocks
         authenticationServiceTest = new AuthenticationServiceimpl
                 (userServiceimpl, passwordEncoder, jwtService, authenticationManager);
     }
