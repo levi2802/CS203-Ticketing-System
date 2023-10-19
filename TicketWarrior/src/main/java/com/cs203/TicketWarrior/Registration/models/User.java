@@ -31,14 +31,14 @@ public class User implements UserDetails {
     private String username;
 
     @NonNull
-    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$",
-            message = "Password must be at least 8 characters long and contain at least one letter and one number")
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$", message = "Password must be at least 8 characters long and contain at least one letter and one number")
     private String password;
 
     // A user can have 0 to many orders. We choose to cascade deletions, and delete
     // orphaned orders.
-    //@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    //private List<Order> orders;
+    // @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval =
+    // true)
+    // private List<Order> orders;
 
     // Declare as enum, using String to represent instead of integer
     // @Enumerated(EnumType.STRING)
