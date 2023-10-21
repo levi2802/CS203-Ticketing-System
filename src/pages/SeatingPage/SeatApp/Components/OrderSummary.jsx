@@ -13,7 +13,7 @@ function OrderSummary({ chosenSeats, rowName, chosenRow, handleCancel, handleCon
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = captchaRef.current.getValue();
-    console.log(token);
+    //console.log(token);
     captchaRef.current.reset();
 
     await axios.post("http://localhost:8080/api/v1/captcha/verification", { token })
