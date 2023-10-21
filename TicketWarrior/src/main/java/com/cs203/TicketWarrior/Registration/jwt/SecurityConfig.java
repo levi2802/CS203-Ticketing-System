@@ -26,7 +26,7 @@ public class SecurityConfig {
         http
                 .cors(Customizer.withDefaults())
                 .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/api/v1/auth/**","api/v1/seats/**", "/api/v1/mail/**")
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/api/v1/auth/**","api/v1/seats/**", "/api/v1/mail/**", "/api/v1/captcha/verification")
                         .permitAll()
                         .anyRequest()
                         .authenticated())

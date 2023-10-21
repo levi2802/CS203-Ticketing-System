@@ -135,3 +135,9 @@ body {
 .imageContainer {
   margin-right: 10px;
 }
+
+.captcha {
+  margin-top: 3rem;
+  margin-left: 600px;
+  margin-bottom: 3rem;
+}
