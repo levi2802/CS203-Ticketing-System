@@ -68,7 +68,8 @@ public class MailIntegrationTest {
     public void testSendMail_InvalidUsername_ReturnUserNotFound() throws Exception {
         // Arrange
         // Register user
-        AuthenticationRequest request = new AuthenticationRequest("testCalvin@gmail.com", "testCalvin", "goodpassword");
+        AuthenticationRequest request = new AuthenticationRequest("isaac.loke.2021@scis.smu.edu.sg", "testCalvin",
+                "goodpassword");
         AuthenticationResponse response = authenticationService.register(request);
 
         // Set token in http header
@@ -91,7 +92,8 @@ public class MailIntegrationTest {
     public void testSendMail_UsernameMovieNameAndSelectedSeats_ReturnSuccessMessage() throws Exception {
         // Arrange
         // Register user
-        AuthenticationRequest request = new AuthenticationRequest("testCalvin@gmail.com", "testCalvin", "goodpassword");
+        AuthenticationRequest request = new AuthenticationRequest("isaac.loke.2021@scis.smu.edu.sg", "testCalvin",
+                "goodpassword");
         AuthenticationResponse response = authenticationService.register(request);
 
         // Set token in http header
@@ -107,6 +109,6 @@ public class MailIntegrationTest {
         System.out.println(resultMessage);
 
         // assertEquals(404, result.getStatusCode().value());
-        assertTrue(resultMessage.equals("Mail has been sent to testCalvin@gmail.com"));
+        assertTrue(resultMessage.equals("Mail has been sent to isaac.loke.2021@scis.smu.edu.sg"));
     }
 }
