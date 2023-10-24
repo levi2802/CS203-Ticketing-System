@@ -4,7 +4,6 @@ import Seat from '../Seat/Seat.js';
 import axios, { formToJSON } from 'axios';
 import { json, useParams } from 'react-router-dom';
 import Button from '@mui/material/Button'
-import Timer from './Timer';
 import { useNavigate } from "react-router-dom";
 import { recomposeColor } from '@mui/material';
 import * as util from './SeatUtils';
@@ -80,14 +79,6 @@ class SeatApp extends Component {
       seats: updatedSeats,
       chosenSeats: updatedChosenSeats
     });
-
-    //log of selected/unselected seat
-    if (selectedSeat.selected) {
-      console.log(`Selected seat: {row: ${row}, column: ${col}}`);
-    }
-    else {
-      console.log(`Unselected seat: {row: ${row}, column: ${col}}`);
-    }
   }
 
   handleCheckout = () => {
@@ -244,7 +235,7 @@ class SeatApp extends Component {
     const chosenRow = seats.filter(seat => seat.selected).map(seat => seat.row + 1);
     const location = localStorage.getItem("selectedLoc");
     const time = localStorage.getItem("selectedTime");
-    const currentDate = new Date().toLocaleDateString();
+    const currentDate = localStorage.getItem("selectedDate");
 
 
     return (
