@@ -35,7 +35,8 @@
     font-size: 1rem;
     color: white;
     border-radius: 5px;
-    background-color: #e50914;
+    /*background-color: #e50914;*/
+    background-color: goldenrod;
     font-weight: 600;
     border: none;
     cursor: pointer;

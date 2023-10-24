@@ -71,12 +71,12 @@ public class PurchaseIntegrationTest {
     public void testGetPurchasesByUser_Success() throws Exception {
         // Arrange
         // Register user
-        AuthenticationRequest request = new AuthenticationRequest("testCalvin@gmail.com", "testCalvin", "goodpassword");
+        AuthenticationRequest request = new AuthenticationRequest("testCalvin@gmail.com", "testCalvin", "goodpassword1");
         AuthenticationResponse response = authenticationService.register(request);
 
         // Set URI
         String id = "testCalvin";
-        URI uri = new URI(baseUrl + port + "/api/purchases/" + id);
+        URI uri = new URI(baseUrl + port + "/api/v1/purchases/" + id);
         String seatIDs = "A1";
         Purchase purchase = new Purchase("testCalvin", "barbier1", seatIDs);
         purchaseRepository.save(purchase);
@@ -101,12 +101,12 @@ public class PurchaseIntegrationTest {
     public void testGetPurchasesByUser_Fail() throws Exception {
         // Arrange
         // Register user
-        AuthenticationRequest request = new AuthenticationRequest("testCalvin@gmail.com", "testCalvin", "goodpassword");
+        AuthenticationRequest request = new AuthenticationRequest("testCalvin@gmail.com", "testCalvin", "goodpassword1");
         AuthenticationResponse response = authenticationService.register(request);
 
         // Set URI
         String id = "invalidUserName";
-        URI uri = new URI(baseUrl + port + "/api/purchases/" + id);
+        URI uri = new URI(baseUrl + port + "/api/v1/purchases/" + id);
         String seatIDs = "A1";
         Purchase purchase = new Purchase("testCalvin", "barbier1", seatIDs);
         purchaseRepository.save(purchase);
@@ -131,12 +131,12 @@ public class PurchaseIntegrationTest {
     public void testCreatePurchase_Success() throws Exception {
         // Arrange
         // Register user
-        AuthenticationRequest request = new AuthenticationRequest("testCalvin@gmail.com", "testCalvin", "goodpassword");
+        AuthenticationRequest request = new AuthenticationRequest("testCalvin@gmail.com", "testCalvin", "goodpassword1");
         AuthenticationResponse response = authenticationService.register(request);
 
         // Set URI
         String id = "testCalvin";
-        URI uri = new URI(baseUrl + port + "/api/purchases");
+        URI uri = new URI(baseUrl + port + "/api/v1/purchases");
         String seatIDs = "A1";
         Purchase purchase = new Purchase("testCalvin", "barbier1", seatIDs);
 
@@ -152,7 +152,7 @@ public class PurchaseIntegrationTest {
         Purchase purchases = result.getBody();
 
         // Assert
-        assertEquals(200, result.getStatusCode().value());
+        assertEquals(201, result.getStatusCode().value());
         assertEquals(purchases.getUserId(), id);
     }
 
@@ -161,7 +161,7 @@ public class PurchaseIntegrationTest {
         // Arrange
         // Set URI
         String invalidUserName = "invalidUser";
-        URI uri = new URI(baseUrl + port + "/api/purchases");
+        URI uri = new URI(baseUrl + port + "/api/v1/purchases");
         String seatIDs = "A1";
         Purchase purchase = new Purchase(invalidUserName, "barbier1", seatIDs);
 

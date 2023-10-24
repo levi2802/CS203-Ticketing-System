@@ -12,7 +12,6 @@ import lombok.*;
 public class AuthenticationRequest {
 
     @NotBlank
-    @Email(message = "Please provide a valid email")
     private String email;
     @NotBlank
     private String username;

@@ -33,7 +33,7 @@ function Row({ title, fetchUrl, isLargeRow }) {
         },
     };
 
-    const someMovies = movies.slice(0, 10);
+    const someMovies = movies.slice(0, 4);
 
     const handleClick = (movie) => {
         if (trailerUrl) {
@@ -69,6 +69,7 @@ function Row({ title, fetchUrl, isLargeRow }) {
     return (
         <div className="row">
             <h2>{title}</h2>
+            <div className="new-page-border"></div>
             <div className="row_posters">
                 {/*several row_poster(s)*/}
                 {someMovies.map(movie => (
@@ -77,17 +78,20 @@ function Row({ title, fetchUrl, isLargeRow }) {
                         className={`row_posterInnerWrapper ${isLargeRow && "row_posterLarge"}`}
                         onClick={() => handleClick(movie)}
                     >
+
                         <img
                             className="row_poster"
                             src={`${base_url}${isLargeRow ? movie.poster_path : movie.backdrop_path}`}
                             alt={movie.name}
                         />
 
+                        <h3 className="movie-title">{movie.title}</h3>
+
                         <button className="buyTicketsButton" onClick={() => handleButtonClick(movie)}>Buy Tickets</button>
                     </div>
                 ))}
 
-        </div>
+            </div>
 
             { trailerUrl && <YouTube videoId={trailerUrl} opts={opts} /> }
         </div >

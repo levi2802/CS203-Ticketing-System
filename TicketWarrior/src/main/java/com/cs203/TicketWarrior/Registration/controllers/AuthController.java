@@ -3,6 +3,7 @@ package com.cs203.TicketWarrior.Registration.controllers;
 import com.cs203.TicketWarrior.Registration.payload.*;
 import com.cs203.TicketWarrior.Registration.services.AuthenticationService;
 
+import com.cs203.TicketWarrior.Registration.servicesimpl.AuthenticationServiceimpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 
