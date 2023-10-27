@@ -154,7 +154,7 @@ class SeatApp extends Component {
 
     // Save purchase order to the database.
     await this.addPurchaseOrder(username, selectedSeatsString, selectedSeats);
-    //window.location.href = '/';
+    window.location.href = '/';
     // Send confirmation email.
     await sendEmail()
   }
