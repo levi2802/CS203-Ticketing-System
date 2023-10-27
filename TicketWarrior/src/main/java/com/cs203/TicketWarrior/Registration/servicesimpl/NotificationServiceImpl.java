@@ -19,29 +19,18 @@ import java.util.Locale;
 public class NotificationServiceImpl implements NotificationService {
     private final JavaMailSender javaMailSender;
 
-    @Override
-    public void sendNotification(User user, String movieName, String selectedSeats) throws MailException {
-        // Send email
-        SimpleMailMessage mail = new SimpleMailMessage();
-
-        mail.setTo(user.getEmail());
-        mail.setFrom("wicketticketwarrior@gmail.com");
-        mail.setSubject("Order Summary");
-        //mail.setText("Hi, " + user.getUsername() + "\nYour seats " + "[" + selectedSeats + "]" + " for the movie: " + movieName + " are booked!");
-        javaMailSender.send(mail);
-    }
-    
     public void sendNotification(User user, String message) throws MailException {
         // Send email
         SimpleMailMessage mail = new SimpleMailMessage();
-        String newMessage = message + "\n\nTransaction done at " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy hh:mm:ss a").withLocale(Locale.ENGLISH));
-
+        String newMessage = message + "\n\nTransaction done at " + LocalDateTime.now()
+                .format(DateTimeFormatter.ofPattern("dd-MM-yyyy hh:mm:ss a").withLocale(Locale.ENGLISH));
 
         mail.setTo(user.getEmail());
         mail.setFrom("wicketticketwarrior@gmail.com");
         mail.setSubject("Order Summary");
         mail.setText(newMessage);
-        //mail.setText("Hi, " + user.getUsername() + "\nYour seats " + "[" + selectedSeats + "]" + " for the movie: " + movieName + " are booked!");
+        // mail.setText("Hi, " + user.getUsername() + "\nYour seats " + "[" +
+        // selectedSeats + "]" + " for the movie: " + movieName + " are booked!");
         javaMailSender.send(mail);
     }
 }

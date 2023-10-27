@@ -26,7 +26,7 @@ public class NotificationServiceTest {
     private NotificationServiceImpl notificationServiceImpl;
 
     @BeforeEach
-    void setUp () {
+    void setUp() {
         // Initialize mocks and inject mocks
         MockitoAnnotations.openMocks(this);
 
@@ -41,7 +41,7 @@ public class NotificationServiceTest {
         User user = new User("testMail@gmail.com", "testMail", "testPassword1");
 
         // Act
-        notificationServiceImpl.sendNotification(user, "Avengers", "A1, A2");
+        notificationServiceImpl.sendNotification(user, "testMessage");
 
         // Assert
         verify(javaMailSender, times(1)).send(any(SimpleMailMessage.class));
@@ -55,6 +55,6 @@ public class NotificationServiceTest {
         doThrow(new MailPreparationException("Failed")).when(javaMailSender).send(any(SimpleMailMessage.class));
 
         // Act & Assert
-        assertThrows(MailException.class, () -> notificationServiceImpl.sendNotification(user, "Avengers", "A1, A2"));
+        assertThrows(MailException.class, () -> notificationServiceImpl.sendNotification(user, "testMessage"));
     }
 }

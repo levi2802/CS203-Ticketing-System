@@ -29,10 +29,10 @@ public class Purchase {
 	private String timestamp;
 
 	@NotBlank
-    private String location;
+	private String location;
 
 	@NotBlank
-    private String timing;
+	private String timing;
 
 	@Positive
 	private int price;
