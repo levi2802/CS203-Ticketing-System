@@ -46,10 +46,13 @@ function OrderSummary({ chosenSeats, rowName, chosenRow, handleCancel, handleCon
         Total cost: ${chosenSeats.length * 8}
       </pre>
 
-      <form onSubmit={handleSubmit}>
+      <form className='form' onSubmit={handleSubmit}>
         <ReCAPTCHA className="captcha" sitekey={process.env.REACT_APP_SITE_KEY} ref={captchaRef} />
-        <Button variant="contained" onClick={handleCancel} style={{ background: 'grey' }}>Cancel</Button>
-        <Button type="submit" variant="contained" style={{ background: 'grey' }}>Confirm</Button>
+        <div className='Buttons'>
+          <Button variant="contained" onClick={handleCancel} style={{ background: 'grey' }}>Cancel</Button>
+          <Button type="submit" variant="contained" style={{ background: 'grey' }}>Confirm</Button>
+        </div>
+        
       </form>
     </div>
   );

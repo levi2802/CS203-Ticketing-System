@@ -136,8 +136,20 @@ body {
   margin-right: 10px;
 }
 
-.captcha {
+/* .captcha {
   margin-top: 3rem;
   margin-left: 600px;
   margin-bottom: 3rem;
+} */
+
+.form {
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  display: inline-block;
+  padding: 50px;
+}
+
+.Buttons {
+  padding: 50px;
 }
