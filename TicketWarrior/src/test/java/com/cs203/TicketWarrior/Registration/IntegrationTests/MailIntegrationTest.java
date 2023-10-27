@@ -13,7 +13,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -22,7 +23,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.SimpleMailMessage;
 
 import java.net.URI;
 
@@ -61,17 +61,21 @@ public class MailIntegrationTest {
 
     @BeforeEach
     void setUp() {
-        doNothing().when(notificationService).sendNotification(any(User.class), any(String.class), any(String.class));
+
+        notificationService = Mockito.mock(NotificationServiceImpl.class);
+        doNothing().when(notificationService).sendNotification(any(User.class), any(String.class));
+        // doNothing().when(notificationService).sendNotification(any(User.class),
+        // any(String.class), any(String.class));
         userRepository.deleteAll();
     }
-//    @BeforeEach
-//    void setUp () {
-//        // Initialize mocks and inject mocks
-//        MockitoAnnotations.openMocks(this);
-//
-//        // Since this is a test, we do not want to send any actual mail
-//
-//    }
+    // @BeforeEach
+    // void setUp () {
+    // // Initialize mocks and inject mocks
+    // MockitoAnnotations.openMocks(this);
+    //
+    // // Since this is a test, we do not want to send any actual mail
+    //
+    // }
 
     @AfterEach
     void tearDown() {
@@ -93,7 +97,7 @@ public class MailIntegrationTest {
         headers.set("Authorization", "Bearer " + token);
         HttpEntity<?> entity = new HttpEntity<>(headers);
 
-        URI uri = new URI(baseUrl + port + "/api/v1/mail/" + "invalidUsername/testMovieName/testSelectedSeats");
+        URI uri = new URI(baseUrl + port + "/api/v1/mail/" + "invalidUsername/testMessage");
         ResponseEntity<String> result = testRestTemplate.exchange(uri, HttpMethod.GET, entity, String.class);
         String resultMessage = result.getBody();
 
@@ -104,7 +108,7 @@ public class MailIntegrationTest {
     }
 
     @Test
-    public void testSendMail_UsernameMovieNameAndSelectedSeats_ReturnSuccessMessage() throws Exception {
+    public void testSendMail_UsernameAndMessage_ReturnSuccessMessage() throws Exception {
         // Arrange
         // Register user
         AuthenticationRequest request = new AuthenticationRequest("isaaclokeweiensecondary@gmail.com", "testCalvin",
@@ -117,7 +121,7 @@ public class MailIntegrationTest {
         headers.set("Authorization", "Bearer " + token);
         HttpEntity<?> entity = new HttpEntity<>(headers);
 
-        URI uri = new URI(baseUrl + port + "/api/v1/mail/" + "testCalvin/testMovieName/testSelectedSeats");
+        URI uri = new URI(baseUrl + port + "/api/v1/mail/" + "testCalvin/testMessage");
         ResponseEntity<String> result = testRestTemplate.exchange(uri, HttpMethod.GET, entity, String.class);
         String resultMessage = result.getBody();
 

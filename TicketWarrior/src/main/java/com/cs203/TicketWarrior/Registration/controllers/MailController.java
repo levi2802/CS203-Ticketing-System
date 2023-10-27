@@ -18,28 +18,6 @@ public class MailController {
     private final NotificationService notificationService;
     private final UserService userService;
 
-    @GetMapping("/{username}/{movieName}/{selectedSeats}")
-    public String sendMail(@PathVariable String username, @PathVariable String movieName,
-            @PathVariable String selectedSeats) {
-        Optional<User> optionalUser = userService.findUserByUsername(username);
-
-        if (optionalUser.isEmpty()) {
-            return "User not found";
-        }
-
-        User user = optionalUser.get();
-
-        // Send a notification
-        try {
-            notificationService.sendNotification(user, movieName, selectedSeats);
-            return "Mail has been sent to " + user.getEmail();
-        } catch (MailException e) {
-            System.out.println("Could not send mail to " + user.getEmail() + e.getMessage());
-        }
-
-        return "Oops, something bad happened";
-    }
-
     @GetMapping("/{username}/{message}")
     public String sendMail(@PathVariable String username, @PathVariable String message) {
         Optional<User> optionalUser = userService.findUserByUsername(username);
