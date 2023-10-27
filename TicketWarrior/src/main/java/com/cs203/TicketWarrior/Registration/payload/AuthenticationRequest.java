@@ -1,6 +1,7 @@
 package com.cs203.TicketWarrior.Registration.payload;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
 @Data
