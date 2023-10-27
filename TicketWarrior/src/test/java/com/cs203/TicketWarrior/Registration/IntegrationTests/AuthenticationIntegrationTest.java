@@ -4,6 +4,7 @@ import com.cs203.TicketWarrior.Registration.models.User;
 import com.cs203.TicketWarrior.Registration.payload.AuthenticationRequest;
 import com.cs203.TicketWarrior.Registration.payload.AuthenticationResponse;
 import com.cs203.TicketWarrior.Registration.repository.UserRepository;
+import com.cs203.TicketWarrior.Registration.services.AuthenticationService;
 import com.cs203.TicketWarrior.Registration.servicesimpl.AuthenticationServiceimpl;
 
 import org.junit.jupiter.api.AfterEach;
@@ -38,7 +39,7 @@ public class AuthenticationIntegrationTest {
     private UserRepository userRepository;
 
     @Autowired
-    private AuthenticationServiceimpl authenticationService;
+    private AuthenticationService authenticationService;
 
     @BeforeEach
     void setUp() {
@@ -55,10 +56,10 @@ public class AuthenticationIntegrationTest {
     public void testRegisterUser_Success() throws Exception {
         // Arrange
         // Register user
-        AuthenticationRequest request = new AuthenticationRequest("validUser@gmail.com", "validUser", "goodpassword");
+        AuthenticationRequest request = new AuthenticationRequest("validUser@gmail.com", "validUser", "goodpassword1");
 
         // Set URI
-        URI uri = new URI(baseUrl + port + "/api/auth/registration");
+        URI uri = new URI(baseUrl + port + "/api/v1/auth/registration");
 
         // Set token in http header
         HttpEntity<?> entity = new HttpEntity<>(request);
@@ -77,13 +78,13 @@ public class AuthenticationIntegrationTest {
     @Test
     public void testRegisterUser_Fail() throws Exception {
         // Arrange
-        User registeredUser = new User("validUser@gmail.com", "validUser", "goodpassword");
+        User registeredUser = new User("validUser@gmail.com", "validUser", "goodpassword1");
         userRepository.save(registeredUser);
         // Register user
-        AuthenticationRequest request = new AuthenticationRequest("validUser@gmail.com", "validUser", "goodpassword");
+        AuthenticationRequest request = new AuthenticationRequest("validUser@gmail.com", "validUser", "goodpassword1");
 
         // Set URI
-        URI uri = new URI(baseUrl + port + "/api/auth/registration");
+        URI uri = new URI(baseUrl + port + "/api/v1/auth/registration");
 
         // Set token in http header
         HttpEntity<?> entity = new HttpEntity<>(request);
@@ -103,12 +104,12 @@ public class AuthenticationIntegrationTest {
     public void testAuthenticateUser_Success() throws Exception {
         // Arrange
         AuthenticationRequest registerRequest = new AuthenticationRequest("validUser@gmail.com", "validUser",
-                "goodpassword");
+                "goodpassword1");
         AuthenticationResponse registerResponse = authenticationService.register(registerRequest);
-        AuthenticationRequest request = new AuthenticationRequest("null", "validUser", "goodpassword");
+        AuthenticationRequest request = new AuthenticationRequest("null", "validUser", "goodpassword1");
 
         // Set URI
-        URI uri = new URI(baseUrl + port + "/api/auth/authentication");
+        URI uri = new URI(baseUrl + port + "/api/v1/auth/authentication");
 
         // Set token in http header
         HttpEntity<?> entity = new HttpEntity<>(request);
@@ -128,12 +129,12 @@ public class AuthenticationIntegrationTest {
     public void testAuthenticateUser_Fail() throws Exception {
         // Arrange
         AuthenticationRequest registerRequest = new AuthenticationRequest("validUser@gmail.com", "validUser",
-                "goodpassword");
+                "goodpassword1");
         AuthenticationResponse registerResponse = authenticationService.register(registerRequest);
-        AuthenticationRequest request = new AuthenticationRequest("null", "validUser", "badpassword");
+        AuthenticationRequest request = new AuthenticationRequest("null", "validUser", "badpassword1");
 
         // Set URI
-        URI uri = new URI(baseUrl + port + "/api/auth/authentication");
+        URI uri = new URI(baseUrl + port + "/api/v1/auth/authentication");
 
         // Set token in http header
         HttpEntity<?> entity = new HttpEntity<>(request);

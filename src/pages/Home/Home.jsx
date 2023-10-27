@@ -24,9 +24,9 @@ function App() {
         <div className="app">
             {hasToken ? <NavBarLoggedIn/> : <NavBar/>}
             <Banner />
-            <Row title="Trending Now" fetchUrl={requests.fetchTrending} isLargeRow={true} />
-            <Row title="Top Rated" fetchUrl={requests.fetchTopRated} />
-            <Row title="Action Movies" fetchUrl={requests.fetchActionMovies} />
+            <Row title="Now Showing" fetchUrl={requests.fetchTrending} isLargeRow={true} />
+            <Row title="Past Favourites" fetchUrl={requests.fetchTopRated} />
+            <Row title="Advance Sales" fetchUrl={requests.fetchActionMovies} />
             <Row title="Comedy Movies" fetchUrl={requests.fetchComedyMovies} />
             <Row title="Horror Movies" fetchUrl={requests.fetchHorrorMovies} />
             <Row title="Romance Movies" fetchUrl={requests.fetchRomanceMovies} />
