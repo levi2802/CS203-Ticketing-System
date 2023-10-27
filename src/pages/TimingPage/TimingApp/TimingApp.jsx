@@ -2,6 +2,9 @@ import PG from "../../HomePage/images/PG.png"
 import './TimingApp.css';
 import { useNavigate } from "react-router-dom";
 import MovieTimingSection from './MovieTimingSection';
+import MovieTimingList from "./MovieTimingList";
+import Dates from "./Dates";
+import React, {useState, useEffect} from "react";
 
 
 
@@ -24,7 +27,19 @@ function TimingApp() {
     localStorage.setItem('selectedLoc', location);
     localStorage.setItem('selectedTime', time);
     navigate('/seating');
-}
+  }
+
+  const [selectedDate, setSelectedDate] = useState("");
+  const [showMovieTimingList, setShowMovieTimingList] = useState(false);
+
+  useEffect(() => {
+    if (selectedDate) {
+      setShowMovieTimingList(false);
+      setTimeout(() => {
+        setShowMovieTimingList(true);
+      }, 300);
+    }
+  }, [selectedDate]);
 
   return (
     <div>
@@ -39,23 +54,16 @@ function TimingApp() {
             </div>
         </div>
 
-        <div className='movieTiming custom-text-color'>
-          <div className='loc-section'>
-            <strong>Theatre</strong>
-          </div>
-
-          <div className='button-section'>
-            <strong>Timing</strong>
-          </div>
+        <div className="dates">
+          <Dates selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
         </div>
-        {locations.map((location, index) => (
-        <MovieTimingSection
-          key={index}
-          location={location}
-          timings={timingData[index]}
-          handleButtonClick={handleButtonClick}
-        />
-      ))}
+        {showMovieTimingList && (
+          <MovieTimingList
+            locations={locations}
+            timingData={timingData}
+            handleButtonClick={handleButtonClick}
+          />
+        )}
     </div>
   );
 }
