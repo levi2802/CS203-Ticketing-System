@@ -154,7 +154,7 @@ class SeatApp extends Component {
 
     // Save purchase order to the database.
     await this.addPurchaseOrder(username, selectedSeatsString, selectedSeats);
-    window.location.href = '/';
+    //window.location.href = '/';
     // Send confirmation email.
     await sendEmail()
   }
@@ -204,7 +204,7 @@ class SeatApp extends Component {
     } catch {
       alert("how did you get here? please report steps done to team (postpurchase threw exception)");
     }
-    console.log("purchase add (without seat id list) success")
+    console.log("purchase add success")
   }
 
 
