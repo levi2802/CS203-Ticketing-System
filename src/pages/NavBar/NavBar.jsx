@@ -34,11 +34,6 @@ function NavBar() {
             <div className="button-container">
                 <Button variant="text" style={{ color: 'gold' }} href="/login">Login</Button>
                 <Button variant="text" style={{ color: 'gold' }} href="/register">Register</Button>
-                <Button><img
-                    className="nav_avatar"
-                    src={userProfile}
-                    alt="user logo"
-                /></Button>
             </div>
         </div>
     )
