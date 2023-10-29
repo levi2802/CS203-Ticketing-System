@@ -32,17 +32,14 @@ public class User implements UserDetails {
 
     @NonNull
     @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$", message = "Password must be at least 8 characters long and contain at least one letter and one number")
+//    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[!@#$%^&*()])([A-Za-z\\d!@#$%^&*()]{8,})$", message = "Password must be at least 8 characters long and contain at least one letter, one number, and one special character")
     private String password;
 
-    // A user can have 0 to many orders. We choose to cascade deletions, and delete
-    // orphaned orders.
-    // @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval =
-    // true)
-    // private List<Order> orders;
-
-    // Declare as enum, using String to represent instead of integer
-    // @Enumerated(EnumType.STRING)
     private ERole role;
+
+    // For waiting room algo
+    private int arrivalTime;
+    private Integer queuePos;
 
     public User(String email, String username, String password) {
         this.email = email;
@@ -74,4 +71,6 @@ public class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
     }
+
+
 }
