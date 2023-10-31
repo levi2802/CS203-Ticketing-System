@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import './styles.css';
 import axios from 'axios';
@@ -26,7 +26,7 @@ function UsernamePassword() {
         }));
     };
 
-    const [errors, setErrors] = useState({});
+    const [setErrors] = useState({});
 
     const handleSubmit = event => {
         event.preventDefault();
@@ -54,7 +54,7 @@ function UsernamePassword() {
 
     };
 
-    const [message, setMessage] = useState(''); // State variable to store the message
+    //const [message, setMessage] = useState(''); // State variable to store the message
 
     return (
         <div className='signUp'>
