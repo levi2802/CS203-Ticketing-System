@@ -5,8 +5,6 @@ import com.cs203.TicketWarrior.Registration.payload.AuthenticationRequest;
 import com.cs203.TicketWarrior.Registration.payload.AuthenticationResponse;
 import com.cs203.TicketWarrior.Registration.repository.UserRepository;
 import com.cs203.TicketWarrior.Registration.services.AuthenticationService;
-import com.cs203.TicketWarrior.Registration.servicesimpl.AuthenticationServiceimpl;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -105,7 +103,6 @@ public class AuthenticationIntegrationTest {
         // Arrange
         AuthenticationRequest registerRequest = new AuthenticationRequest("validUser@gmail.com", "validUser",
                 "goodpassword1");
-        AuthenticationResponse registerResponse = authenticationService.register(registerRequest);
         AuthenticationRequest request = new AuthenticationRequest("null", "validUser", "goodpassword1");
 
         // Set URI

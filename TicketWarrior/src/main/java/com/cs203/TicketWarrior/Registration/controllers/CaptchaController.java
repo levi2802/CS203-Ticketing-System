@@ -1,12 +1,8 @@
 package com.cs203.TicketWarrior.Registration.controllers;
 
 import com.cs203.TicketWarrior.Registration.services.CaptchaService;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
