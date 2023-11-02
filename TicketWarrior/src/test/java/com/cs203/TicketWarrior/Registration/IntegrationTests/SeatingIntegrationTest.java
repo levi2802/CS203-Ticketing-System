@@ -113,7 +113,7 @@ public class SeatingIntegrationTest {
 
     // // Assert
     // assertEquals(403, result.getStatusCode().value());
-    }
+    // }
 
     @Test
     public void testGetSeatsByUser_Success() throws Exception {
