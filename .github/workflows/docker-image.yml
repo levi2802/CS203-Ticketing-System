@@ -23,15 +23,12 @@ jobs:
         run: sudo apt-get install maven
 
       - name: Run tests
-
         run: cd TicketWarrior && ./mvnw -Dtest=UserRepositoryTest test && ./mvnw -Dtest=AuthenticationServiceTest test && ./mvnw -Dtest=NotificationServiceTest test && ./mvnw -Dtest=PurchaseServiceTest test && ./mvnw -Dtest=SeatServiceTest test && ./mvnw -Dtest=UserServiceTest test && ./mvnw -Dtest=AuthenticationIntegrationTest test && ./mvnw -Dtest=MailIntegrationTest test && ./mvnw -Dtest=PurchaseIntegrationTest test && ./mvnw -Dtest=SeatingIntegrationTest test
 
-        # ./mvnw test
+  build:
+    runs-on: ubuntu-latest
 
-  # build:
-  #   runs-on: ubuntu-latest
-
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - name: Build the Docker image
-  #       run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
