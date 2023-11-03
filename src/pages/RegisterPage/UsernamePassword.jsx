@@ -5,8 +5,8 @@ import axios from 'axios';
 
 function UsernamePassword() {
     //switch them based on which database you are testing on
-    const API_URL = "http://localhost:8080/api/v1/auth/";
-    //const API_URL = "http://13.212.113.161:8080/api/auth/";
+    //const API_URL = "http://localhost:8080/api/v1/auth/";
+    const API_URL = "http://api.wicket.shop:8080";
 
     const initialFormData = {
         email: '',
@@ -30,7 +30,7 @@ function UsernamePassword() {
 
     const handleSubmit = event => {
         event.preventDefault();
-        axios.post(API_URL + "registration", formData).then(response => {
+        axios.post(API_URL + "/api/v1/auth/registration", formData).then(response => {
             console.log(response.data);
             if (response.data.isSuccessful) {
                 localStorage.setItem('accessToken', response.data.token);

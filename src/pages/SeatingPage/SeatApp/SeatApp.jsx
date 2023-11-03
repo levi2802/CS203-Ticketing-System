@@ -14,8 +14,8 @@ import MovieInfo from './Components/MovieInfo';
 class SeatApp extends Component {
   template = function (row, column, type, availability) { }
   //switch them based on which database you are testing on
-  backendURL = "http://localhost:8080"
-  // backendURL= "http://13.212.113.161:8080"
+  //backendURL = "http://localhost:8080"
+  backendURL= "http://api.wicket.shop:8080"
   Unavailable = [];
   d = new Date();
 
@@ -236,7 +236,7 @@ class SeatApp extends Component {
     const chosenRow = seats.filter(seat => seat.selected).map(seat => seat.row + 1);
     const location = localStorage.getItem("selectedLoc");
     const time = localStorage.getItem("selectedTime");
-    const currentDate = new Date().toLocaleDateString();
+    const currentDate = localStorage.getItem("selectedDate");
 
 
     return (

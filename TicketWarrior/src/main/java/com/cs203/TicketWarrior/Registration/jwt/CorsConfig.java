@@ -12,7 +12,8 @@ public class CorsConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("http://54.179.160.19");
+        configuration.addAllowedOrigin("http://fe1.wicket.shop");
+        configuration.addAllowedOrigin("http://www.wicket.shop");
         configuration.addAllowedOrigin("http://localhost:3000"); // Allow requests from this origin
         configuration.addAllowedMethod("*"); // Allow all HTTP methods
         configuration.addAllowedHeader("*"); // Allow all headers
