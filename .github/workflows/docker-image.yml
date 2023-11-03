@@ -19,8 +19,8 @@ jobs:
           java-version: "17"
           distribution: "temurin"
 
-      - name: Install Maven
-        run: sudo apt-get install maven
+      # - name: Install Maven
+      #   run: sudo apt-get install maven
 
       - name: Run tests
         run: cd TicketWarrior && ./mvnw -Dtest=UserRepositoryTest test && ./mvnw -Dtest=AuthenticationServiceTest test && ./mvnw -Dtest=NotificationServiceTest test && ./mvnw -Dtest=PurchaseServiceTest test && ./mvnw -Dtest=SeatServiceTest test && ./mvnw -Dtest=UserServiceTest test && ./mvnw -Dtest=AuthenticationIntegrationTest test && ./mvnw -Dtest=MailIntegrationTest test && ./mvnw -Dtest=PurchaseIntegrationTest test && ./mvnw -Dtest=SeatingIntegrationTest test
