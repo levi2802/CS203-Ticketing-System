@@ -1,6 +1,5 @@
 import React from "react";
 import logo from "./logo.png";
-import userProfile from "./user_profile.png";
 import './NavBar.css';
 import { useEffect } from "react";
 import { useState } from "react";

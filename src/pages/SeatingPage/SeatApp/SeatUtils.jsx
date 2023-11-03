@@ -1,6 +1,6 @@
 export const handleSeatSelect = (seats, row, col) => {
     //object of the seat that i clicked
-    const selectedSeat = seats.find(seat => seat.row === row && seat.num === col);
+    //const selectedSeat = seats.find(seat => seat.row === row && seat.num === col);
     const chosenSeats = seats.filter(seat => seat.selected).map(seat => seat.num + 1);
 
     //A list of selected seat numbers

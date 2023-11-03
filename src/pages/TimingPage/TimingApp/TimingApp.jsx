@@ -1,7 +1,7 @@
 import PG from "../../HomePage/images/PG.png"
 import './TimingApp.css';
 import { useNavigate } from "react-router-dom";
-import MovieTimingSection from './MovieTimingSection';
+//import MovieTimingSection from './MovieTimingSection';
 import MovieTimingList from "./MovieTimingList";
 import Dates from "./Dates";
 import React, {useState, useEffect} from "react";

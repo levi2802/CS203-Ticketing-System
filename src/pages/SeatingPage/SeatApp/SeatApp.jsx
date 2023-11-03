@@ -1,12 +1,8 @@
-import React, { Component, useState } from 'react';
+import React, {Component} from 'react';
 import './SeatApp.css';
 import Seat from '../Seat/Seat.js';
-import axios, { formToJSON } from 'axios';
-import { json, useParams } from 'react-router-dom';
+import axios from 'axios';
 import Button from '@mui/material/Button'
-import Timer from './Timer';
-import { useNavigate } from "react-router-dom";
-import { recomposeColor } from '@mui/material';
 import * as util from './SeatUtils';
 import OrderSummary from './Components/OrderSummary';
 import MovieLegend from './Components/MovieLegend';
@@ -91,12 +87,10 @@ class SeatApp extends Component {
   }
 
   handleCheckout = () => {
-    const { chosenSeats } = this.state;
     this.setState({ showSummary: true });
   };
 
   handleCancel = () => {
-    const { chosenSeats } = this.state;
     this.setState({ showSummary: false });
   }
 
@@ -111,9 +105,9 @@ class SeatApp extends Component {
       return;
     }
 
-    const headers = {
-      'Authorization': `Bearer ${accessToken}`
-    };
+    // const headers = {
+    //   'Authorization': `Bearer ${accessToken}`
+    // };
 
     const { seats } = this.state;
     const selectedSeats = seats.filter(seat => seat.selected)
@@ -124,7 +118,6 @@ class SeatApp extends Component {
 
     //adding purchased seats to backend
     await selectedSeats.forEach(seat => this.addSeatToDB(seat, username));
-    let seatIDs = [];
     const rowName = [];
     for (let i = 0; i < seats.length; i++) {
         let temp = 'A'.charCodeAt(0) + i;

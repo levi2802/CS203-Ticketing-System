@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 
 function Dates({ selectedDate, setSelectedDate }) {
-  const [selectedDateInfo, setSelectedDateInfo] = useState(null);
+  const [setSelectedDateInfo] = useState(null);
   const today = new Date();
   const fiveDaysFromToday = new Date(today);
   fiveDaysFromToday.setDate(today.getDate() + 5); // Calculate the date 5 days from today
