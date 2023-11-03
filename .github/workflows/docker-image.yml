@@ -20,7 +20,7 @@ jobs:
           distribution: "Oracle"
 
       - name: Run tests
-        run: ./mvnw -Dtest="TicketWarrior/src/test/**" test
+        run: ./mvnw test
 
   build:
     runs-on: ubuntu-latest
