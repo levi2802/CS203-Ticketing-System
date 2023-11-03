@@ -6,7 +6,7 @@ import axios from 'axios';
 function UsernamePassword() {
     //switch them based on which database you are testing on
     const API_URL = "http://localhost:8080";
-    //const API_URL = "http://13.212.113.161:8080";
+    //const API_URL = "http://api.wicket.shop:8080";
 
     const initialFormData = {
         email: 'null',
