@@ -23,7 +23,8 @@ jobs:
         run: sudo apt-get install maven
 
       - name: Run tests
-        run: ./TicketWarrior/mvnw test
+
+        run: cd TicketWarrior && ./mvnw test
         # run: ./mvnw -Dtest=UserRepositoryTest test
 
         # run: ./mvnw -Dtest=AuthenticationServiceTest test
