@@ -60,7 +60,7 @@
 .register {
     position: relative;
     height: 100%;
-    background: url("./images/netflix.png") center no-repeat;
+    background: url("./images/background.png") center no-repeat;
     background-size: cover;
 }
 
