@@ -24,19 +24,9 @@ jobs:
 
       - name: Run tests
 
-        run: cd TicketWarrior && ./mvnw test
-        # run: ./mvnw -Dtest=UserRepositoryTest test
+        run: cd TicketWarrior && ./mvnw -Dtest=UserRepositoryTest test && ./mvnw -Dtest=AuthenticationServiceTest test && ./mvnw -Dtest=NotificationServiceTest test && ./mvnw -Dtest=PurchaseServiceTest test && ./mvnw -Dtest=SeatServiceTest test && ./mvnw -Dtest=UserServiceTest test && ./mvnw -Dtest=AuthenticationIntegrationTest test && ./mvnw -Dtest=MailIntegrationTest test && ./mvnw -Dtest=PurchaseIntegrationTest test && ./mvnw -Dtest=SeatingIntegrationTest test
 
-        # run: ./mvnw -Dtest=AuthenticationServiceTest test
-        # run: ./mvnw -Dtest=NotificationServiceTest test
-        # run: ./mvnw -Dtest=PurchaseServiceTest test
-        # run: ./mvnw -Dtest=SeatServiceTest test
-        # run: ./mvnw -Dtest=UserServiceTest test
-
-        # run: ./mvnw -Dtest=AuthenticationIntegrationTest test
-        # run: ./mvnw -Dtest=MailIntegrationTest test
-        # run: ./mvnw -Dtest=PurchaseIntegrationTest test
-        # run: ./mvnw -Dtest=SeatingIntegrationTest test
+        # ./mvnw test
 
   # build:
   #   runs-on: ubuntu-latest
