@@ -21,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -75,23 +76,49 @@ public class SeatServiceTest {
     }
 
     @Test
-    void testFindBySeat() {
-        // Define a list of test cases
-        List<Seat> testCases = Arrays.asList(
-            new Seat(1, 1, "Standard", false, "existingUser", "Barbie"),
-            new Seat(2, 2, "Standard", false, "user2", "Barbie")
-        );
-        testCases.get(0).setLocation("Jurong theatre");
-        testCases.get(0).setTiming("11:00");
-        testCases.get(1).setLocation("Hougang theatre");
-        testCases.get(1).setTiming("09:00");
-        // Arrange
-        when(seatRepository.findAllOccupiedSeats("Barbie","Jurong theatre", "11:00")).thenReturn(Collections.singletonList(testCases.get(0)));
+    void testFindOccupiedSeats() {
+        // Create a list of occupied seats for the first scenario
+        List<Seat> occupiedSeats1 = new ArrayList<>();
 
-        // Act
-        List<Seat> result = seatServiceTest.findAllOccupiedSeats(testCases.get(0).getMovieName(), testCases.get(0).getLocation(), testCases.get(0).getTiming());
-        // Assert
-        assertTrue(result.size() == 1); // Check that a result is present
-        assertEquals(testCases.get(0), result.get(0)); // Check that the result matches the expected test case
+        // Initially, you have one occupied seat with specific timing
+        Seat firstOccupiedSeat = new Seat(1, 1, "Standard", false, "existingUser", "Barbie");
+        firstOccupiedSeat.setLocation("Jurong theatre");
+        firstOccupiedSeat.setTiming("11:00");
+        occupiedSeats1.add(firstOccupiedSeat);
+
+        Seat secondOccupiedSeat = new Seat(2, 2, "Standard", false, "existingUser", "Barbie");
+        secondOccupiedSeat.setLocation("Jurong theatre");
+        secondOccupiedSeat.setTiming("11:00");
+        occupiedSeats1.add(secondOccupiedSeat);
+
+        // Arrange and Act for the first scenario
+        when(seatRepository.findAllOccupiedSeats("Barbie", "Jurong theatre", "11:00")).thenReturn(occupiedSeats1);
+
+        List<Seat> result1 = seatServiceTest.findAllOccupiedSeats("Barbie", "Jurong theatre", "11:00");
+
+        // Assert the first scenario
+        assertEquals(2, result1.size());
+        assertEquals(occupiedSeats1, result1);
+        verify(seatRepository, times(1)).findAllOccupiedSeats("Barbie", "Jurong theatre", "11:00");
+
+        // Create a new list of occupied seats for the second scenario
+        List<Seat> occupiedSeats2 = new ArrayList<>();
+
+        // Add a new occupied seat with different timing to the second list
+        Seat newOccupiedSeat = new Seat(3, 3, "Standard", false, "user2", "Barbie");
+        newOccupiedSeat.setLocation("Jurong theatre");
+        newOccupiedSeat.setTiming("09:00");
+        occupiedSeats2.add(newOccupiedSeat);
+
+        // Arrange and Act for the second scenario
+        when(seatRepository.findAllOccupiedSeats("Barbie", "Jurong theatre", "09:00")).thenReturn(occupiedSeats2);
+
+        List<Seat> result2 = seatServiceTest.findAllOccupiedSeats("Barbie", "Jurong theatre", "09:00");
+
+        // Assert the second scenario
+        assertEquals(1, result2.size());
+        assertEquals(occupiedSeats2, result2);
+        verify(seatRepository, times(1)).findAllOccupiedSeats("Barbie", "Jurong theatre", "09:00");
     }
+
 }

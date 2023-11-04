@@ -35,14 +35,7 @@ class SeatApp extends Component {
 
   async componentDidMount() {
 
-    let seats = [];
-
-    //How many seats to create r=row i=col
-    for (let r = 0; r < 4; r++) {
-      for (let i = 0; i < 14; i++) {
-        seats.push({ row: r, num: i, avail: true });
-      }
-    }
+    let seats = util.generateSeats(4,14);
     
     await axios.get(this.backendURL + "/api/v1/seats/" + this.movieName + "/" + this.location + "/" + this.timing)
       .then(json => json.data.forEach(data => this.Unavailable.push([data.row, data.column])))
@@ -61,14 +54,6 @@ class SeatApp extends Component {
     const { seats } = this.state;
     //object of the seat that i clicked
     const selectedSeat = seats.find(seat => seat.row === row && seat.num === col);
-
-    //A list of selected seat numbers
-    const selectedSeatNumbers = [];
-    seats.forEach(seat => {
-      if (seat.row === row && seat.selected) {
-        selectedSeatNumbers.push(seat.num);
-      }
-    });
 
     //Seat picking algo
     const updatedSeats = util.handleSeatSelect(seats, row, col);
@@ -91,12 +76,10 @@ class SeatApp extends Component {
   }
 
   handleCheckout = () => {
-    const { chosenSeats } = this.state;
     this.setState({ showSummary: true });
   };
 
   handleCancel = () => {
-    const { chosenSeats } = this.state;
     this.setState({ showSummary: false });
   }
 
@@ -217,8 +200,6 @@ class SeatApp extends Component {
     // Movie title
     const title = localStorage.getItem("movieTitle");
 
-    console.log(title);
-
     //create array with nulls
     let Row = 4;
     let Col = 14;
@@ -237,13 +218,13 @@ class SeatApp extends Component {
         />
       );
     }
+    
     const rowName = util.charConverter(seatsGrid);
-
     const chosenSeats = seats.filter(seat => seat.selected).map(seat => seat.num + 1);
     const chosenRow = seats.filter(seat => seat.selected).map(seat => seat.row + 1);
     const location = localStorage.getItem("selectedLoc");
     const time = localStorage.getItem("selectedTime");
-    const currentDate = new Date().toLocaleDateString();
+    const currentDate = localStorage.getItem("selectedDate");
 
 
     return (
