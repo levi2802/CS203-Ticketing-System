@@ -50,4 +50,4 @@ jobs:
         run: cd TicketWarrior && ./mvnw spring-boot:build-image
 
       - name: Tag and Push image to DockerHub
-        run: cd TicketWarrior && docker tag ticketwarrior:0.0.1-SNAPSHOT cerebret/cs203_project && docker push cerebret/cs203_project
+        run: cd TicketWarrior && docker tag ticketwarrior:0.0.1-SNAPSHOT cerebret/cs203_project:1.0 && docker push cerebret/cs203_project:1.0
