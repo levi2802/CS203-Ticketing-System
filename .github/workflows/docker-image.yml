@@ -19,17 +19,14 @@ jobs:
           java-version: "17"
           distribution: "temurin"
 
-      - name: Change Directory to TicketWarrior
-        run: cd TicketWarrior
-
       - name: Run Repository Tests
-        run: ./mvnw -Dtest=UserRepositoryTest test
+        run: cd TicketWarrior && ./mvnw -Dtest=UserRepositoryTest test
 
       - name: Run Service Tests
-        run: ./mvnw -Dtest=AuthenticationServiceTest test && ./mvnw -Dtest=NotificationServiceTest test && ./mvnw -Dtest=PurchaseServiceTest test && ./mvnw -Dtest=SeatServiceTest test && ./mvnw -Dtest=UserServiceTest test
+        run: cd TicketWarrior && ./mvnw -Dtest=AuthenticationServiceTest test && ./mvnw -Dtest=NotificationServiceTest test && ./mvnw -Dtest=PurchaseServiceTest test && ./mvnw -Dtest=SeatServiceTest test && ./mvnw -Dtest=UserServiceTest test
 
       - name: Run Integration Tests
-        run: ./mvnw -Dtest=AuthenticationIntegrationTest test && ./mvnw -Dtest=MailIntegrationTest test && ./mvnw -Dtest=PurchaseIntegrationTest test && ./mvnw -Dtest=SeatingIntegrationTest test
+        run: cd TicketWarrior && ./mvnw -Dtest=AuthenticationIntegrationTest test && ./mvnw -Dtest=MailIntegrationTest test && ./mvnw -Dtest=PurchaseIntegrationTest test && ./mvnw -Dtest=SeatingIntegrationTest test
 
   build:
     runs-on: ubuntu-latest
