@@ -37,5 +37,8 @@ jobs:
       # - name: Change Directory to TicketWarrior
       #   run: cd TicketWarrior
 
+      # - name: Build the Docker image
+      #   run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+
       - name: Build the Docker image
-        run: cd TicketWarrior && docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      run: cd TicketWarrior && ./mvnw spring-boot:build-image
