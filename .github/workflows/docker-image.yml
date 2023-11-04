@@ -47,7 +47,7 @@ jobs:
       #   run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
 
       - name: Build and Tag the Docker image
-        run: cd TicketWarrior && ./mvnw spring-boot:build-image && docker tag ticketwarrior:0.0.1-SNAPSHOT cerebret/cs203_project:1.0
+        run: cd TicketWarrior && ./mvnw spring-boot:build-image && docker tag ticketwarrior:0.0.1-SNAPSHOT cerebret/cs203_project:latest
 
       # MUST CHANGE THIS TO NOT DIRECTLY PUT USERNAME AND PASSWORD
       # - name: Log into registry
@@ -60,4 +60,4 @@ jobs:
           password: ${{ secrets.PASSWORD }}
 
       - name: Push image
-        run: cd TicketWarrior && docker push cerebret/cs203_project:1.0
+        run: cd TicketWarrior && docker push cerebret/cs203_project:latest
