@@ -67,7 +67,7 @@ class PurchaseServiceTest {
         // Arrange
         String purchaseId = "purchaseId";
         String userId = "userId";
-        Purchase purchase = new Purchase(purchaseId, userId, "movieId", "seatIDs", "timestamp", "location", "timing",
+        Purchase purchase = new Purchase(purchaseId, userId, "movieId", "seatIDs", "timestamp", "location", "timing","movieDate",
                 0);
         String falsePurchaseID = "falsePurchaseID";
         when(purchaseRepository.findByIdAndUserId(falsePurchaseID, userId)).thenReturn(Optional.empty());
@@ -86,7 +86,7 @@ class PurchaseServiceTest {
         // Arrange
         String purchaseId = "purchaseId";
         String userId = "userId";
-        Purchase purchase = new Purchase(purchaseId, userId, "movieId", "seatIDs", "timestamp", "location", "timing",
+        Purchase purchase = new Purchase(purchaseId, userId, "movieId", "seatIDs", "timestamp", "location", "timing","movieDate",
                 0);
         when(purchaseRepository.findByIdAndUserId(purchaseId, userId)).thenReturn(Optional.of(purchase));
 
@@ -105,11 +105,11 @@ class PurchaseServiceTest {
         String purchaseId1 = "purchaseId1";
         String userId = "userId";
         Purchase purchase1 = new Purchase(purchaseId1, userId, "movieId1", "seatIDs1",
-                "timestamp1", "location1", "timing1", 0);
+                "timestamp1", "location1", "timing1", "movieDate", 0);
 
         String purchaseId2 = "purchaseId2";
         Purchase purchase2 = new Purchase(purchaseId2, userId, "movieId2", "seatIDs2",
-                "timestamp2", "location2", "timing2", 0);
+                "timestamp2", "location2", "timing2", "movieDate", 0);
 
         List<Purchase> listOfPurchases = new ArrayList<Purchase>();
         listOfPurchases.add(purchase1);
@@ -135,11 +135,11 @@ class PurchaseServiceTest {
         String purchaseId1 = "purchaseId1";
         String userId = "userId";
         Purchase purchase1 = new Purchase(purchaseId1, userId, "movieId1", "seatIDs1",
-                "timestamp1", "location1", "timing1", 0);
+                "timestamp1", "location1", "timing1","movieDate", 0);
 
         String purchaseId2 = "purchaseId2";
         Purchase purchase2 = new Purchase(purchaseId2, userId, "movieId2", "seatIDs2",
-                "timestamp2", "location2", "timing2", 0);
+                "timestamp2", "location2", "timing2","movieDate", 0);
 
         List<Purchase> listOfPurchases = new ArrayList<Purchase>();
         listOfPurchases.add(purchase1);
@@ -163,7 +163,7 @@ class PurchaseServiceTest {
         String purchaseId = "purchaseId";
         String userId = "userId";
         Purchase purchase = new Purchase(purchaseId, userId, "movieId", "seatIDs",
-                "timestamp", "location", "timing", 0);
+                "timestamp", "location", "timing", "movieDate", 0);
 
         List<Purchase> listOfPurchases = new ArrayList<Purchase>();
         listOfPurchases.add(purchase);
@@ -184,7 +184,7 @@ class PurchaseServiceTest {
         String purchaseId = "purchaseId";
         String userId = "userId";
         Purchase purchase = new Purchase(purchaseId, userId, "movieId", "seatIDs",
-                "timestamp", "location", "timing", 0);
+                "timestamp", "location", "timing", "moveiDate", 0);
 
         List<Purchase> listOfPurchases = new ArrayList<Purchase>();
         listOfPurchases.add(purchase);
