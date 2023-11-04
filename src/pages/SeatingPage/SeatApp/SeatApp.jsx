@@ -22,6 +22,7 @@ class SeatApp extends Component {
   movieName = localStorage.getItem("movieTitle");
   location = localStorage.getItem("selectedLoc");
   timing = localStorage.getItem("selectedTime");
+  currentDate = localStorage.getItem('selectedDate');
 
   constructor(props) {
     super(props);
@@ -129,8 +130,12 @@ class SeatApp extends Component {
       return rowName[seat.row] + seat.num; // directly return the seatID for each iteration
     });
 
+    const date = new Date(this.currentDate);
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const formattedDate = date.toLocaleString('en-GB', options);
+
     const selectedSeatsString = selectedSeatsStringArray.join(", ").replace(/,\s*$/, "");  // join and then remove the trailing comma (if any)
-    const alertMessage = "Your seats: " + selectedSeatsString + " for the movie: " + this.movieName + " at " + this.location + " " + this.timing +" are booked!";
+    let alertMessage = "Your seats: " + selectedSeatsString + " for the movie: " + this.movieName + " at " + this.location + " on " + formattedDate + " at " + this.timing +" are booked!";
     alert(alertMessage);
     console.log(selectedSeatsStringArray);
 
@@ -166,7 +171,8 @@ class SeatApp extends Component {
         username: username,
         movieName: this.movieName,
         location: this.location,
-        timing: this.timing
+        timing: this.timing,
+        movieDate: this.currentDate
       }, {
         headers: headers
       }).then(this.Unavailable.push([seat.row, seat.num]));
@@ -191,7 +197,8 @@ class SeatApp extends Component {
         seatIDs: seatIDs,
         location: this.location,
         timing: this.timing,
-        price: selectedSeats.length*8
+        price: selectedSeats.length*8,
+        movieDate: this.currentDate
       }, { headers: headers })
         .then();
     } catch {

@@ -42,6 +42,9 @@ public class Seat {
 
     @NotBlank
     private String timing;
+
+    @NotBlank
+    private String movieDate;
     // private float price;
     // private SeatType seatType;
 

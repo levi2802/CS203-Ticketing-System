@@ -34,12 +34,12 @@ public class AuthController {
         // return ResponseEntity.badRequest().body(new MessageResponse("Error: Username
         // already taken!"));
         // }
-        //
+        
         // User user = new User(registerRequest.getUsername(),
         // registerRequest.getPassword());
-        //
+        
         // userService.save(user);
-        //
+        
         // return new ResponseEntity<User>(user, HttpStatus.CREATED);
 
     }

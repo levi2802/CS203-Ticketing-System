@@ -36,6 +36,7 @@ function OrderHistoryPageTable() {
             <table>
                 <thead>
                     <th>Purchase Date</th>
+                    <th>Movie Date</th>
                     <th>Movie Title</th>
                     <th>Theater Location</th>
                     <th>Show Time</th>
@@ -45,6 +46,7 @@ function OrderHistoryPageTable() {
                 {userPurchases.map(purchase => (
                     <tr key={purchase.id}>
                         <td>{purchase.timestamp}</td>
+                        <td>{purchase.movieDate}</td>
                         <td>{purchase.movieId}</td>
                         <td>{purchase.location}</td>
                         <td>{purchase.timing}</td>

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 
 function Dates({ selectedDate, setSelectedDate }) {
-  const [setSelectedDateInfo] = useState(null);
+  const [selectedDateInfo, setSelectedDateInfo] = useState(null);
   const today = new Date();
   const fiveDaysFromToday = new Date(today);
   fiveDaysFromToday.setDate(today.getDate() + 5); // Calculate the date 5 days from today
@@ -20,7 +20,7 @@ function Dates({ selectedDate, setSelectedDate }) {
     setSelectedDateInfo(dateInfo);
     
     // Store selected date info in local storage
-    const formattedDate = `${dateInfo.day}/${dateInfo.month}/${dateInfo.year}`;
+    const formattedDate = "" + dateInfo.month + '/' + dateInfo.day + '/' + dateInfo.year;
     localStorage.setItem('selectedDate', formattedDate);
   };
 
