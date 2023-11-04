@@ -5,6 +5,7 @@ import com.cs203.TicketWarrior.Registration.services.SeatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
 @RequestMapping("/api/v1/seats")
 public class SeatController {
     private final SeatService seatService;
+    private final SimpMessagingTemplate messagingTemplate;
 
     @GetMapping
     public ResponseEntity<List<Seat>> getAllSeat() {
@@ -31,8 +33,9 @@ public class SeatController {
 
     @PostMapping
     public ResponseEntity<Seat> addSeat(@RequestBody Seat seat) throws Exception {
-        return new ResponseEntity<Seat>(seatService.insert(seat), HttpStatus.OK);// Sends Http status code
-                                                                                 // 200.
+        Seat savedSeat = seatService.insert(seat);
+        messagingTemplate.convertAndSend("/topic/seats", savedSeat); // This sends a message to the topic when a seat is added.
+        return new ResponseEntity<Seat>(savedSeat, HttpStatus.OK);
     }
 
     @GetMapping("/{username}")

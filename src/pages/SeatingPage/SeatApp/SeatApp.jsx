@@ -13,6 +13,8 @@ import MovieLegend from './Components/MovieLegend';
 import Stage from './Components/stage';
 import MovieSeats from './Components/MovieSeats';
 import MovieInfo from './Components/MovieInfo';
+import { Client } from '@stomp/stompjs';
+import SockJS from 'sockjs-client';
 
 
 class SeatApp extends Component {
@@ -43,7 +45,7 @@ class SeatApp extends Component {
         seats.push({ row: r, num: i, avail: true });
       }
     }
-    
+
     await axios.get(this.backendURL + "/api/v1/seats/" + this.movieName + "/" + this.location + "/" + this.timing)
       .then(json => json.data.forEach(data => this.Unavailable.push([data.row, data.column])))
       .catch(console.error);
@@ -55,6 +57,28 @@ class SeatApp extends Component {
 
     //Updating
     this.setState({ seats });
+
+    // WebSocket logic
+    const client = new Client({
+      brokerURL: this.backendURL + '/ws',
+      reconnectDelay: 5000,
+      heartbeatIncoming: 4000,
+      heartbeatOutgoing: 4000,
+      onConnect: () => {
+        console.log('Connected to WebSocket!');
+
+        client.subscribe('/topic/seats', (message) => {
+          if (message.body) {
+            // Handle seat changes here (e.g., reload the seat data)
+            console.log("Received seat update:", message.body);
+            this.refreshSeatData(); // you might want to create this method to refetch seat data
+          }
+        });
+      }
+    });
+
+    client.webSocketFactory = () => new SockJS(this.backendURL + '/ws');
+    client.activate();
   }
 
   handleSeatSelect = (row, col) => {
@@ -127,8 +151,8 @@ class SeatApp extends Component {
     let seatIDs = [];
     const rowName = [];
     for (let i = 0; i < seats.length; i++) {
-        let temp = 'A'.charCodeAt(0) + i;
-        rowName.push(String.fromCharCode(temp));
+      let temp = 'A'.charCodeAt(0) + i;
+      rowName.push(String.fromCharCode(temp));
     }
 
     let selectedSeatsStringArray = selectedSeats.map(seat => {
@@ -137,13 +161,13 @@ class SeatApp extends Component {
     });
 
     const selectedSeatsString = selectedSeatsStringArray.join(", ").replace(/,\s*$/, "");  // join and then remove the trailing comma (if any)
-    const alertMessage = "Your seats: " + selectedSeatsString + " for the movie: " + this.movieName + " at " + this.location + " " + this.timing +" are booked!";
+    const alertMessage = "Your seats: " + selectedSeatsString + " for the movie: " + this.movieName + " at " + this.location + " " + this.timing + " are booked!";
     alert(alertMessage);
     console.log(selectedSeatsStringArray);
 
 
     // Create confirmation email.
-    const sendEmail = async() => {
+    const sendEmail = async () => {
       try {
         const response = await axios.get(`${this.backendURL}/api/v1/mail/${username}/${alertMessage}`);
         console.log("Email sent successfully!", response.data);
@@ -198,7 +222,7 @@ class SeatApp extends Component {
         seatIDs: seatIDs,
         location: this.location,
         timing: this.timing,
-        price: selectedSeats.length*8
+        price: selectedSeats.length * 8
       }, { headers: headers })
         .then();
     } catch {
@@ -249,16 +273,16 @@ class SeatApp extends Component {
     return (
       <div style={{ backgroundColor: 'black' }}>
         <div className='minibox' style={{ display: showSummary ? 'none' : 'block' }}>
-        <MovieInfo
-          movieImage={movieImage}
-          title={title}
-          location={location}
-          currentDate={currentDate}
-          time={time}
-        />
-          <Stage/>
+          <MovieInfo
+            movieImage={movieImage}
+            title={title}
+            location={location}
+            currentDate={currentDate}
+            time={time}
+          />
+          <Stage />
           <MovieSeats rowName={rowName} seatsGrid={seatsGrid} />
-          <MovieLegend/>
+          <MovieLegend />
         </div>
 
         <OrderSummary
