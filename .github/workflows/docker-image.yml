@@ -19,16 +19,35 @@ jobs:
           java-version: "17"
           distribution: "temurin"
 
-      # - name: Install Maven
-      #   run: sudo apt-get install maven
+      - name: Run Repository Tests
+        run: cd TicketWarrior && ./mvnw -Dtest=UserRepositoryTest test
 
-      - name: Run tests
-        run: cd TicketWarrior && ./mvnw -Dtest=UserRepositoryTest test && ./mvnw -Dtest=AuthenticationServiceTest test && ./mvnw -Dtest=NotificationServiceTest test && ./mvnw -Dtest=PurchaseServiceTest test && ./mvnw -Dtest=SeatServiceTest test && ./mvnw -Dtest=UserServiceTest test && ./mvnw -Dtest=AuthenticationIntegrationTest test && ./mvnw -Dtest=MailIntegrationTest test && ./mvnw -Dtest=PurchaseIntegrationTest test && ./mvnw -Dtest=SeatingIntegrationTest test
+      - name: Run Service Tests
+        run: cd TicketWarrior && ./mvnw -Dtest=AuthenticationServiceTest test && ./mvnw -Dtest=NotificationServiceTest test && ./mvnw -Dtest=PurchaseServiceTest test && ./mvnw -Dtest=SeatServiceTest test && ./mvnw -Dtest=UserServiceTest test
+
+      - name: Run Integration Tests
+        run: cd TicketWarrior && ./mvnw -Dtest=AuthenticationIntegrationTest test && ./mvnw -Dtest=MailIntegrationTest test && ./mvnw -Dtest=PurchaseIntegrationTest test && ./mvnw -Dtest=SeatingIntegrationTest test
 
   build:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
+
+      - name: Set up JDK 17 for x64
+        uses: actions/setup-java@v3
+        with:
+          java-version: "17"
+          distribution: "temurin"
+
+      # - name: Change Directory to TicketWarrior
+      #   run: cd TicketWarrior
+
+      # - name: Build the Docker image
+      #   run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+
       - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+        run: cd TicketWarrior && ./mvnw spring-boot:build-image
+
+      - name: Tag and Push image to DockerHub
+        run: cd TicketWarrior && docker tag ticketwarrior:0.0.1-SNAPSHOT cerebret/cs203_project:1.0 && docker push cerebret/cs203_project:1.0
