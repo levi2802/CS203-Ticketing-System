@@ -34,6 +34,9 @@ public class Purchase {
 	@NotBlank
 	private String timing;
 
+	@NotBlank
+	private String movieDate;
+
 	@Positive
 	private int price;
 	// private PaymentMethod paymentMethod;
