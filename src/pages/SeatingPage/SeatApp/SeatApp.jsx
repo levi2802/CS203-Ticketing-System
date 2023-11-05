@@ -50,9 +50,6 @@ class SeatApp extends Component {
     }
 
     try {
-      // const date = new Date(this.currentDate);
-      // const options = { year: 'numeric', month: 'long', day: 'numeric' };
-      // const formattedDate = date.toLocaleString('en-GB', options);
 
       const response = await axios.get(this.backendURL + "/api/v1/seats/" + this.movieName + "/" + this.location + "/" + this.timing + "/" + this.dateConvertor(this.currentDate));
       response.data.forEach(data => this.Unavailable.push([data.row, data.column]));
@@ -145,10 +142,6 @@ class SeatApp extends Component {
       return;
     }
 
-    // const headers = {
-    //   'Authorization': `Bearer ${accessToken}`
-    // };
-
     const { seats } = this.state;
     const selectedSeats = seats.filter(seat => seat.selected)
       .map(seat => {
@@ -169,9 +162,6 @@ class SeatApp extends Component {
       return rowName[seat.row] + seat.num; // directly return the seatID for each iteration
     });
 
-    // const date = new Date(this.currentDate);
-    // const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    // const formattedDate = date.toLocaleString('en-GB', options);
 
     const selectedSeatsString = selectedSeatsStringArray.join(", ").replace(/,\s*$/, "");  // join and then remove the trailing comma (if any)
     let alertMessage = "Your seats: " + selectedSeatsString + " for the movie: " + this.movieName + " at " + this.location + " on " + this.dateConvertor(this.currentDate) + " at " + this.timing + " are booked!";
@@ -197,15 +187,13 @@ class SeatApp extends Component {
   }
 
   addSeatToDB = (seat, username) => {
-    // const date = new Date(this.currentDate);
-    // const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    // const formattedDate = date.toLocaleString('en-GB', options);
-
     try {
       const accessToken = localStorage.getItem('accessToken');
+
       const headers = {
         'Authorization': `Bearer ${accessToken}`
       };
+
       axios.post(this.backendURL + "/api/v1/seats", {
         row: seat.row,
         column: seat.num,
@@ -223,17 +211,19 @@ class SeatApp extends Component {
       alert("how did you get here? please report steps done to team(addseat threw exception)");
     }
 
-
     console.log(this.Unavailable);
   }
 
   addPurchaseOrder = (username, seatIDs, selectedSeats) => {
     console.log(seatIDs);
+
     try {
       const accessToken = localStorage.getItem('accessToken');
+
       const headers = {
         'Authorization': `Bearer ${accessToken}`
       };
+
       axios.post(this.backendURL + "/api/v1/purchases", {
         userId: username,
         movieId: this.movieName,
