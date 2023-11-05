@@ -30,24 +30,14 @@ class SeatApp extends Component {
   }
 
   async fetchSeats() {
-    let seats = [];
+    let seats = util.generateSeats(4,14);
 
     // Store the currently selected seats in a temporary array
     const currentlySelectedSeats = this.state.seats.filter(seat => seat.selected);
 
-    // How many seats to create r=row i=col
-    for (let r = 0; r < 4; r++) {
-      for (let i = 0; i < 14; i++) {
-        seats.push({ row: r, num: i, avail: true });
-      }
-    }
-
     try {
-
       const response = await axios.get(this.backendURL + "/api/v1/seats/" + this.movieName + "/" + this.location + "/" + this.timing + "/" + util.dateConvertor(this.currentDate));
       response.data.forEach(data => this.Unavailable.push([data.row, data.column]));
-
-      console.log(this.Unavailable);
 
       // Code to make seat unavail
       util.makeUnavail(seats, this.Unavailable);
@@ -106,14 +96,6 @@ class SeatApp extends Component {
       seats: updatedSeats,
       chosenSeats: updatedChosenSeats
     });
-
-    //log of selected/unselected seat
-    if (selectedSeat.selected) {
-      console.log(`Selected seat: {row: ${row}, column: ${col}}`);
-    }
-    else {
-      console.log(`Unselected seat: {row: ${row}, column: ${col}}`);
-    }
   }
 
   handleCheckout = () => {
@@ -144,25 +126,21 @@ class SeatApp extends Component {
 
     //adding purchased seats to backend
     await selectedSeats.forEach(seat => this.addSeatToDB(seat, username));
-    const rowName = util.charConverter();
+    const rowName = util.charConverter(seats);
 
     let selectedSeatsStringArray = selectedSeats.map(seat => {
       seat.num += 1;  // Increment seat.num by 1
       return rowName[seat.row] + seat.num; // directly return the seatID for each iteration
     });
 
-
     const selectedSeatsString = selectedSeatsStringArray.join(", ").replace(/,\s*$/, "");  // join and then remove the trailing comma (if any)
     let alertMessage = "Your seats: " + selectedSeatsString + " for the movie: " + this.movieName + " at " + this.location + " on " + util.dateConvertor(this.currentDate) + " at " + this.timing + " are booked!";
     alert(alertMessage);
-    console.log(selectedSeatsStringArray);
-
 
     // Create confirmation email.
     const sendEmail = async () => {
       try {
         const response = await axios.get(`${this.backendURL}/api/v1/mail/${username}/${alertMessage}`);
-        console.log("Email sent successfully!", response.data);
       } catch (error) {
         console.error("There is an error", error);
       }
@@ -199,12 +177,9 @@ class SeatApp extends Component {
     } catch {
       alert("how did you get here? please report steps done to team(addseat threw exception)");
     }
-
-    console.log(this.Unavailable);
   }
 
   addPurchaseOrder = (username, seatIDs, selectedSeats) => {
-    console.log(seatIDs);
 
     try {
       const accessToken = localStorage.getItem('accessToken');
@@ -226,7 +201,6 @@ class SeatApp extends Component {
     } catch {
       alert("how did you get here? please report steps done to team (postpurchase threw exception)");
     }
-    console.log("purchase add success")
   }
 
 
@@ -238,8 +212,6 @@ class SeatApp extends Component {
 
     // Movie title
     const title = localStorage.getItem("movieTitle");
-
-    console.log(title);
 
     //create array with nulls
     let Row = 4;
