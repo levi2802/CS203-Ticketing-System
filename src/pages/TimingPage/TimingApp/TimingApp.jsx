@@ -17,11 +17,8 @@ function TimingApp() {
   const navigate = useNavigate();
 
   const locations = ['Jurong theatre', 'Hougang theatre', 'Sengkang theatre'];
-  const timingData = [
-    ['09:00 AM', '11:15 AM'],
-    ['09:00 AM'],
-    ['09:00 AM', '12:30 PM', '02:45 PM'],
-  ];
+  const timingDataStr = localStorage.getItem("filteredData");
+  const timingData = JSON.parse(timingDataStr);
 
   const handleButtonClick = (location, time) => {
     localStorage.setItem('selectedLoc', location);
@@ -37,7 +34,7 @@ function TimingApp() {
       setShowMovieTimingList(false);
       setTimeout(() => {
         setShowMovieTimingList(true);
-      }, 300);
+      }, 1);
     }
   }, [selectedDate]);
 

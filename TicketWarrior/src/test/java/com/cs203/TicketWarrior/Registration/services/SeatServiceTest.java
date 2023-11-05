@@ -83,13 +83,16 @@ public class SeatServiceTest {
         );
         testCases.get(0).setLocation("Jurong theatre");
         testCases.get(0).setTiming("11:00");
-        testCases.get(1).setLocation("Hougang theatre");
-        testCases.get(1).setTiming("09:00");
+        testCases.get(0).setMovieDate("11/5/2023");
+        testCases.get(1).setLocation("Jurong theatre");
+        testCases.get(1).setTiming("11:00");
+        testCases.get(1).setMovieDate("11/6/2023");
+
         // Arrange
-        when(seatRepository.findAllOccupiedSeats("Barbie","Jurong theatre", "11:00")).thenReturn(Collections.singletonList(testCases.get(0)));
+        when(seatRepository.findAllOccupiedSeats("Barbie","Jurong theatre", "11:00", "11/5/2023")).thenReturn(Collections.singletonList(testCases.get(0)));
 
         // Act
-        List<Seat> result = seatServiceTest.findAllOccupiedSeats(testCases.get(0).getMovieName(), testCases.get(0).getLocation(), testCases.get(0).getTiming());
+        List<Seat> result = seatServiceTest.findAllOccupiedSeats(testCases.get(0).getMovieName(), testCases.get(0).getLocation(), testCases.get(0).getTiming(), testCases.get(0).getMovieDate());
         // Assert
         assertTrue(result.size() == 1); // Check that a result is present
         assertEquals(testCases.get(0), result.get(0)); // Check that the result matches the expected test case

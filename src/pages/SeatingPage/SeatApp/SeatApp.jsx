@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import './SeatApp.css';
 import Seat from '../Seat/Seat.js';
 import axios from 'axios';
@@ -24,34 +24,73 @@ class SeatApp extends Component {
   timing = localStorage.getItem("selectedTime");
   currentDate = localStorage.getItem('selectedDate');
 
+  dateConvertor(currDate) {
+    const date = new Date(currDate);
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const formattedDate = date.toLocaleString('en-GB', options);
+    return formattedDate;
+  }
+
   constructor(props) {
     super(props);
     this.state = { seats: [], chosenSeats: [], showSummary: false };
   }
 
-
-  async componentDidMount() {
-
+  async fetchSeats() {
     let seats = [];
 
-    //How many seats to create r=row i=col
+    // Store the currently selected seats in a temporary array
+    const currentlySelectedSeats = this.state.seats.filter(seat => seat.selected);
+
+    // How many seats to create r=row i=col
     for (let r = 0; r < 4; r++) {
       for (let i = 0; i < 14; i++) {
         seats.push({ row: r, num: i, avail: true });
       }
     }
-    
-    await axios.get(this.backendURL + "/api/v1/seats/" + this.movieName + "/" + this.location + "/" + this.timing)
-      .then(json => json.data.forEach(data => this.Unavailable.push([data.row, data.column])))
-      .catch(console.error);
 
-    console.log(this.Unavailable);
+    try {
+      // const date = new Date(this.currentDate);
+      // const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      // const formattedDate = date.toLocaleString('en-GB', options);
 
-    //code to make seat unavail
-    util.makeUnavail(seats, this.Unavailable);
+      const response = await axios.get(this.backendURL + "/api/v1/seats/" + this.movieName + "/" + this.location + "/" + this.timing + "/" + this.dateConvertor(this.currentDate));
+      response.data.forEach(data => this.Unavailable.push([data.row, data.column]));
 
-    //Updating
-    this.setState({ seats });
+      console.log(this.Unavailable);
+
+      // Code to make seat unavail
+      util.makeUnavail(seats, this.Unavailable);
+
+      // Reapply the selected seats to the updated seats array
+      currentlySelectedSeats.forEach(selectedSeat => {
+        const seatToUpdate = seats.find(seat => seat.row === selectedSeat.row && seat.num === selectedSeat.num);
+        if (seatToUpdate && seatToUpdate.avail) {
+          seatToUpdate.selected = true;
+        }
+      });
+
+      // Updating
+      this.setState({ seats });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+
+  async componentDidMount() {
+    // Fetch once initially.
+    await this.fetchSeats();
+
+    this.eventSource = new EventSource('http://localhost:3001/sse');
+    this.eventSource.onmessage = (event) => {
+      console.log('Database change detected:', JSON.parse(event.data));
+      this.fetchSeats(); // Fetch seats whenever a change is detected
+    };
+  }
+
+  componentWillUnmount() {
+    this.eventSource.close();
   }
 
   handleSeatSelect = (row, col) => {
@@ -121,8 +160,8 @@ class SeatApp extends Component {
     await selectedSeats.forEach(seat => this.addSeatToDB(seat, username));
     const rowName = [];
     for (let i = 0; i < seats.length; i++) {
-        let temp = 'A'.charCodeAt(0) + i;
-        rowName.push(String.fromCharCode(temp));
+      let temp = 'A'.charCodeAt(0) + i;
+      rowName.push(String.fromCharCode(temp));
     }
 
     let selectedSeatsStringArray = selectedSeats.map(seat => {
@@ -130,18 +169,18 @@ class SeatApp extends Component {
       return rowName[seat.row] + seat.num; // directly return the seatID for each iteration
     });
 
-    const date = new Date(this.currentDate);
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    const formattedDate = date.toLocaleString('en-GB', options);
+    // const date = new Date(this.currentDate);
+    // const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    // const formattedDate = date.toLocaleString('en-GB', options);
 
     const selectedSeatsString = selectedSeatsStringArray.join(", ").replace(/,\s*$/, "");  // join and then remove the trailing comma (if any)
-    let alertMessage = "Your seats: " + selectedSeatsString + " for the movie: " + this.movieName + " at " + this.location + " on " + formattedDate + " at " + this.timing +" are booked!";
+    let alertMessage = "Your seats: " + selectedSeatsString + " for the movie: " + this.movieName + " at " + this.location + " on " + this.dateConvertor(this.currentDate) + " at " + this.timing + " are booked!";
     alert(alertMessage);
     console.log(selectedSeatsStringArray);
 
 
     // Create confirmation email.
-    const sendEmail = async() => {
+    const sendEmail = async () => {
       try {
         const response = await axios.get(`${this.backendURL}/api/v1/mail/${username}/${alertMessage}`);
         console.log("Email sent successfully!", response.data);
@@ -158,6 +197,10 @@ class SeatApp extends Component {
   }
 
   addSeatToDB = (seat, username) => {
+    // const date = new Date(this.currentDate);
+    // const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    // const formattedDate = date.toLocaleString('en-GB', options);
+
     try {
       const accessToken = localStorage.getItem('accessToken');
       const headers = {
@@ -172,7 +215,7 @@ class SeatApp extends Component {
         movieName: this.movieName,
         location: this.location,
         timing: this.timing,
-        movieDate: this.currentDate
+        movieDate: this.dateConvertor(this.currentDate)
       }, {
         headers: headers
       }).then(this.Unavailable.push([seat.row, seat.num]));
@@ -197,8 +240,8 @@ class SeatApp extends Component {
         seatIDs: seatIDs,
         location: this.location,
         timing: this.timing,
-        price: selectedSeats.length*8,
-        movieDate: this.currentDate
+        price: selectedSeats.length * 8,
+        movieDate: this.dateConvertor(this.currentDate)
       }, { headers: headers })
         .then();
     } catch {
@@ -249,16 +292,16 @@ class SeatApp extends Component {
     return (
       <div style={{ backgroundColor: 'black' }}>
         <div className='minibox' style={{ display: showSummary ? 'none' : 'block' }}>
-        <MovieInfo
-          movieImage={movieImage}
-          title={title}
-          location={location}
-          currentDate={currentDate}
-          time={time}
-        />
-          <Stage/>
+          <MovieInfo
+            movieImage={movieImage}
+            title={title}
+            location={location}
+            currentDate={currentDate}
+            time={time}
+          />
+          <Stage />
           <MovieSeats rowName={rowName} seatsGrid={seatsGrid} />
-          <MovieLegend/>
+          <MovieLegend />
         </div>
 
         <OrderSummary

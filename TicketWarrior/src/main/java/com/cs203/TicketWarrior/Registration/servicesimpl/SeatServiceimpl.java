@@ -31,8 +31,8 @@ public class SeatServiceimpl implements SeatService{
         return insertedSeat;
     }
 
-    public List<Seat> findAllOccupiedSeats(String movieName, String location, String timing) {
-        return SeatRepository.findAllOccupiedSeats(movieName, location, timing);
+    public List<Seat> findAllOccupiedSeats(String movieName, String location, String timing, String movieDate) {
+        return SeatRepository.findAllOccupiedSeats(movieName, location, timing, movieDate);
     }
 
     public Optional<Seat> findSeatById(String seatId) {

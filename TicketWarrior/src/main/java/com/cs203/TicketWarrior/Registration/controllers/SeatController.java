@@ -21,10 +21,10 @@ public class SeatController {
         return new ResponseEntity<List<Seat>>(seatService.allSeats(), HttpStatus.OK); // Sends Http status code 200.
     }
 
-    @GetMapping("/{movieName}/{location}/{timing}")
+    @GetMapping("/{movieName}/{location}/{timing}/{movieDate}")
     public ResponseEntity<List<Seat>> findAllOccupiedSeats(@PathVariable String movieName,
-            @PathVariable String location, @PathVariable String timing) {
-        return new ResponseEntity<List<Seat>>(seatService.findAllOccupiedSeats(movieName, location, timing),
+            @PathVariable String location, @PathVariable String timing, @PathVariable String movieDate) {
+        return new ResponseEntity<List<Seat>>(seatService.findAllOccupiedSeats(movieName, location, timing, movieDate),
                 HttpStatus.OK);// Sends Http status
         // code 200.
     }

@@ -78,14 +78,13 @@ function Row({ title, fetchUrl, isLargeRow }) {
                         className={`row_posterInnerWrapper ${isLargeRow && "row_posterLarge"}`}
                         onClick={() => handleClick(movie)}
                     >
-
                         <img
                             className="row_poster"
                             src={`${base_url}${isLargeRow ? movie.poster_path : movie.backdrop_path}`}
                             alt={movie.name}
                         />
 
-                        <h3 className="movie-title">{movie.title}</h3>
+                        <h3 className="movie-title">{`${movie?.title || movie?.name || movie?.original_name}`}</h3>
 
                         <button className="buyTicketsButton" onClick={() => handleButtonClick(movie)}>Buy Tickets</button>
                     </div>
