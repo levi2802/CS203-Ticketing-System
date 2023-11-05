@@ -24,13 +24,6 @@ class SeatApp extends Component {
   timing = localStorage.getItem("selectedTime");
   currentDate = localStorage.getItem('selectedDate');
 
-  dateConvertor(currDate) {
-    const date = new Date(currDate);
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    const formattedDate = date.toLocaleString('en-GB', options);
-    return formattedDate;
-  }
-
   constructor(props) {
     super(props);
     this.state = { seats: [], chosenSeats: [], showSummary: false };
@@ -51,7 +44,7 @@ class SeatApp extends Component {
 
     try {
 
-      const response = await axios.get(this.backendURL + "/api/v1/seats/" + this.movieName + "/" + this.location + "/" + this.timing + "/" + this.dateConvertor(this.currentDate));
+      const response = await axios.get(this.backendURL + "/api/v1/seats/" + this.movieName + "/" + this.location + "/" + this.timing + "/" + util.dateConvertor(this.currentDate));
       response.data.forEach(data => this.Unavailable.push([data.row, data.column]));
 
       console.log(this.Unavailable);
@@ -151,11 +144,7 @@ class SeatApp extends Component {
 
     //adding purchased seats to backend
     await selectedSeats.forEach(seat => this.addSeatToDB(seat, username));
-    const rowName = [];
-    for (let i = 0; i < seats.length; i++) {
-      let temp = 'A'.charCodeAt(0) + i;
-      rowName.push(String.fromCharCode(temp));
-    }
+    const rowName = util.charConverter();
 
     let selectedSeatsStringArray = selectedSeats.map(seat => {
       seat.num += 1;  // Increment seat.num by 1
@@ -164,7 +153,7 @@ class SeatApp extends Component {
 
 
     const selectedSeatsString = selectedSeatsStringArray.join(", ").replace(/,\s*$/, "");  // join and then remove the trailing comma (if any)
-    let alertMessage = "Your seats: " + selectedSeatsString + " for the movie: " + this.movieName + " at " + this.location + " on " + this.dateConvertor(this.currentDate) + " at " + this.timing + " are booked!";
+    let alertMessage = "Your seats: " + selectedSeatsString + " for the movie: " + this.movieName + " at " + this.location + " on " + util.dateConvertor(this.currentDate) + " at " + this.timing + " are booked!";
     alert(alertMessage);
     console.log(selectedSeatsStringArray);
 
@@ -203,7 +192,7 @@ class SeatApp extends Component {
         movieName: this.movieName,
         location: this.location,
         timing: this.timing,
-        movieDate: this.dateConvertor(this.currentDate)
+        movieDate: util.dateConvertor(this.currentDate)
       }, {
         headers: headers
       }).then(this.Unavailable.push([seat.row, seat.num]));
@@ -231,7 +220,7 @@ class SeatApp extends Component {
         location: this.location,
         timing: this.timing,
         price: selectedSeats.length * 8,
-        movieDate: this.dateConvertor(this.currentDate)
+        movieDate: util.dateConvertor(this.currentDate)
       }, { headers: headers })
         .then();
     } catch {
@@ -276,7 +265,7 @@ class SeatApp extends Component {
     const chosenRow = seats.filter(seat => seat.selected).map(seat => seat.row + 1);
     const location = localStorage.getItem("selectedLoc");
     const time = localStorage.getItem("selectedTime");
-    const currentDate = localStorage.getItem("selectedDate");
+    const currentDate = util.dateConvertor(this.currentDate);
 
 
     return (

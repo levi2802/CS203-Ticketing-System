@@ -12,7 +12,7 @@ function NavBarLoggedIn() {
     const handleLogout = () => {
         localStorage.removeItem('accessToken');
         localStorage.removeItem('username');
-        window.location.reload();
+        window.location.href = "/";
     }
 
     const [show, handleShow] = useState(false);

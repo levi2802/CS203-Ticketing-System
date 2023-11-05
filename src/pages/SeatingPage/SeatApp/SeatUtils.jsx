@@ -90,4 +90,11 @@ export const charConverter = (seatsGrid) => {
   }
   return rowName;
 };
+
+export const dateConvertor = (currDate) =>{
+  const date = new Date(currDate);
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  const formattedDate = date.toLocaleString('en-GB', options);
+  return formattedDate;
+}
   
