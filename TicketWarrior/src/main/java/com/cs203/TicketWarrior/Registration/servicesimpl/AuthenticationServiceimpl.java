@@ -5,6 +5,7 @@ import com.cs203.TicketWarrior.Registration.models.ERole;
 import com.cs203.TicketWarrior.Registration.models.User;
 import com.cs203.TicketWarrior.Registration.payload.AuthenticationRequest;
 import com.cs203.TicketWarrior.Registration.payload.AuthenticationResponse;
+import com.cs203.TicketWarrior.Registration.payload.RegisterRequest;
 import com.cs203.TicketWarrior.Registration.services.AuthenticationService;
 
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ public class AuthenticationServiceimpl implements AuthenticationService{
 
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationResponse register(AuthenticationRequest registerRequest) {
+    public AuthenticationResponse register(RegisterRequest registerRequest) {
 
         if (userService.doesUsernameExist(registerRequest.getUsername()) || userService.doesEmailExist(registerRequest.getEmail())) {
             return AuthenticationResponse.builder()

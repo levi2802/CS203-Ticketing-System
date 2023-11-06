@@ -3,6 +3,7 @@ package com.cs203.TicketWarrior.Registration.IntegrationTests;
 import com.cs203.TicketWarrior.Registration.models.Purchase;
 import com.cs203.TicketWarrior.Registration.payload.AuthenticationRequest;
 import com.cs203.TicketWarrior.Registration.payload.AuthenticationResponse;
+import com.cs203.TicketWarrior.Registration.payload.RegisterRequest;
 import com.cs203.TicketWarrior.Registration.repository.PurchaseRepository;
 import com.cs203.TicketWarrior.Registration.repository.UserRepository;
 import com.cs203.TicketWarrior.Registration.servicesimpl.AuthenticationServiceimpl;
@@ -65,7 +66,7 @@ public class PurchaseIntegrationTest {
     public void testGetPurchasesByUser_Success() throws Exception {
         // Arrange
         // Register user
-        AuthenticationRequest request = new AuthenticationRequest("testCalvin@gmail.com", "testCalvin", "goodpassword1");
+        RegisterRequest request = new RegisterRequest("testCalvin@gmail.com", "testCalvin", "goodpassword1");
         AuthenticationResponse response = authenticationService.register(request);
 
         // Set URI
@@ -95,7 +96,7 @@ public class PurchaseIntegrationTest {
     public void testGetPurchasesByUser_Fail() throws Exception {
         // Arrange
         // Register user
-        AuthenticationRequest request = new AuthenticationRequest("testCalvin@gmail.com", "testCalvin", "goodpassword1");
+        RegisterRequest request = new RegisterRequest("testCalvin@gmail.com", "testCalvin", "goodpassword1");
         AuthenticationResponse response = authenticationService.register(request);
 
         // Set URI
@@ -125,7 +126,7 @@ public class PurchaseIntegrationTest {
     public void testCreatePurchase_Success() throws Exception {
         // Arrange
         // Register user
-        AuthenticationRequest request = new AuthenticationRequest("testCalvin@gmail.com", "testCalvin", "goodpassword1");
+        RegisterRequest request = new RegisterRequest("testCalvin@gmail.com", "testCalvin", "goodpassword1");
         AuthenticationResponse response = authenticationService.register(request);
 
         // Set URI

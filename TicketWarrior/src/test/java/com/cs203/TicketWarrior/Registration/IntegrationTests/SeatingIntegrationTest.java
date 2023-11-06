@@ -3,6 +3,7 @@ package com.cs203.TicketWarrior.Registration.IntegrationTests;
 import com.cs203.TicketWarrior.Registration.models.Seat;
 import com.cs203.TicketWarrior.Registration.payload.AuthenticationRequest;
 import com.cs203.TicketWarrior.Registration.payload.AuthenticationResponse;
+import com.cs203.TicketWarrior.Registration.payload.RegisterRequest;
 import com.cs203.TicketWarrior.Registration.repository.SeatRepository;
 import com.cs203.TicketWarrior.Registration.repository.UserRepository;
 import com.cs203.TicketWarrior.Registration.servicesimpl.AuthenticationServiceimpl;
@@ -65,7 +66,7 @@ public class SeatingIntegrationTest {
     public void testGetSeats_Success() throws Exception {
         // Arrange
         // Register user
-        AuthenticationRequest request = new AuthenticationRequest("testCalvin@gmail.com", "testCalvin", "goodpassword");
+        RegisterRequest request = new RegisterRequest("testCalvin@gmail.com", "testCalvin", "goodpassword1");
         AuthenticationResponse response = authenticationService.register(request);
 
         // Set URI
@@ -119,7 +120,7 @@ public class SeatingIntegrationTest {
     public void testGetSeatsByUser_Success() throws Exception {
         // Arrange
         // Register user
-        AuthenticationRequest request = new AuthenticationRequest("testCalvin@gmail.com", "testCalvin", "goodpassword");
+        RegisterRequest request = new RegisterRequest("testCalvin@gmail.com", "testCalvin", "goodpassword1");
         AuthenticationResponse response = authenticationService.register(request);
 
         // Set URI
@@ -151,7 +152,7 @@ public class SeatingIntegrationTest {
     public void testGetSeatsByUser_Fail() throws Exception {
         // Arrange
         // Register user
-        AuthenticationRequest request = new AuthenticationRequest("testCalvin@gmail.com", "testCalvin", "goodpassword");
+        RegisterRequest request = new RegisterRequest("testCalvin@gmail.com", "testCalvin", "goodpassword1");
         AuthenticationResponse response = authenticationService.register(request);
 
         // Set URI
