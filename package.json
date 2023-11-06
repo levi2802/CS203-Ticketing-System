@@ -33,7 +33,9 @@
     "start": "concurrently \"npm run server\" \"npm run client\"",
     "build": "react-scripts build",
     "client": "react-scripts start",
-    "server": "nodemon server.js"
+    "server": "nodemon server.js",
+    "test": "echo \"No test specified\"",
+    "eject": "react-scripts eject"
   },
   "proxy": "http://localhost:3001",
   "eslintConfig": {
