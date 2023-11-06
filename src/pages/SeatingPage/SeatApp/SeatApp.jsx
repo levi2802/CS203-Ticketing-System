@@ -76,7 +76,7 @@ class SeatApp extends Component {
   handleSeatSelect = (row, col) => {
     const { seats } = this.state;
     //object of the seat that i clicked
-    const selectedSeat = seats.find(seat => seat.row === row && seat.num === col);
+    // const selectedSeat = seats.find(seat => seat.row === row && seat.num === col);
 
     //A list of selected seat numbers
     const selectedSeatNumbers = [];
@@ -140,7 +140,7 @@ class SeatApp extends Component {
     // Create confirmation email.
     const sendEmail = async () => {
       try {
-        const response = await axios.get(`${this.backendURL}/api/v1/mail/${username}/${alertMessage}`);
+        await axios.get(`${this.backendURL}/api/v1/mail/${username}/${alertMessage}`);
       } catch (error) {
         console.error("There is an error", error);
       }
