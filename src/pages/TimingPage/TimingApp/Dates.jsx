@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 
 function Dates({ selectedDate, setSelectedDate }) {
-  const [selectedDateInfo, setSelectedDateInfo] = useState(null);
+  // const [selectedDateInfo, setSelectedDateInfo] = useState(null);
   const today = new Date();
   const fiveDaysFromToday = new Date(today);
   fiveDaysFromToday.setDate(today.getDate() + 5); // Calculate the date 5 days from today
@@ -40,7 +40,7 @@ function Dates({ selectedDate, setSelectedDate }) {
       month: selected.getMonth() + 1,
       year: selected.getFullYear(),
     };
-    setSelectedDateInfo(dateInfo);
+    // setSelectedDateInfo(dateInfo);
 
     if(currentTime.getDate() === Number(dateInfo.day)){
       filteredData = timingData.map(times => times.filter(time => !isBeforeCurrentTime(time)));
