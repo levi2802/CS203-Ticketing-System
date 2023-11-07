@@ -5,6 +5,7 @@ import com.cs203.TicketWarrior.Registration.models.ERole;
 import com.cs203.TicketWarrior.Registration.models.User;
 import com.cs203.TicketWarrior.Registration.payload.AuthenticationRequest;
 import com.cs203.TicketWarrior.Registration.payload.AuthenticationResponse;
+import com.cs203.TicketWarrior.Registration.payload.RegisterRequest;
 import com.cs203.TicketWarrior.Registration.repository.UserRepository;
 import com.cs203.TicketWarrior.Registration.servicesimpl.AuthenticationServiceimpl;
 import com.cs203.TicketWarrior.Registration.servicesimpl.UserServiceimpl;
@@ -55,7 +56,7 @@ public class AuthenticationServiceTest {
     @Test
     void testCanRegister_Success() {
         //Arrange
-        AuthenticationRequest registerRequest = new AuthenticationRequest("goodEmail@gmail.com", "goodUsername", "goodPassword1");
+        RegisterRequest registerRequest = new RegisterRequest("goodEmail@gmail.com", "goodUsername", "goodPassword1");
         User user = new User(registerRequest.getEmail(), registerRequest.getUsername(), "encodedPassword");
         user.setRole(ERole.USER);
         when(userServiceimpl.doesUsernameExist(registerRequest.getUsername())).thenReturn(false);
@@ -74,7 +75,7 @@ public class AuthenticationServiceTest {
     @Test
     void testCanRegister_Fail() {
         //Arrange
-        AuthenticationRequest registerRequest = new AuthenticationRequest("badEmail@gmail.com", "badUsername", "badPassword1");
+        RegisterRequest registerRequest = new RegisterRequest("badEmail@gmail.com", "badUsername", "badPassword1");
         when(userServiceimpl.doesUsernameExist(registerRequest.getUsername())).thenReturn(true);
 
         //Act

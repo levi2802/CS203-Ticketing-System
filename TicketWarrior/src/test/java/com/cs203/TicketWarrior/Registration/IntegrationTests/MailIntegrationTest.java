@@ -3,6 +3,7 @@ package com.cs203.TicketWarrior.Registration.IntegrationTests;
 import com.cs203.TicketWarrior.Registration.models.User;
 import com.cs203.TicketWarrior.Registration.payload.AuthenticationRequest;
 import com.cs203.TicketWarrior.Registration.payload.AuthenticationResponse;
+import com.cs203.TicketWarrior.Registration.payload.RegisterRequest;
 import com.cs203.TicketWarrior.Registration.repository.PurchaseRepository;
 import com.cs203.TicketWarrior.Registration.repository.UserRepository;
 import com.cs203.TicketWarrior.Registration.services.UserService;
@@ -87,8 +88,8 @@ public class MailIntegrationTest {
     public void testSendMail_InvalidUsername_ReturnUserNotFound() throws Exception {
         // Arrange
         // Register user
-        AuthenticationRequest request = new AuthenticationRequest("isaaclokeweiensecondary@gmail.com", "testCalvin",
-                "goodpassword");
+        RegisterRequest request = new RegisterRequest("isaaclokeweiensecondary@gmail.com", "testCalvin",
+                "goodpassword1");
         AuthenticationResponse response = authenticationService.register(request);
 
         // Set token in http header
@@ -111,8 +112,8 @@ public class MailIntegrationTest {
     public void testSendMail_UsernameAndMessage_ReturnSuccessMessage() throws Exception {
         // Arrange
         // Register user
-        AuthenticationRequest request = new AuthenticationRequest("isaaclokeweiensecondary@gmail.com", "testCalvin",
-                "goodpassword");
+        RegisterRequest request = new RegisterRequest("isaaclokeweiensecondary@gmail.com", "testCalvin",
+                "goodpassword1");
         AuthenticationResponse response = authenticationService.register(request);
 
         // Set token in http header

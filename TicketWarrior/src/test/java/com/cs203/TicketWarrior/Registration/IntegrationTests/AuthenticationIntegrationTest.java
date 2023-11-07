@@ -3,6 +3,7 @@ package com.cs203.TicketWarrior.Registration.IntegrationTests;
 import com.cs203.TicketWarrior.Registration.models.User;
 import com.cs203.TicketWarrior.Registration.payload.AuthenticationRequest;
 import com.cs203.TicketWarrior.Registration.payload.AuthenticationResponse;
+import com.cs203.TicketWarrior.Registration.payload.RegisterRequest;
 import com.cs203.TicketWarrior.Registration.repository.UserRepository;
 import com.cs203.TicketWarrior.Registration.services.AuthenticationService;
 import com.cs203.TicketWarrior.Registration.servicesimpl.AuthenticationServiceimpl;
@@ -103,7 +104,7 @@ public class AuthenticationIntegrationTest {
     @Test
     public void testAuthenticateUser_Success() throws Exception {
         // Arrange
-        AuthenticationRequest registerRequest = new AuthenticationRequest("validUser@gmail.com", "validUser",
+        RegisterRequest registerRequest = new RegisterRequest("validUser@gmail.com", "validUser",
                 "goodpassword1");
         AuthenticationResponse registerResponse = authenticationService.register(registerRequest);
         AuthenticationRequest request = new AuthenticationRequest("null", "validUser", "goodpassword1");
@@ -128,7 +129,7 @@ public class AuthenticationIntegrationTest {
     @Test
     public void testAuthenticateUser_Fail() throws Exception {
         // Arrange
-        AuthenticationRequest registerRequest = new AuthenticationRequest("validUser@gmail.com", "validUser",
+        RegisterRequest registerRequest = new RegisterRequest("validUser@gmail.com", "validUser",
                 "goodpassword1");
         AuthenticationResponse registerResponse = authenticationService.register(registerRequest);
         AuthenticationRequest request = new AuthenticationRequest("null", "validUser", "badpassword1");
