@@ -19,7 +19,7 @@ function OrderHistoryPageTable() {
                 'Authorization': `Bearer ${accessToken}`
             };
 
-            let response = await axios.get(`http://api.wicket.shop:8080/api/v1/purchases/${username}`, {
+            let response = await axios.get(`http://localhost:8080/api/v1/purchases/${username}`, {
                 headers: headers,
                 validateStatus: status => status < 500
             });

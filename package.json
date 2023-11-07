@@ -37,7 +37,7 @@
     "test": "echo \"No test specified\"",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://api.wicket.shop:3001",
+  "proxy": "http://localhost:3001",
   "eslintConfig": {
     "extends": [
       "react-app",

@@ -14,8 +14,8 @@ import MovieInfo from './Components/MovieInfo';
 class SeatApp extends Component {
   template = function (row, column, type, availability) { }
   //switch them based on which database you are testing on
-  //backendURL = "http://localhost:8080"
-  backendURL= "http://api.wicket.shop:8080"
+  backendURL = "http://localhost:8080"
+  // backendURL= "http://api.wicket.shop:8080"
   Unavailable = [];
   d = new Date();
 
@@ -62,7 +62,7 @@ class SeatApp extends Component {
     // Fetch once initially.
     await this.fetchSeats();
 
-    this.eventSource = new EventSource('http://api.wicket.shop:3001/sse');
+    this.eventSource = new EventSource('http://localhost:3001/sse');
     this.eventSource.onmessage = (event) => {
       console.log('Database change detected:', JSON.parse(event.data));
       this.fetchSeats(); // Fetch seats whenever a change is detected

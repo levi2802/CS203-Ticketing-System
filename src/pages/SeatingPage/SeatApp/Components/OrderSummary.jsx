@@ -16,7 +16,7 @@ function OrderSummary({ chosenSeats, rowName, chosenRow, handleCancel, handleCon
     //console.log(token);
     captchaRef.current.reset();
 
-    await axios.post("http://api.wicket.shop:8080/api/v1/captcha/verification", { token })
+    await axios.post("http://localhost:8080/api/v1/captcha/verification", { token })
       .then(res => {
         console.log(res);
         handleConfirm();
