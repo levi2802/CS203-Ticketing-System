@@ -30,33 +30,33 @@ class UserRepositoryTest {
 
     @Test
     void findUser_UsernameValidReturnUser_Success() {
-        //Arrange
+        // Arrange
         User newUser = new User(
                 "calvin@gmail.com",
                 "calvin",
-                passwordEncoder.encode("goodpassword"));
+                passwordEncoder.encode("goodpassword1"));
         userRepositoryTest.save(newUser);
 
-        //Act
+        // Act
         Optional<User> expectedUser = userRepositoryTest.findUserByUsername(newUser.getUsername());
 
-        //Assert
+        // Assert
         assertEquals(newUser, expectedUser.get());
     }
 
     @Test
     void findUser_UsernameInvalidReturnUser_Failure() {
-        //Arrange
+        // Arrange
         User newUser = new User(
                 "calvin@gmail.com",
                 "calvin",
-                passwordEncoder.encode("goodpassword"));
+                passwordEncoder.encode("goodpassword1"));
         userRepositoryTest.save(newUser);
 
-        //Act
+        // Act
         Optional<User> expectedUser = userRepositoryTest.findUserByUsername("invalid");
 
-        //Assert
+        // Assert
         assertTrue(expectedUser.isEmpty());
     }
 
